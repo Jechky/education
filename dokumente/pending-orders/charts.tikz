@@ -1,0 +1,187 @@
+% charts.tikz -- Vektor-Nachbau der vier Plattform-Chartbilder
+% (img-pending-order-{bl,sl,bs,ss}.png, 174 x 96 px; Ursprung unten links,
+% 1 Einheit = 1 px).  Je Bild 37 Rechtecke (Balken und Stiele), 2 Kreise
+% (Kugeln: links rot = Kurs jetzt, rechts gruen = At price), 1 Dreieck
+% (Richtung danach).  Farben: pfgruen, pfrot, pfgrau (abgedunkelte graue
+% Kerzen fuer weissen Grund), definiert in der .tex.
+%
+% AUTOMATISCH ERZEUGT von tools/charts_aus_pdf.py aus
+% originals/Pending-Orders-Guide_ORIGINAL.pdf (Seiten 1, 3, 4, 5).
+% Alle Werte sind bitgenau aus dem Inhaltsstrom zurueckgerechnet.
+
+\newcommand{\chartbl}{%
+  \fill[pfrot] (14,66) rectangle (16.367,89.525);
+  \fill[pfrot] (52.702,83.5) circle (3.651);
+  \fill[pfrot] (51.497,44) rectangle (53.874,83.5);
+  \fill[pfrot] (19,62) rectangle (21,85.624);
+  \fill[pfrot] (23,58.683) rectangle (25.376,82);
+  \fill[pfrot] (31,54.599) rectangle (33.502,78);
+  \fill[pfrot] (39.251,49) rectangle (41.624,72.37);
+  \fill[pfrot] (27,46.475) rectangle (29.367,70);
+  \fill[pfrot] (35.125,46.375) rectangle (37.623,70);
+  \fill[pfrot] (43.252,43.124) rectangle (45.75,66.75);
+  \fill[pfrot] (47.371,38.251) rectangle (49.873,61.873);
+  \fill[pfgrau] (64,39) rectangle (66,58.624);
+  \fill[pfgrau] (55.498,38.251) rectangle (58,57.748);
+  \fill[pfgrau] (68,36) rectangle (70,55.376);
+  \fill[pfgrau] (76,36) rectangle (78.376,55.317);
+  \fill[pfgrau] (59.655,33.37) rectangle (62,52.736);
+  \fill[pfgrau] (88.251,32.63) rectangle (90.624,52);
+  \fill[pfgrau] (80,31.699) rectangle (82.502,51);
+  \fill[pfgrau] (72,30) rectangle (74.365,49.525);
+  \fill[pfgrau] (96.37,29.251) rectangle (98.872,48.873);
+  \fill[pfgrau] (104.498,31) rectangle (107,48.873);
+  \fill[pfgrau] (84.125,28.375) rectangle (86.623,48);
+  \fill[pfgrau] (92.251,27.849) rectangle (94.749,47);
+  \fill[pfgrau] (100.498,23.604) rectangle (102.875,43);
+  \fill[pfgruen] (152.349,83) -- (164.69,83) -- (158.476,89) -- cycle;
+  \fill[pfgruen] (151.125,51.251) rectangle (153.623,70.876);
+  \fill[pfgruen] (155.251,49) rectangle (157.624,68.159);
+  \fill[pfgruen] (163.373,48) rectangle (165.875,69);
+  \fill[pfgruen] (159.251,45) rectangle (161.749,64.151);
+  \fill[pfgruen] (147,44) rectangle (149.502,63.401);
+  \fill[pfgruen] (139,37.475) rectangle (141.365,57);
+  \fill[pfgruen] (143,35) rectangle (145.376,54.422);
+  \fill[pfgruen] (134,31.683) rectangle (136.376,51);
+  \fill[pfgruen] (129.125,27) rectangle (131.502,46.158);
+  \fill[pfgruen] (121,23.578) rectangle (123.376,43);
+  \fill[pfgruen] (109.881,7.5) circle (3.594);
+  \fill[pfgruen] (108.62,7.5) rectangle (111,38.962);
+  \fill[pfgruen] (125,20.37) rectangle (127.345,39.736);
+  \fill[pfgruen] (117,18) rectangle (119,37.376);
+  \fill[pfgruen] (113,14.498) rectangle (115,34);
+}
+\newcommand{\chartsl}{%
+  \fill[pfrot] (54,44) rectangle (56.376,63.422);
+  \fill[pfrot] (67.493,15.5) circle (3.457);
+  \fill[pfrot] (66.125,15.5) rectangle (68.625,60.962);
+  \fill[pfrot] (58,41.599) rectangle (60.502,61);
+  \fill[pfrot] (62.125,37.5) rectangle (64.502,57);
+  \fill[pfrot] (50,36.624) rectangle (52,56);
+  \fill[pfrot] (41.635,30) rectangle (44,49.525);
+  \fill[pfrot] (46,27.624) rectangle (48,47);
+  \fill[pfrot] (37,24.251) rectangle (39,43.875);
+  \fill[pfrot] (32,19.376) rectangle (34,39);
+  \fill[pfrot] (24,16.125) rectangle (26,35.749);
+  \fill[pfrot] (11.373,13) rectangle (13.875,32.376);
+  \fill[pfrot] (28,13) rectangle (30,32.502);
+  \fill[pfrot] (19.635,10.475) rectangle (22,30);
+  \fill[pfrot] (15.498,7.127) rectangle (18,26.748);
+  \fill[pfrot] (152.282,18) -- (164.725,18) -- (158.5,11) -- cycle;
+  \fill[pfgrau] (111.125,45) rectangle (113.502,64.158);
+  \fill[pfgrau] (119.251,44) rectangle (121.749,63.501);
+  \fill[pfgrau] (99,41.498) rectangle (101,61);
+  \fill[pfgrau] (107,41.599) rectangle (109.502,61);
+  \fill[pfgrau] (115.125,39) rectangle (117.623,58.625);
+  \fill[pfgrau] (86.652,38.37) rectangle (89,57.63);
+  \fill[pfgrau] (95,37.376) rectangle (97,57);
+  \fill[pfgrau] (103,36) rectangle (105.376,55.317);
+  \fill[pfgrau] (70.251,36.849) rectangle (72.749,54.501);
+  \fill[pfgrau] (78.373,35) rectangle (80.875,54.376);
+  \fill[pfgrau] (90.655,34.264) rectangle (93,53.63);
+  \fill[pfgrau] (82.498,33.251) rectangle (85,52.873);
+  \fill[pfgrau] (74.37,29.236) rectangle (76.748,48.866);
+  \fill[pfgruen] (124.503,82.5) circle (3.465);
+  \fill[pfgruen] (123.372,52.107) rectangle (125.75,82.5);
+  \fill[pfgruen] (128.251,48) rectangle (130.749,71.75);
+  \fill[pfgruen] (132.373,45) rectangle (134.749,68.158);
+  \fill[pfgruen] (140.498,40.699) rectangle (143,64.301);
+  \fill[pfgruen] (148.633,35) rectangle (151,58.525);
+  \fill[pfgruen] (136.373,32.624) rectangle (138.875,56);
+  \fill[pfgruen] (144.624,32.578) rectangle (147,56);
+  \fill[pfgruen] (153,29.251) rectangle (155,52.875);
+  \fill[pfgruen] (157,24.251) rectangle (159,48);
+  \fill[pfgruen] (161,27.683) rectangle (163.356,43.736);
+}
+\newcommand{\chartbs}{%
+  \fill[pfrot] (54,44) rectangle (56.376,63.422);
+  \fill[pfrot] (67.493,15.5) circle (3.457);
+  \fill[pfrot] (66.125,15.5) rectangle (68.625,60.962);
+  \fill[pfrot] (58,41.599) rectangle (60.502,61);
+  \fill[pfrot] (62.125,37.5) rectangle (64.502,57);
+  \fill[pfrot] (50,36.624) rectangle (52,56);
+  \fill[pfrot] (41.635,30) rectangle (44,49.525);
+  \fill[pfrot] (46,27.624) rectangle (48,47);
+  \fill[pfrot] (37,24.251) rectangle (39,43.875);
+  \fill[pfrot] (32,19.376) rectangle (34,39);
+  \fill[pfrot] (24,16.125) rectangle (26,35.749);
+  \fill[pfrot] (11.373,13) rectangle (13.875,32.376);
+  \fill[pfrot] (28,13) rectangle (30,32.502);
+  \fill[pfrot] (19.635,10.475) rectangle (22,30);
+  \fill[pfrot] (15.498,7.127) rectangle (18,26.748);
+  \fill[pfgrau] (111.125,39) rectangle (113.502,58.5);
+  \fill[pfgrau] (119.251,38.248) rectangle (121.749,57.75);
+  \fill[pfgrau] (99,36) rectangle (101,55.376);
+  \fill[pfgrau] (107,36) rectangle (109.502,55.301);
+  \fill[pfgrau] (115.125,33.251) rectangle (117.623,52.876);
+  \fill[pfgrau] (86.624,32.578) rectangle (89,52);
+  \fill[pfgrau] (95,31.624) rectangle (97,51);
+  \fill[pfgrau] (103,30) rectangle (105.365,49.525);
+  \fill[pfgrau] (70.249,31) rectangle (72.747,48.874);
+  \fill[pfgrau] (78.37,29.251) rectangle (80.872,48.873);
+  \fill[pfgrau] (90.635,28.475) rectangle (93,48);
+  \fill[pfgrau] (82.498,27.699) rectangle (85,47);
+  \fill[pfgrau] (74.373,23.632) rectangle (76.749,43);
+  \fill[pfgruen] (161,66) rectangle (163.367,89.525);
+  \fill[pfgruen] (124.5,83.5) circle (3.476);
+  \fill[pfgruen] (123.372,43.107) rectangle (125.75,83.5);
+  \fill[pfgruen] (156,62) rectangle (158.502,85.498);
+  \fill[pfgruen] (152,58.683) rectangle (154.376,82);
+  \fill[pfgruen] (144,54.498) rectangle (146,78);
+  \fill[pfgruen] (135.624,49) rectangle (138,72.422);
+  \fill[pfgruen] (140,46.376) rectangle (142,70);
+  \fill[pfgruen] (148,46.376) rectangle (150,70);
+  \fill[pfgruen] (131.498,43.127) rectangle (134,66.748);
+  \fill[pfgruen] (127.371,38.251) rectangle (129.873,61.873);
+  \fill[pfgruen] (152.427,12) -- (164.557,12) -- (158.459,18) -- cycle;
+}
+\newcommand{\chartss}{%
+  \fill[pfrot] (14,66) rectangle (16.367,89.525);
+  \fill[pfrot] (152.302,89) -- (164.651,89) -- (158.5,82) -- cycle;
+  \fill[pfrot] (52.702,83.5) circle (3.651);
+  \fill[pfrot] (51.497,44) rectangle (53.874,83.5);
+  \fill[pfrot] (19,62) rectangle (21,85.624);
+  \fill[pfrot] (23,58.683) rectangle (25.376,82);
+  \fill[pfrot] (31,54.599) rectangle (33.502,78);
+  \fill[pfrot] (39.251,49) rectangle (41.624,72.37);
+  \fill[pfrot] (27,46.475) rectangle (29.367,70);
+  \fill[pfrot] (35.125,46.375) rectangle (37.623,70);
+  \fill[pfrot] (43.252,43.124) rectangle (45.75,66.75);
+  \fill[pfrot] (47.371,38.251) rectangle (49.873,61.873);
+  \fill[pfgrau] (64,39) rectangle (66,58.624);
+  \fill[pfgrau] (55.498,38.251) rectangle (58,57.748);
+  \fill[pfgrau] (68,36) rectangle (70,55.376);
+  \fill[pfgrau] (76,36) rectangle (78.376,55.317);
+  \fill[pfgrau] (59.655,33.37) rectangle (62,52.736);
+  \fill[pfgrau] (88.251,32.63) rectangle (90.624,52);
+  \fill[pfgrau] (80,31.699) rectangle (82.502,51);
+  \fill[pfgrau] (72,30) rectangle (74.365,49.525);
+  \fill[pfgrau] (96.37,29.251) rectangle (98.872,48.873);
+  \fill[pfgrau] (104.498,31) rectangle (107,48.873);
+  \fill[pfgrau] (84.125,28.375) rectangle (86.623,48);
+  \fill[pfgrau] (92.251,27.849) rectangle (94.749,47);
+  \fill[pfgrau] (100.498,23.604) rectangle (102.875,43);
+  \fill[pfgruen] (121,44) rectangle (123.376,63.422);
+  \fill[pfgruen] (109.882,15.5) circle (3.571);
+  \fill[pfgruen] (108.621,15.5) rectangle (111,60.95);
+  \fill[pfgruen] (117,41.498) rectangle (119,61);
+  \fill[pfgruen] (113,37.376) rectangle (115,57);
+  \fill[pfgruen] (125,36.683) rectangle (127.376,56);
+  \fill[pfgruen] (133.125,30) rectangle (135.623,49.625);
+  \fill[pfgruen] (129.125,27.842) rectangle (131.502,47);
+  \fill[pfgruen] (138,24.251) rectangle (140.502,43.873);
+  \fill[pfgruen] (143,19.475) rectangle (145.365,39);
+  \fill[pfgruen] (151.128,16.124) rectangle (153.626,35.75);
+  \fill[pfgruen] (147,13) rectangle (149.502,32.401);
+  \fill[pfgruen] (163.373,13) rectangle (165.875,32.376);
+  \fill[pfgruen] (155.252,10.395) rectangle (157.623,30);
+  \fill[pfgruen] (159.252,7.124) rectangle (161.751,26.75);
+}
+
+% Mini-Fassungen (Spickzettel S. 5, Deckblatt).
+% Im ORIGINAL-PDF sind sie geometrisch und farblich identisch mit den
+% grossen Fassungen (nur kleiner skaliert) -> Verweis statt Kopie.
+\newcommand{\chartblmini}{\chartbl}
+\newcommand{\chartslmini}{\chartsl}
+\newcommand{\chartbsmini}{\chartbs}
+\newcommand{\chartssmini}{\chartss}
