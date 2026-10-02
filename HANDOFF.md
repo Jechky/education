@@ -1,4 +1,4 @@
-# HANDOFF – Trading-Schulungs-PDFs (Stand: Ende des claude.ai-Chats, 07.09.2026)
+# HANDOFF – Trading-Schulungs-PDFs (Stand: Ende des claude.ai-Chats, 07.09.2026; Nachträge bis 02.10.2026)
 
 > **Für Claude Code.** Diese Datei fasst den kompletten Chat-Verlauf (`docs/chat-verlauf.txt`, Nachrichten #0–#159, 04.–07.09.2026) zusammen, damit du genau dort weitermachen kannst, wo der Chat aufgehört hat.
 > Quelle ist **nur der Textexport**: Tool-Aufrufe, Bilder, Screenshots, Konsolen-Ausgaben und die erzeugten Dateien fehlen. Alles, was hier steht, ist im Verlauf belegt (Nachrichtennummer in Klammern, z. B. „(#103)“). Was nicht sicher belegt ist, ist mit **⚠ unsicher** markiert.
@@ -41,6 +41,8 @@
 
 **Stand beim Abbruch (#157 → #158):** In Dokument 2 waren gerade die mobile Kontoübersicht (Vektor-Nachbau mit gemessenen Werten) und die Desktop-Leiste (im **blauen** Design, teils geschätzt) auf der Seite „In der Plattform“ eingebaut. Offen waren zwei weitere Messläufe mit dem Konsolenbefehl aus #153 (Desktop-Leiste im blauen Design und Instrument-Info-Feld). Danach bat der Nutzer um diese Übergabedatei (#158); die Antwort #159 ist leer.
 
+**Stand 02.10.2026 (Repo):** Maßgeblich für Doku 2 sind die Abschnitte 12–15 (u. a. S. 4 Hebel-Vergleich, S. 5 Swap-Modell mit Rechenbeispiel, Fußzeile „KONTOGRUNDLAGEN & KOSTEN · EDUCATION – STANDARD PACKAGE“), für Doku 1 Abschnitt 16 (9 Seiten, Fußzeile „PENDING ORDERS · STANDARD TIER“, Deckblatt-Testvariante). Offene Rückfragen: Abschnitt 8.2.
+
 ---
 
 ## 2. Harte Vorgaben des Nutzers (Checkliste)
@@ -79,8 +81,9 @@ Diese Regeln gelten für **beide** Dokumente, sofern nicht anders vermerkt. Vor 
 - [ ] **Keine Zahlen im Dokument** – „generell keine Zahlen“, sie verwirren Laien (#58). Entfernt wurden Preise, Kapitelnummern, „Typ 1–4“, Datum und Seitenzahlen (#59).
   - Ausnahme 1: **Schrittnummern 1–5** (Wegweiser, keine Preise) (#59, #67).
   - Ausnahme 2: **Badge auf dem Deckblatt** „4 Ordertypen. 1 klare Entscheidungslogik.“ – vom Nutzer selbst vorgegeben (#102); Claude hat auf den Konflikt hingewiesen (#103), keine Antwort.
-  - Ausnahme 3 (nur Doku 2): **Vergleichstabelle „Ohne Hebel / Mit Hebel 1:10“ auf der Hebel-Seite** mit einfachen Beträgen (100 €, 1.000 €, 5 %) – ausdrücklicher Wunsch des Nutzers (02.10.2026), Abschnitt 14. Sonst gilt das Zahlenverbot weiter.
-  - Im Fenster stehen statt Werten „deine Menge“, „dein Wert“, „dein Ziel“ (#59); in der Kontoübersicht „Konto jetzt“ statt einer Summe (#151).
+  - Ausnahme 3 (nur Doku 2, **S. 4**): **Hebel-Vergleich** „Direktkauf über die Bank“ gegen „Broker, Hebel 1:10“ mit einfachen Zahlen (1.000 €, 10.000 €, 9.000 €, 1:10, Kurs 100 → 105 €, 95 €, ±50 €/±500 €, Swap 7 € pro Nacht, 5 %/50 %/10 %) – ausdrücklicher Wunsch des Nutzers (02.10.2026), Abschnitt 14.
+  - Ausnahme 4 (nur Doku 2, **S. 5**): **Swap-Beispiel** mit 1.000 €, 10.000 €, 1:10, 3 €, 3 €, 6 €, 1 €, 7 € pro Nacht und „Tageswechsel um 23:00 Uhr (Amsterdamer Zeit)“ – ausdrücklich vom Nutzer (Skizze `originals/skizze-hebel-swap.png`; Uhrzeit Nutzerangabe), Abschnitt 5.3. Sonst gilt das Zahlenverbot weiter.
+  - Im Fenster stehen statt Werten „deine Menge“, „dein Wert“, „dein Ziel“ (#59); in der Kontoübersicht „Konto jetzt“ statt einer Summe (#151). Die „dein/deine“-Platzhalter in den Plattform-Nachbauten **bleiben** (Nutzerentscheidung 02.10.2026, endgültig; Abschnitt 8.2).
 - [ ] **Take-Profit-Regel bei jedem Typ nennen**: bei Buy **über**, bei Sell **unter** dem At price (#48, #49).
 - [ ] Kein **historischer Trade / Hebel-Rechenbeispiel** im Guide. Claude riet ab (Zahlen, Hebel ohne Absicherung, falsche Erwartungen, Größen- statt Richtungsfrage) und bot ein separates Anhangsblatt „Rechenbeispiel“ an (#65). ⚠ Der Nutzer hat nicht geantwortet.
 - [ ] **Keine Doppelungen** auf einer Seite oder zwischen Seiten (#66, #68): jedes Element hat genau eine Aufgabe.
@@ -255,7 +258,7 @@ Alle Seiten beginnen bei **20,5 mm** (#99). Kopfzeilen/Kapitelzeilen laut #99: D
   - Links immer Grün (Buy), rechts immer Rot (Sell).
   - Zu jedem Type ein kleiner Chart (Grundform-Vektor der Plattformbilder), oben und unten **spiegelbildlich nach außen**, Name und Nutzenzeile **zur Linie hin**.
   - Die vier Elemente sind gleichwertig, sauber ausgerichtet und großzügig getrennt; Name plus kurze Nutzenzeile, keine langen Texte.
-- Footer: links „Pending Orders“, rechts „Kurz-Guide“ (Versalien-Stil). **Kein Logo**, weil keins vorhanden (#103).
+- Footer: links „Pending Orders“, rechts „Kurz-Guide“ (Versalien-Stil). **Kein Logo**, weil keins vorhanden (#103). ⚠ Überholt: seit 02.10.2026 „PENDING ORDERS · STANDARD TIER“ statt „KURZ-GUIDE“ (Guide und CoverTest-Variante, Abschnitt 16).
 - Weitere Vorgaben aus #102: wirkt wie ein FinTech-/Broker-Onboarding-Guide, minimalistisch, vertrauenswürdig, ruhig; Stil der Innenseiten beibehalten; Ziel-Eindruck: *„Moderne Finanzplattform erklärt eine komplexe Funktion in einer klaren, ruhigen und professionellen Sprache.“*
 - Frühere Deckblatt-Fassungen (Preis-Leiter, Charts in Reihe, versetzte 2-Spalten-Diagonale #93) sind **ersetzt**.
 
@@ -326,15 +329,18 @@ Plattform-Fakten aus dem Referenzdokument: Balance, Equity, Free Margin, Margin 
 1. **Deckblatt** – Konto-Anatomie als Bild: Balance + Profit/Losses ergibt Equity; Equity teilt sich in Margin und Free; darunter Level als Verhältnis (#147).
 2. **Kontostand** (deckt Themen 1 und 2 ab) – Balance („was fest ist“) gegen Equity („was jetzt gilt“) als zwei Kästen; Grafik mit Position im Plus und im Minus; unten der Weg von schwebend zu fest: öffnen → Kurs bewegt sich → schließen (#147).
 3. **Margin** (Themen 3 und 4) – Margin, Free, Level nebeneinander; Balken in drei Zuständen (eine Position, mehrere, Positionen im Minus); Level-Skala „genug Puffer“ → Warnbereich → Stop out. **Stop-out-Wert bewusst nicht genannt**, Verweis auf das Feld unter „Information“, weil er je Konto anders sein kann (#147).
-4. **Hebel** (Thema 5) – „ohne“ und „mit“ nebeneinander: gleicher Einsatz, unterschiedlich viel bewegtes Volumen; darunter symmetrisch, wie stark dieselbe Bewegung nach oben und unten wirkt; Vor- und Nachteil als zwei gleichwertige Kästen, keine Gewinnversprechen. Die Grafik „ohne Hebel“ ist **bewusst winzig** (das ist die Aussage) (#147). Seit 02.10.2026 zusätzlich Vergleichstabelle mit Zahlen; die Vor-/Nachteil-Kästen sind neutral umgebaut (Abschnitt 14).
-5. **Swaps** (Thema 6) – neu nach der **Skizze des Nutzers** (#148, #151):
-   - Das Warum: Dir gehört nur die Margin, der Rest ist geliehen, und geliehenes Geld kostet Zinsen.
-   - Die Kette: **Geldmarkt-Zins + Broker-Aufschlag = dein Swap**.
-   - Der Moment der Buchung: den ganzen Tag nichts, zum **Tageswechsel** alles auf einmal; wer eine Minute vorher schließt, zahlt nichts.
-   - Aus der ersten Fassung (#147): Woche mit einem Punkt pro Nacht, **am Mittwoch drei**; Swap long, Swap short und wo der Swap bei der Position auftaucht. ⚠ Ob das nach dem Straffen (#149) noch alles drin ist, ist unklar.
-   - Abweichung von der Skizze: **Beträge weggelassen**, stattdessen Wörter (Zahlenverbot). Rechenbeispiel als eigener Kasten auf Wunsch (#151). ⚠ Die Skizze selbst ist nicht im Export.
+4. **Hebel** (Thema 5) – „ohne“ und „mit“ nebeneinander: gleicher Einsatz, unterschiedlich viel bewegtes Volumen; darunter symmetrisch, wie stark dieselbe Bewegung nach oben und unten wirkt; Vor- und Nachteil als zwei gleichwertige Kästen, keine Gewinnversprechen. Die Grafik „ohne Hebel“ ist **bewusst winzig** (das ist die Aussage) (#147). ⚠ Überholt: Seit 02.10.2026 ist die Seite ohne Grafik und ohne Grün/Rot neu aufgebaut – Direktkauf über die Bank gegen Broker mit Hebel 1:10 in zwei Tabellen „Öffnen/Schließen der Positionen“, darunter zwei neutrale `soft`-Kästen (Abschnitt 14).
+5. **Swaps** (Thema 6) – seit 02.10.2026 nach dem **Modell des Nutzers** und seiner Skizze `originals/skizze-hebel-swap.png` (ersetzt die Fassung nach #148/#151 mit „geliehen“ und Geldmarkt-Zins):
+   - Lead: „Bleibt eine Position über Nacht offen, verlangen die Bank und der Broker dafür je einen Betrag. Zusammen werden sie als Swap gebucht.“
+   - Das Modell: Die **Bank** berechnet bei Rohstoffen (z. B. Crude Oil, Natural Gas) eine **Miete für die Aufbewahrung**; bei Devisen treten an ihre Stelle die **Zinsen für das geliehene Geld**. Dazu kommen ein **Risikoanteil** (soll die Bank vor Verlusten schützen) und der **Aufschlag des Brokers**.
+   - **Rechenbeispiel** (erledigt, Abschnitt 5.4) unter `\Htwo` „Zusammensetzung des Swaps“: Instrument XY aus dem Vergleich auf S. 4 ist hier der Rohstoff Crude Oil. Balken maßstäblich (Margin 17 von 170 mm = 1:10), Maß oben „Ihre Position in Crude Oil: 10.000 €“, unten „Margin: 1.000 € bei Hebel 1:10 ein Zehntel der Position“; Pfeil „pro Nacht“; Summenzeile (`\hthree`, Klammern `greya`) Miete für die Aufbewahrung + Risikoanteil + Aufschlag des Brokers = Swap, darunter **3 € · 3 € · 1 € · 7 € pro Nacht**; zweite Klammer unter den ersten beiden: „Betrag der Bank: 6 €“. Kein Grün/Rot. Danach ein Absatz zu Miete (Rohstoffe) bzw. Zinsen (Devisen) und Risikoanteil.
+   - Der Moment der Buchung: den ganzen Tag nichts, zum **Tageswechsel** alles auf einmal; wer eine Minute vorher schließt, zahlt nichts. Der Zeitstrahl nennt links der Stufe „**Tageswechsel um 23:00 Uhr (Amsterdamer Zeit)**“ (Angabe des Nutzers), rechts „Swap wird gebucht“ (beides `sell`, fett); sonst überall nur „Tageswechsel“ (Notiz unter der Achse, Merk-Kasten).
+   - Aus der ersten Fassung (#147): Woche mit einem Punkt pro Nacht, **am Mittwoch drei**; Swap long und Swap short (Satz zur Gutschrift bei positivem Satz: Frage in 8.2) und wo der Swap bei der Position auftaucht; Zeitstrahl, Woche und Merk-Kasten unverändert. ⚠ Die frühere Abweichung von der Skizze („Beträge weggelassen“) entfällt.
+   - S. 7 („Auf einen Blick“): Swap = „Kosten für das Halten über Nacht“ (vorher „Zinsen für …“).
 6. **In der Plattform** – oben die **mobile Kontoübersicht** als Vektor-Nachbau (blaues Design, Maße 3.6) mit fünf Nummern (Equity, Profit/Losses, Margin, Free, Level) und „Konto jetzt“ statt einer Summe; darunter dieselben Werte als **Desktop-Leiste** (blaues Design, teils geschätzt). Unter der Leiste der Hinweis, dass **Level am Desktop fehlt** (#151, #157). ⚠ **Falsch** laut DOM-Messung vom 02.10.2026: Level steht auch am Desktop; Leiste und Hinweis sind korrigiert (Abschnitt 12). Seit 02.10.2026 zeigt die mobile Ansicht auch Kopf- und Reiterleiste mit den Marken A (Info-Zeichen) und B (Reiter Balance) (Abschnitt 12).
 7. **Spickzettel** mit allen Begriffen. Er bekam eine eigene Seite, weil die Plattform-Seite sonst überladen war (#151).
+
+Fußzeile (seit 02.10.2026, S. 2–7 und Fuß des Deckblatts): „KONTOGRUNDLAGEN & KOSTEN · EDUCATION – STANDARD PACKAGE“ (vorher „… · SCHULUNGSEINHEIT“). Die Oberzeile des Deckblatts „SCHULUNGSEINHEIT“, der Lead und der `pdftitle` bleiben.
 
 Geprüft (#147): null Rasterbilder, alle Schriften eingebettet; die geschützte Fassung liefert null echte Wörter, neun Rechte gesperrt. ⚠ Ob nach den Änderungen in #151–#157 die geschützte Fassung neu erzeugt wurde, steht nicht im Text.
 
@@ -345,7 +351,7 @@ Geprüft (#147): null Rasterbilder, alle Schriften eingebettet; die geschützte 
 - ~~**Level fehlt am Desktop**~~ → **falsch**: Die Desktop-Leiste zeigt alle acht Felder (Balance, Equity, Profit/Losses, Margin, Free, Level, Bonus, Credit). Der Hinweis unter der Leiste ist korrigiert.
 - **Instrument-Info-Feld** (Swap long, Swap short, Contract size, Leverage) noch nicht gemessen → für echte Fenster auf der Swap- und der Hebel-Seite (#153, #155).
 - **Mobile, Reiter Information** (Leverage, Stop out): optional, ein Screenshot existiert schon (#153).
-- **Rechenbeispiel-Kasten** zur Swap-Skizze: optional, nur auf Wunsch (#151).
+- ~~**Rechenbeispiel-Kasten** zur Swap-Skizze~~ → erledigt (02.10.2026): Rechenbeispiel 3 € + 3 € + 1 € = 7 € pro Nacht steht auf S. 5 (Abschnitt 5.3).
 - **Textfarbe:** Claude merkte in #153 an, dass der Bericht aus #150 Schwarz meldete, der Screenshot aber Weiß zeigt. Deshalb ermittelt der neue Befehl die effektive Hintergrundfarbe.
 
 ---
@@ -380,6 +386,7 @@ Geprüft (#147): null Rasterbilder, alle Schriften eingebettet; die geschützte 
 - **Deckblatt sitzt tiefer**: Ein erzwungener Leerraum am Seitenanfang verschob es um ca. 4 mm; er wurde entfernt (#99).
 - Labels in Charts können Kerzen überlappen → weißer Untergrund unter allen Beschriftungen (#89).
 - Ein Menü, das über dem At-price-Feld aufklappt, verdeckt Schritt 3 → Menü als separater Ausschnitt (#49).
+- **Hinweis für Agenten (Stand 02.10.2026):** In der aktuellen Umgebung erzeugt `scripts/build.sh` beim Neubau von `bar.pdf`/`mobil.pdf` leicht abweichende Dateien (vermutlich andere Schrift-/TeX-Versionen). Für Einzelprüfungen deshalb direkt mit `xelatex -output-directory=build/<ordner>` bauen und die eingecheckten Grafik-PDFs (`bar.pdf`, `mobil.pdf`) **nicht versehentlich mitcommitten** (nur eigene Dateien explizit stagen).
 
 ### 6.3 Schutz-Fassung (`*_GESCHUETZT.pdf`)
 
@@ -642,7 +649,7 @@ Erste, gröbere Fassung (Suche über den Text „NEW ORDER“ + „Place pending
 ### 8.2 Entscheidungen, die beim Nutzer liegen (offen)
 
 - [ ] **Blaues oder graues Design** für die Nachbauten in Doku 2 (und welches die Kunden hauptsächlich sehen) (#155–#157).
-- [ ] **Swap-Rechenbeispiel** als eigener Kasten – ja/nein (#151). (Widerspricht dem Zahlenverbot, nur auf ausdrücklichen Wunsch.)
+- [x] ~~**Swap-Rechenbeispiel** als eigener Kasten – ja/nein (#151)~~ → erledigt 02.10.2026: Rechenbeispiel (3 € + 3 € + 1 € = 7 € pro Nacht) steht auf S. 5, Zahlen-Ausnahme 4 (Abschnitt 2.3, 5.3).
 - [ ] **Absender/Logo** für den Footer – gibt es einen Firmennamen oder ein Logo? (#102, #103, #117)
 - [ ] **„Ausbruch nach oben/unten“** auf dem Deckblatt und in den Kartenköpfen ersetzen (z. B. „wenn der Kurs nach oben durchbricht“) oder behalten, weil der Begriff später gebraucht wird? (#117) – Achtung: Der Wortlaut stammt aus der Vorgabe des Nutzers (#102).
 - [ ] **Lernreihe?** Wurden Market Orders vorher schon erklärt, oder ist Doku 1 der allererste Kontakt? Davon hängt ab, wie viel Seite 2 voraussetzen darf (#117). (Doku 2 heißt „Schulungseinheit 1“ – das spricht für eine Reihe; ⚠ die Reihenfolge der beiden Dokumente ist unklar.)
@@ -650,7 +657,11 @@ Erste, gröbere Fassung (Suche über den Text „NEW ORDER“ + „Place pending
 - [ ] **Rot**: Dokument-Rot (wie Überschriften) behalten oder Original-Rot der Plattform? (#89)
 - [ ] **Stop-Loss-Zeile** im Fenster-Nachbau ganz entfernen? (#15)
 - [ ] **Historischer Trade** als separates Anhangsblatt „Rechenbeispiel“? (#65)
-- [ ] „Ohne Hebel“-Grafik auf der Hebel-Seite größer? (Claude rät ab, #147)
+- [ ] ~~„Ohne Hebel“-Grafik auf der Hebel-Seite größer? (Claude rät ab, #147)~~ → gegenstandslos: Die Grafik ist seit 02.10.2026 entfernt (Nutzervorgabe, Abschnitt 14).
+- [x] ~~**„dein/deine“-Platzhalter** in den Plattform-Nachbauten (`fenster-bl.pdf`: „deine Menge/dein Wert/dein Ziel“; `panel.pdf`/`mobil.tex`/`bar.tex`: „dein Guthaben“)~~ → **erledigt, endgültig:** Sie **bleiben wie sie sind** (Nutzerentscheidung 02.10.2026). Nicht erneut fragen, nicht auf „Ihre …“ umstellen.
+- [ ] **Neu (02.10.2026): „die Bank“ auf S. 5** (Kontogrundlagen) näher bestimmen, z. B. „Bank des Brokers“? Derzeit: „verlangen die Bank und der Broker dafür je einen Betrag“.
+- [ ] **Neu (02.10.2026): Satz zur Gutschrift auf S. 5** („In der Regel sind beide negativ; ist ein Satz positiv, wird Ihnen der Betrag gutgeschrieben.“) behalten?
+- [ ] **Neu (02.10.2026): Deckblatt von Pending Orders übernehmen?** Das SVG-Deckblatt (`Pending-Orders-Guide_CoverTest.tex`) ist mit den drei Korrekturen fertig (Abschnitt 16); die Übernahme in den Guide liegt beim Nutzer. Dazu die Rückfrage: **Sollen die Charts zusätzlich die volle Spaltenbreite füllen** (rechte Kante auf 92,5 bzw. 190 mm, bündig mit Achsenende und Fußzeile)? Sie würden ca. 14–15 % größer (derzeit enden sie bei ca. 83 bzw. 181 mm); die unteren Charts kämen „günstiger kaufen“ bis auf ca. 2 mm nahe, die senkrechten Positionen müssten neu verteilt werden.
 
 ### 8.3 Erledigt bzw. überholt (nicht erneut fragen)
 
@@ -659,6 +670,8 @@ Erste, gröbere Fassung (Suche über den Text „NEW ORDER“ + „Place pending
 - Kompletter Guide im dunklen Querformat (#35, #39, #43) → nein, helles A4 (#50, #102).
 - Fenster-Variante A/B (#43) → A „Exakt“ (#45).
 - Gewinnzone als Fläche/Klammer (#21) → überholt durch die Tönung ab der grünen Kugel (#83).
+- Du-Platzhalter in den Plattform-Nachbauten → bleiben (Nutzerentscheidung 02.10.2026, endgültig).
+- Swap-Rechenbeispiel auf der Swap-Seite → umgesetzt (02.10.2026).
 
 ---
 
@@ -710,7 +723,7 @@ Im Repo liegt dafür bereits **`scripts/setup.sh`** (Commit `ecc5820`). Laut Com
 - **Grün:** `#53BC51` ist das gemessene Plattform-Grün; im Dokument soll aber das „gedämpfte“ Grün aus dem zweiten Bild stehen (#89). Hex-Werte für Dokument-Grün und -Rot fehlen im Export.
 - **„Kurs jetzt“-Pille:** in #83 eingeführt, in #85 entfernt.
 - **Desktop-Design:** grau (`#181818`) im Screenshot, gebaut in Blau; Desktop-Werte teils geschätzt (#157). Seit 02.10.2026 im blauen Design gemessen (`body.blue-theme`, Leiste `#051B3A`) und danach gebaut.
-- **Swaps:** Thema 6 verlangt die „Berechnung“, das Dokument ist aber zahlenfrei → Erklärung in Worten, Rechenbeispiel nur optional.
+- **Swaps:** Thema 6 verlangt die „Berechnung“, das Dokument ist aber zahlenfrei → Erklärung in Worten, Rechenbeispiel nur optional. ⚠ Überholt: Der Nutzer wünschte das Rechenbeispiel (02.10.2026), Zahlen-Ausnahme 4 (Abschnitt 2.3).
 - **Nutzer-Nachricht #118** ist abgeschnitten („die konkrete Ausführung kann bei …“).
 - **CSV-Tabelle mit Spalte „Auslöser“** (#119): Herkunft und genaue Position im Dokument sind im Export nicht sichtbar.
 - **Mehrfach leere Antworten** (#11, #27, #31, #53, #57, #105–#115, #135–#145, #159): Dort fehlen Inhalte im Export oder die Antworten sind abgebrochen. Der Nutzer hat Nachrichten deshalb mehrfach wiederholt.
@@ -859,8 +872,8 @@ Nutzer: „Im Pending-Orders-Dokument ist das Gute, dass alle Grafiken wie LaTeX
 | 1 Deckblatt | drei abgerundete Karten „Balance + Profit/Losses = Equity“, darunter Segmentbalken Margin/Free | **ein** eckiger Mengenbalken (Margin `pfgrau`, Free weiß, Haarlinien-Rahmen) mit Maßketten: oben Gesamtmaß „Equity“ (`body`) und Kette „Balance | Profit/Losses“, unten „Margin | Free“; Labels in `\hthree` gemischt geschrieben (vorher Versalien), Unterzeilen `\lbl` muted; Level-Linie und Hinweis unverändert |
 | 2 Kontostand | Balken mit farbiger Markierungslinie | eckige Balken (Haarlinie), Ende der Balance als gestrichelte Bezugslinie, Differenz als Maßlinie in `buy`/`sell` mit „+ Profit“ / „– Losses“; Zeitleiste: Achse `body` 0,7 pt mit Pfeil, Ereignispunkte `ink`, „UNREALISIERT“ als Maßlinie von „öffnen“ bis „schließen“ |
 | 3 Margin | Segmentbalken mit Text im Balken (Speicheranzeige-Optik) | drei Mengenbalken (6 mm) mit Maßketten „Margin | Free“ darüber; Verlust als getönte Zone mit gestricheltem `sell`-Rand außerhalb der Equity; Level als Achse (`body`, Pfeil) mit getönten Zonen ohne Rahmen, Stop-out-Schwelle im `zone`-Stil `sell`, Grenze zum Puffer gestrichelt `greya` |
-| 4 Hebel | Quadrate und Kästen, Text in zwei Spalten | maßstäblicher Vergleich: Margin 7,5 mm in beiden Spalten, Trade volume 7,5 mm bzw. 75 mm (= 1 : 10, passend zur geplanten Tabelle „Ohne Hebel / Mit Hebel 1:10“); Gewinn/Verlust: gleiche Bewegung = gleiche Höhe (± 6 mm), Breite = Volumen, Zonen `buytint`/`selltint` zwischen gestrichelten `buy`/`sell`-Linien, Beschriftung über bzw. unter der Linie wie „Take-Profit“. Grafik 51 statt 64 mm hoch → unter dem Text ca. 80 mm frei |
-| 5 Swaps | abgerundete Blöcke „Margin“/„Der Rest ist geliehen“; Kette aus drei Karten mit + und = | Position als **ein** Balken mit Gesamtmaß „DEINE POSITION AM MARKT“ und Kette „Margin | Der Rest ist geliehen“; Herleitung als **Formelzeile** „Zins am Geldmarkt + Aufschlag des Brokers = Dein Swap“ (`\hthree`, zentriert) mit geschweiften Klammern `greya` und Erläuterung darunter (jetzt einzeilig, die falsche Trennung „zwis-chen“ entfällt); Tageslinie und Woche: Zeitachse mit Pfeil (Tag `greya`, Woche `body`) |
+| 4 Hebel | Quadrate und Kästen, Text in zwei Spalten | maßstäblicher Vergleich: Margin 7,5 mm in beiden Spalten, Trade volume 7,5 mm bzw. 75 mm (= 1 : 10, passend zur geplanten Tabelle „Ohne Hebel / Mit Hebel 1:10“); Gewinn/Verlust: gleiche Bewegung = gleiche Höhe (± 6 mm), Breite = Volumen, Zonen `buytint`/`selltint` zwischen gestrichelten `buy`/`sell`-Linien, Beschriftung über bzw. unter der Linie wie „Take-Profit“. Grafik 51 statt 64 mm hoch → unter dem Text ca. 80 mm frei. ⚠ Überholt 02.10.2026: Grafik entfernt, Seite ohne Illustration und ohne Grün/Rot (Abschnitt 14) |
+| 5 Swaps | abgerundete Blöcke „Margin“/„Der Rest ist geliehen“; Kette aus drei Karten mit + und = | Position als **ein** Balken, seit 02.10.2026 **maßstäblich 1 : 10** (Margin 17 von 170 mm) und ohne „geliehen“: Gesamtmaß „Ihre Position in Crude Oil: 10.000 €“, Maß „Margin: 1.000 € bei Hebel 1:10 ein Zehntel der Position“; Herleitung als **Formelzeile** „Miete für die Aufbewahrung + Risikoanteil + Aufschlag des Brokers = Swap“ (`\hthree`, zentriert) mit geschweiften Klammern `greya`, darunter die Beträge 3 € · 3 € · 1 € · 7 € pro Nacht und eine zweite Klammer „Betrag der Bank: 6 €“ unter den ersten beiden; Tageslinie und Woche: Zeitachse mit Pfeil (Tag `greya`, Woche `body`) |
 | 6, 7 | – | nur `soft`-Kästen (wie Doku 1); Plattform-Elemente unverändert |
 
 `soft`-Kästen wieder genau wie in Doku 1 (`paper`, ohne Rand). ⚠ Ihre `muted`-Kicker (8 pt fett, Versalien) haben darauf 4,39:1 – wie in Doku 1. Merk-Kasten und Badge unverändert wie Doku 1.
@@ -871,50 +884,65 @@ Nutzer: „Im Pending-Orders-Dokument ist das Gute, dass alle Grafiken wie LaTeX
 
 ## 14. Hebel-Vergleich mit Zahlen (Kontogrundlagen S. 4)
 
-Stand 02.10.2026. Nutzerwunsch: ein Vergleich wie im englischen Lehrbuchbeispiel „you vs. your friend“ (CFD mit Hebel gegen direkten Kauf, Tabelle „Opening the Positions / Closing the Positions“), aber mit **einfachen Zahlen wie 100 und 1:10**.
+Stand 02.10.2026 (Commits `09b31e8`, `706317e`). Nutzerwunsch: ein Vergleich wie im englischen Lehrbuchbeispiel „you vs. your friend“ (CFD mit Hebel gegen direkten Kauf, Tabellen „Opening the Positions / Closing the Positions“), aber mit **einfachen Zahlen**. Ersetzt die frühere Fassung (Einzeltabelle „Ohne Hebel / Mit Hebel 1:10“ mit 100 €, Fazit und Grafik).
 
-⚠ **Einzige bewusste Ausnahme vom Zahlenverbot** (Abschnitt 2.3, Ausnahme 3). Nicht als Freigabe für weitere Beträge im Dokument verstehen; Rechenbeispiel auf der Swap-Seite bleibt offen (Abschnitt 5.4).
+**Nutzervorgaben 02.10.2026:** „für die Hebel-Seite braucht es keine Illustrationen, keine Farben Grün oder Rot“; Zahlen nach der Skizze des Nutzers (`originals/skizze-hebel-swap.png`).
+
+⚠ **Zahlen-Ausnahme 3** (Abschnitt 2.3), nur S. 4: 1.000 €, 10.000 €, 9.000 €, 1:10 und der Swap-Betrag 7 € pro Nacht samt der Kurswerte. Nicht als Freigabe für weitere Beträge im Dokument verstehen. Das Swap-Beispiel auf S. 5 ist eine eigene, ebenfalls vom Nutzer gewünschte Ausnahme (Ausnahme 4, Abschnitt 5.3).
 
 **Vorgaben aus derselben Runde (über den Koordinator weitergegeben):**
 
 - Register: gehobenes, präzises Standarddeutsch (C1, seriöses Schulungsdokument einer Bank), ganze Sätze mit klarer Logik (folglich, demnach, hingegen, sofern), keine saloppen Bilder („fressen“, „wird es eng“, „kostet dich“), keine Slogans, keine Gedankenstrich-Ketten; für Laien verständlich.
-- **Anrede „Sie“** (Entscheidung des Nutzers). Der neue Hebel-Abschnitt und die beiden Kästen sind schon in der Sie-Form; die übrigen Texte (auch Lead und Merk-Kasten der Hebel-Seite) stellt ein eigener Durchgang um. Bis dahin stehen auf S. 4 „du“ und „Sie“ nebeneinander.
-- **Rein informativ:** keine Handelsentscheidung nahelegen oder bewerten. Keine Wertungen wie „Vorteil/Nachteil“, „was dafür/dagegen spricht“, „lohnt sich“, „sinnvoll“, „Gewinnverstärker“. Grün/Rot nur für Gewinn/Verlust (Tabelle, Grafik), nicht für Kästen.
+- **Anrede „Sie“** (Entscheidung des Nutzers); der Durchgang ist erledigt (Abschnitt 15).
+- **Rein informativ:** keine Handelsentscheidung nahelegen oder bewerten. Keine Wertungen wie „Vorteil/Nachteil“, „was dafür/dagegen spricht“, „lohnt sich“, „sinnvoll“, „Gewinnverstärker“. **Kein Grün/Rot** auf dieser Seite (auch nicht für Gewinn/Verlust).
 
-**Aufbau der Seite (von oben):** Kicker, Titel, Lead, Grafik (unverändert, maßstäblich 1 : 10) · „EIN VERGLEICH MIT EINFACHEN ZAHLEN“ (`\Htwo`) · Geschichte (3 Zeilen) · Tabelle · Fazit (2 Zeilen) · zwei `soft`-Kästen (gleich hoch, `equal height group=hebel`) · Merk-Kasten „Wo der Hebel steht“ (Information → Leverage, unverändert; deshalb kein zweiter Hinweis).
+**Entfernt:** Grafik „Ohne Hebel / Mit Hebel“ (inkl. „Trade volume“), alle `buy`/`sell`-Färbungen, alte Einzeltabelle, altes Fazit und der Begriff „Finanzierungskosten“.
 
-Geschichte: „Angenommen, Sie und ein Bekannter verfügen über je 100 € und erwarten, dass Instrument XY steigt. Ihr Bekannter kauft ohne Hebel und bewegt folglich genau 100 €. Sie handeln hingegen mit Hebel 1:10: Ihre 100 € sind als Margin gebunden, bewegt werden jedoch 1.000 €. Die fehlenden 900 € sind geliehen.“
+**Aufbau der Seite (von oben, Lehrbuch-Aufbau):** Kicker, Titel, Lead (unverändert) · `\Htwo` „Ein Vergleich mit einfachen Zahlen“ · Geschichte (3 Zeilen) · Tabelle „Öffnen der Positionen“ · Überleitung (1 Zeile) · Tabelle „Schließen der Positionen“ · Schluss (3 Zeilen) · zwei `soft`-Kästen (gleich hoch, `equal height group=hebel`; Texte „AUSWIRKUNG AUF DEN KAPITALEINSATZ“ / „AUSWIRKUNG AUF KURSBEWEGUNGEN“ wie in der neutralen Fassung) · Merk-Kasten „Wo der Hebel steht“ (Information → Leverage, unverändert). Die Seite endet bei ca. 272 mm.
 
-| | Ohne Hebel | Mit Hebel 1:10 |
+**Direktkauf über die Bank (Bekannter) gegen Broker mit Hebel 1:10 (Sie).**
+
+Geschichte: „Angenommen, Sie und ein Bekannter verfügen über je 1.000 € und erwarten, dass der Kurs von Instrument XY steigt. Ihr Bekannter kauft Instrument XY für 1.000 € direkt über das Wertpapierdepot seiner Bank, also ohne Hebel. Sie öffnen hingegen beim Broker eine Position mit Hebel 1:10.“
+
+Spaltenköpfe (`\hdd`, zweizeilig): „Ihr Bekannter / Direktkauf über die Bank“ · „Sie / Broker, Hebel 1:10“; der Tabellentitel (`\ttl`, fett, `ink`) steht in der ersten Kopfzelle.
+
+| Öffnen der Positionen | Ihr Bekannter (Direktkauf über die Bank) | Sie (Broker, Hebel 1:10) |
 |---|---|---|
-| **Einsatz** | 100 € | 100 € als Margin |
-| **Bewegtes Volumen** | 100 € | 1.000 € |
-| **Kurs steigt um 5 %** | +5 € (`buy`) | +50 € (`buy`) |
-| **Kurs fällt um 5 %** | −5 € (`sell`) | −50 € (`sell`) |
-| **Kurs fällt um 10 %** | −10 € (`sell`) | −100 €, also der gesamte Einsatz (`sell`); darunter klein `muted`: „Der Stop out schließt die Position in der Regel vorher.“ |
-| **Halten über Nacht** | kein Swap | Swap für die geliehenen 900 € |
+| Kurs von Instrument XY | 100 € | 100 € |
+| Volumen (Wert der Position) | 1.000 € | 10.000 € |
+| Margin | – | 1.000 € |
+| Geliehener Betrag | – | 9.000 € |
+| Einsatz | 1.000 € | 1.000 € |
 
-Fazit: „Gemessen am Einsatz ergibt dieselbe Kursbewegung bei Ihrem Bekannten ±5 %, bei Ihnen hingegen +50 % oder −50 %. Der Hebel vergrößert folglich Gewinn und Verlust im gleichen Verhältnis.“
+Überleitung: „Am nächsten Tag steht Instrument XY bei 105 €, und Sie beide schließen Ihre Positionen.“
 
-**Rechnungen geprüft:** Margin = 1.000 € : 10 = 100 €; geliehen 1.000 − 100 = 900 €; 5 % von 100 € = 5 €, von 1.000 € = 50 €; 10 % von 100 € = 10 €, von 1.000 € = 100 € (= ganzer Einsatz); 50 € : 100 € = 50 %, 5 € : 100 € = 5 %.
+| Schließen der Positionen | Ihr Bekannter | Sie |
+|---|---|---|
+| Kurs von Instrument XY | 105 € | 105 € |
+| Ergebnis vor Kosten | +50 € | +500 € |
+| Kosten über Nacht | kein Swap | Swap: 7 € pro Nacht (darunter `muted`: „Mehr dazu auf der nächsten Seite.“) |
+| Ergebnis nach Swap | +50 € | +493 € |
+| Ergebnis gemessen am Einsatz (vor Kosten) | +5 % | +50 % |
 
-**Stop-out-Aussage:** Mit 100 € auf dem Konto und 100 € Margin steht das Level nach dem Öffnen bei Equity : Margin = 100 % und sinkt mit jedem Verlust. Liegt der Stop-out-Wert des Kontos über null, schließt die Plattform, bevor die Equity null erreicht – also vor −100 €. „In der Regel“, weil der Wert je Konto verschieden ist und Kurssprünge möglich sind; **keine Prozentschwelle genannt** (wie S. 3). ⚠ Je nach Stop-out-Wert kann schon die Zeile −5 % (Level dann 50 %) zum Stop out führen; der Betrag −50 € stimmt trotzdem.
+Keine Volumen-Zeile beim Schließen (1.050/10.500 € wären neue Zahlen).
 
-⚠ **„kein Swap“ ohne Hebel** folgt dem Modell der Swap-Seite (Swap = Zins für geliehenes Geld) und dem Lehrbuchbeispiel (direkter Kauf). Auf CFD-Plattformen wird ein Swap meist auf das ganze Volumen berechnet, auch bei Hebel 1:1. Die Geschichte sagt deshalb „kauft ohne Hebel“, nicht „handelt auf der Plattform ohne Hebel“.
+Schluss: „Bei einem Rückgang auf 95 € hingegen hätte der Hebel den Verlust im gleichen Verhältnis vergrößert: −50 € beim Direktkauf gegenüber −500 € beim Broker, jeweils vor Kosten. Fiele der Kurs um 10 %, entspräche Ihr Verlust dem gesamten Einsatz von 1.000 €; der Stop out schließt die Position in der Regel vorher.“
 
-**Geändert außerhalb des neuen Abschnitts (auf Wunsch):**
+**Rechnungen geprüft:** 10.000 : 10 = 1.000; 10.000 − 1.000 = 9.000; 100 → 105 = +5 %: 1.000 € → +50 €, 10.000 € → +500 €; 500 − 7 = 493; 50 bzw. 500 auf 1.000 € = 5 % bzw. 50 %; bei 95 €: −50 €/−500 €; −10 % von 10.000 € = −1.000 € = ganzer Einsatz. Zahlen im Abschnitt nur: 1.000, 10.000, 9.000, 1:10, 100, 105, 95, 50, 500, 7, 493, 5 %, 50 %, 10 %. „Spread“ ist nicht eingeführt; „Öffnen“ statt „Eröffnen“ wie S. 3/S. 7.
 
-- Kästen „WAS DAFÜR SPRICHT“ (`buy`) / „WAS DAGEGEN SPRICHT“ (`sell`) → neutral, Überschriften `muted`: „AUSWIRKUNG AUF DEN KAPITALEINSATZ“ – „Ein großes Volumen erfordert nur eine geringe Margin. Folglich bleibt ein größerer Teil der Equity frei.“ · „AUSWIRKUNG AUF KURSBEWEGUNGEN“ – „Jede Kursbewegung wirkt im Verhältnis zum Einsatz stärker, und zwar in beide Richtungen. Je höher der Hebel, desto schneller nähert sich das Level bei Verlusten dem Stop out.“
-- Schlusszeile „Der Hebel ist kein Gewinnverstärker. Er ist ein Bewegungsverstärker – nach oben wie nach unten.“ **entfernt**: Aussage steckt jetzt im Fazit (keine Doppelung), „Gewinnverstärker“ ist wertend, und die Seite wäre sonst übergelaufen.
-- Abstände: Lead → Grafik 9 → 8 mm (wie S. 2/3), Kästen → Merk 7 mm + 6 mm → nur die 6 mm des Merk-Kastens.
+**Stop-out-Aussage:** Liegt der Stop-out-Wert des Kontos über null, schließt die Plattform, bevor die Equity null erreicht – also vor dem Verlust des gesamten Einsatzes. „In der Regel“, weil der Wert je Konto verschieden ist und Kurssprünge möglich sind; **keine Prozentschwelle genannt** (wie S. 3). ⚠ Je nach Stop-out-Wert kann schon bei 95 € der Stop out greifen; die Rechnung −500 € bleibt davon unberührt.
 
-**Layout:** Spalte „Mit Hebel 1:10“ beginnt bei 88 mm, genau unter „Mit Hebel“ in der Grafik (Spalten 34 / 45,53 / 82 mm, zusammen mit 2 × 2 `\tabcolsep` exakt 170 mm, kein Overfull). Alle Spalten Flattersatz (`>{\raggedright\arraybackslash}`). Zahlen in IBM Plex Sans (nicht Mono), schmales Leerzeichen `\,` vor € und %, Minus U+2212, Tausenderpunkt; `Hebel~1:10`, `Instrument~XY`, `Ihre~100\,€` gegen Umbrüche. Die Seite ist bis ca. 275 mm gefüllt (Satzspiegel endet bei 279 mm): **Jede zusätzliche Zeile auf S. 4 schiebt den Merk-Kasten auf eine neue Seite** – nach Textänderungen Seitenzahl prüfen.
+**Swap auf S. 4:** Der Swap wird hier **nicht** mit dem geliehenen Betrag begründet („Miete“ in der Skizze = Aufbewahrung, z. B. von Rohstoffen); die Erklärung steht auf S. 5 (Abschnitt 5.3). Die Zeile „kein Swap“ gilt für den Direktkauf über das Wertpapierdepot der Bank, nicht für eine Position beim Broker. ⚠ Überholt ist damit die frühere Notiz „kein Swap ohne Hebel“ (Swap = Zins für geliehenes Geld) samt dem Hinweis auf CFD-Plattformen; zur Rückfrage in Abschnitt 16 (b) siehe dort.
 
-**Prüfung:** 7 Seiten; einzige Warnung weiterhin Overfull \hbox 1,24 pt in der Spickzettel-Tabelle (alt); 10 Schriften eingebettet; keine Rasterbilder; Starthöhe S. 4 unverändert 20,3 mm (pdftotext). Seiten 1–3 und 5–7 pixelgleich mit `86b22e4` (60 dpi). Bild (nicht eingecheckt): `build/Hebel-Neu.png` (S. 4, 110 dpi); Test-PDF `build/Kontogrundlagen-Kosten_TEST.pdf`.
+**Layout:** Spalten 71 / 42 / 48,53 mm (+ 2 × 2 `\tabcolsep` = 170 mm). Kopfzellen beginnen mit `\leavevmode` (sonst steht `\color` zuerst in der Zelle und es entsteht ca. 5 mm Lücke). Abstände: Lead 8 · Geschichte 6 · Tabelle 5 · Überleitung 6 · Tabelle 5 · Schluss 6 mm. Zahlen in IBM Plex Sans (nicht Mono), schmales Leerzeichen `\,` vor € und %, Minus U+2212, Tausenderpunkt; `Hebel~1:10`, `Instrument~XY` gegen Umbrüche. Der Satzspiegel endet bei 279 mm: **Jede zusätzliche Zeile auf S. 4 kann den Merk-Kasten auf eine neue Seite schieben** – nach Textänderungen Seitenzahl prüfen.
+
+**Prüfung:** 7 Seiten; Log ohne Warnung; 10 Schriften eingebettet; keine Rasterbilder; S. 1–3 und 5–7 pixelgleich (60 dpi) mit `09b31e8`. Bild (nicht eingecheckt): `build/agent-hebel2/seite4.png`. Prüfkommandos: `cd dokumente/kontogrundlagen-kosten && xelatex -interaction=nonstopmode -output-directory=../../build/agent-hebel2 Kontogrundlagen-Kosten.tex`, danach `pdftotext -f 4 -l 4 -layout …`.
+
+**Übergaben:** `docs/uebergaben/kg-hebel-bank-broker.md` (Stand nach Nachfolger `kg-hebel-lehrbuch`) und `docs/uebergaben/kg-swap-seite.md` sind erledigt.
 
 ## 15. Sprachdurchgang Kontogrundlagen: Sie-Form, C1, neutral (02.10.2026)
 
-Alle Texte von `Kontogrundlagen-Kosten.tex` (S. 1–7: Lead, Überschriften, Kästen, Grafik-Beschriftungen, Tabelle S. 7, Merk-Kästen, Texte neben den Plattform-Grafiken auf S. 6) auf **Sie-Form, gehobenes Deutsch (C1), rein informativ** umgestellt. Keine Umgangssprache, keine Slogans, keine Wertungen („Gesundheitsanzeige“, „genug Puffer“, „ehrliche Zahl“, „fressen“ … entfernt). „Spickzettel“ → „Auf einen Blick“, „Drei Faustregeln“ → „Kernaussagen“, „Margin Call“ → „Warnbereich“ (kein Plattform-Begriff), Skala S. 3 „GENUG PUFFER“ → „NORMALBEREICH“. Hebel-Tabelle und -Zahlen S. 4 unverändert; nur Lead und Merk-Kasten dort umformuliert (Länge gleich). Plattform-Elemente (`bar.*`, `mobil.*`, `panel.pdf`, Marken A/B/1–5) unverändert – sie enthalten weiterhin den Platzhalter **„dein Guthaben“** (einzige du-Form im PDF; bei Bedarf mit dem Nutzer klären).
+Alle Texte von `Kontogrundlagen-Kosten.tex` (S. 1–7: Lead, Überschriften, Kästen, Grafik-Beschriftungen, Tabelle S. 7, Merk-Kästen, Texte neben den Plattform-Grafiken auf S. 6) auf **Sie-Form, gehobenes Deutsch (C1), rein informativ** umgestellt. Keine Umgangssprache, keine Slogans, keine Wertungen („Gesundheitsanzeige“, „genug Puffer“, „ehrliche Zahl“, „fressen“ … entfernt). „Spickzettel“ → „Auf einen Blick“, „Drei Faustregeln“ → „Kernaussagen“, „Margin Call“ → „Warnbereich“ (kein Plattform-Begriff), Skala S. 3 „GENUG PUFFER“ → „NORMALBEREICH“. Hebel-Tabelle und -Zahlen S. 4 unverändert; nur Lead und Merk-Kasten dort umformuliert (Länge gleich). ⚠ Die Hebel-Tabelle wurde danach ersetzt (Abschnitt 14). Plattform-Elemente (`bar.*`, `mobil.*`, `panel.pdf`, Marken A/B/1–5) unverändert – sie enthalten weiterhin den Platzhalter **„dein Guthaben“** (einzige du-Form im PDF; Nutzerentscheidung 02.10.2026: bleibt, endgültig – Abschnitt 8.2).
 Nebenbei: Tabelle S. 7 im Flattersatz, letzte Spalte 62 → 61,5 mm (alter Overfull 1,24 pt weg); Kästen S. 2 gleich hoch (`equal height group=konto`). Prüfung: 7 Seiten, kein Overfull, keine Ziffern außer S. 4-Vergleich und Schrittmarken, kein Stop-Loss. Übersicht (nicht eingecheckt): `build/KG-Text-Uebersicht.png`.
 
 ## 16. Pending-Orders-Guide: Neufassung (Sie-Form, C1, neutral)
@@ -939,10 +967,19 @@ Ersetzt den Seitenplan in Abschnitt 4.3 (dort Stand des alten Chats, 6 Seiten). 
 - Neue Makros: `\abschnitt`, `\beispiel`, `\chartzeile`, `\leadfix`. Linke Spalte `\labw` = 37 mm; `\abschnitt` setzt Label und Text per `\leavevmode` auf dieselbe Grundlinie.
 - Abstandsparameter für S7/S9 in der Präambel: `\SPICKCHART`, `\SPICKTAB`, `\TROW`, `\TABMERK`, `\MERKPAR`, `\LOESCHSEP`.
 - S7 endet wie S3–S6 bei ca. 264 mm; S9 im Flattersatz, 140 mm breit, endet bei ca. 238 mm.
+- **Fußzeile** (02.10.2026, Commit `87a95f9`): „PENDING ORDERS · STANDARD TIER“ statt „… · KURZ-GUIDE“, im Guide und in der CoverTest-Variante (dort auch der Fuß des SVG-Deckblatts: „STANDARD TIER“ rechts).
 
-**Offene Entscheidungen beim Nutzer:**
-- (a) Du-Platzhalter in Plattform-Nachbauten: „deine Menge / dein Wert / dein Ziel“ in `fenster-bl.pdf` sowie „dein Guthaben“ in den Kontogrundlagen-Nachbauten (`panel`/`mobil`/`bar`). Vorschlag: „Ihre …/Ihr …“. Das Fenster müsste dafür aus `originals/messungen/new-order-fenster.json` neu gebaut werden. „Set Stop-Loss“ im Fenster ist Plattform-Originaltext und bleibt.
-- (b) Swap ohne Hebel: Die Hebel-Tabelle (Kontogrundlagen S. 4) sagt „kein Swap“ ohne Hebel; auf CFD-Plattformen fällt Swap oft auch bei 1:1 an. Antwort des Nutzers ausstehend.
-- (c) Cover-Testvariante `Pending-Orders-Guide_CoverTest.tex` (SVG-Cover) noch nicht übernommen; ihre Innenseiten sind veraltet.
+**Entscheidungen beim Nutzer (Stand 02.10.2026):**
+- (a) ~~Du-Platzhalter in Plattform-Nachbauten~~ („deine Menge / dein Wert / dein Ziel“ in `fenster-bl.pdf`, „dein Guthaben“ in `panel.pdf`/`mobil.tex`/`bar.tex`) → **erledigt: bleiben wie sie sind** (Nutzerentscheidung, endgültig). Nicht auf „Ihre …“ umbauen. „Set Stop-Loss“ im Fenster ist Plattform-Originaltext und bleibt.
+- (b) ~~Swap ohne Hebel~~ → überholt: Kontogrundlagen S. 4 vergleicht seit 02.10.2026 den Direktkauf über die Bank (ohne Hebel, ohne Swap) mit dem Broker bei Hebel 1:10 (Abschnitt 14); die Swap-Erklärung steht nach dem Modell des Nutzers auf S. 5 (Abschnitt 5.3). Eine ausdrückliche Antwort des Nutzers zur CFD-Praxis (Swap oft auch bei 1:1) gab es nicht.
+- (c) Cover-Testvariante `Pending-Orders-Guide_CoverTest.tex` (SVG-Cover) ist **noch nicht in den Guide übernommen** (Nutzerentscheidung); ihre Innenseiten sind veraltet. Die drei Korrekturen sind in der Testvariante umgesetzt (siehe unten). Offen außerdem die Rückfrage „Charts auf volle Spaltenbreite?“ (Abschnitt 8.2).
+- Weitere neue Rückfragen zu Kontogrundlagen S. 5 („die Bank“ näher bestimmen; Satz zur Gutschrift behalten?): Abschnitt 8.2.
 
-**Übergaben:** `docs/uebergaben/pending-orders-text.md` und `docs/uebergaben/kontogrundlagen-hebel.md` sind erledigt.
+**Deckblatt-Testvariante (02.10.2026, Commit `d55ca00`, Übergabe `docs/uebergaben/po-deckblatt-vorschau.md`):** Nur `Pending-Orders-Guide_CoverTest.tex`, `cover.svg`, `cover-bg.svg`, `cover-bg.pdf` geändert; der Guide selbst bleibt unverändert.
+- Charts bündig mit dem Text: linke Inhaltskante bei x = 20 mm bzw. 117,5 mm (gemessen 19,995 / 117,503 mm), Maßstab unverändert (72,5/174). Die Verschiebung (`shift` der vier Chart-Scopes) nutzt die linke Inhaltskante aus `charts.tikz` (bs/sl: 11,373 px, bl/ss: 14 px); **ändert sich `charts.tikz`, müssen diese Werte in der Testvariante angepasst werden**.
+- Verwaiste Mittellinie (`center-rule-top`/`grid-connection`, x = 105, y 98–111) unter dem Navy-Band entfernt.
+- Achse „Kurs jetzt“: Lücke 92,6–117,4 mm (vorher 87–123 mm), Label-Schriftbild 96,0–114,1 mm, Luft zum Schriftbild ca. 3,3 mm wie im Haupt-Guide; Platzhalter `ph-axis-label` auf x = 95, Breite 20.
+- `cover-bg.pdf` entsteht mit `rsvg-convert -f pdf -o cover-bg.pdf cover-bg.svg` (Ordner `dokumente/pending-orders/`).
+- Prüfung: `cd dokumente/pending-orders && xelatex -interaction=nonstopmode -halt-on-error -output-directory=../../build/agent-deckblatt Pending-Orders-Guide_CoverTest.tex`, dann `pdffonts -f 1 -l 1 …`. Vorschau (nicht eingecheckt): `build/agent-deckblatt/deckblatt-vorher.png`, `…/deckblatt-nachher.png` (100 dpi).
+
+**Übergaben:** `docs/uebergaben/pending-orders-text.md`, `docs/uebergaben/kontogrundlagen-hebel.md`, `docs/uebergaben/kg-hebel-bank-broker.md` und `docs/uebergaben/kg-swap-seite.md` sind erledigt; `docs/uebergaben/po-deckblatt-vorschau.md` ist umgesetzt, die Rückfragen dazu sind offen (Abschnitt 8.2).
