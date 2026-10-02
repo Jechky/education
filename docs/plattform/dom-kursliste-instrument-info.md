@@ -26,6 +26,15 @@ Quelle: HTML-Ausschnitte, die der Nutzer am 02.10.2026 aus dem WebTrader kopiert
   - Commission steht mit dem Wert 0 da. Das passt zur Angabe des Nutzers, dass es keine Commission gibt.
 - Darunter ein Raster mit 2 Spalten und vier Schaltflächen: **New order, New pending order, New chart, Trade Hours**.
 
+## Desktop: Info-Fenster eines Instruments (nach Klick auf das Info-Zeichen)
+- Es öffnet sich ein Overlay als Kontextmenü: `.cdk-overlay-pane.ngx-contextmenu` → `.ngx-contextmenu.quote-info-popup` → `symbol-info` → `.quote-info-frame`. Es schließt sich vermutlich, sobald woanders hingeklickt wird, also auch beim Klick in die Konsole.
+- Kopf (`.heading`): Bild des Instruments und das **Symbol**, z. B. „XAUUSD“.
+- Angaben (`.quote-info.grid.grid-col-2`, jeweils `dl > dt + dd`), in dieser Reihenfolge:
+  **Symbol, Swap long, Type, Swap short, Spread, Digits, Commission, Leverage, Contract size**
+  - Beispiel Gold: Swap long −85, Swap short −65, Type Metals, **Spread „Floating Points“** (mobil steht dort ein Wert), Commission 0, Leverage 1 : 100, Contract size 100.
+- Darunter die Tabelle der Handelszeiten (`trading-hours`) mit den Spalten **Day of week | Open Time | Close Time**, Montag bis Sonntag, mehrere Zeitfenster je Tag. Die Zeitzone ist nicht angegeben.
+- Rechts oben eine Schaltfläche zum Schließen (`a.close > i.icon-close`).
+
 ## Folgerungen für die Dokumente
 - Die Plattform nennt Devisen **„Forex“**. Rohöl und Erdgas gehören vermutlich zur Kategorie **„Energies“**; nicht belegt, weil diese Kategorie im Ausschnitt nicht aufgeklappt ist.
 - Weg zu Swap long, Swap short und Leverage eines Instruments:
