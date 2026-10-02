@@ -337,23 +337,30 @@ als Sicherheit für mögliche Verluste. Dieser Betrag wird nicht verbraucht, son
 {\color{body}\raggedright Positionen mit höherem Volumen und eine höhere Anzahl an Positionen binden mehr Margin. Verluste verringern
 zudem die Equity. Der Wert unter Free nimmt folglich aus zwei Gründen ab.\par}
 \hr
-\Htwo{Level, Warnbereich und Stop out}
+\Htwo{Level, Margin Call und Stop out}
 {\color{body}\raggedright Solange die Equity deutlich über der gebundenen Margin liegt, ist das Level hoch. Sinkt die Equity
-durch Verluste, sinkt folglich auch das Level. Ab einer bestimmten Schwelle gibt die Plattform eine Warnung aus.
-Erreicht das Level den \textbf{Stop out}, schließt die Plattform Positionen selbstständig, beginnend mit der Position
+durch Verluste, sinkt folglich auch das Level. Unter 100\,\% gibt die Plattform eine Warnung aus (\textbf{Margin Call}),
+unter 70\,\% beginnt der \textbf{Risikobereich}. Erreicht das Level den \textbf{Stop out} bei 20\,\%, schließt die Plattform Positionen selbstständig, beginnend mit der Position
 mit dem größten Verlust. Den Stop-out-Wert Ihres Kontos finden Sie unter \textbf{Information} (siehe~\titel{s:plattform}{In der Plattform}).\par}
 \par\vspace{5mm}
 \noindent \begin{tikzpicture}[x=1mm,y=1mm]
 \useasboundingbox (0,0) rectangle (170.0,30);
-\fill[selltint] (0,12) rectangle (34,20);\fill[buytint] (78,12) rectangle (170.0,20);
+% Level-Schwellen laut Nutzer (02.10.2026, Zahlen-Ausnahme 5): unter 100 % Margin Call, unter 70 %
+% Risikobereich, 20 % Stop out. Achse massstaeblich 0-130 % auf 170 mm (1 % = 1,3077 mm).
+\fill[selltint] (0,12) rectangle (26.2,20);\fill[buytint] (130.8,12) rectangle (170.0,20);
 \draw[body,line width=0.7pt,-{Stealth[length=2mm]}] (0,12) -- (170.0,12);
-\draw[sell,zone] (34,9.5) -- (34,22);
-\draw[greya,line width=0.5pt,dash pattern=on 1.2mm off 0.9mm] (78,9.5) -- (78,22);
-\node[inner sep=0,text=sell,font=\micro\bfseries\ls] at (17,16) {STOP OUT};
-\node[inner sep=0,text=muted,font=\micro\bfseries\ls] at (56,16) {WARNBEREICH};
-\node[inner sep=0,text=buy,font=\micro\bfseries\ls] at (124,16) {NORMALBEREICH};
-\node[anchor=west,inner sep=0,text=muted,font=\micro] at (0,5) {Niedriges Level: Equity nur wenig über der Margin};
-\node[anchor=east,inner sep=0,text=muted,font=\micro] at (170.0,5) {Hohes Level: Equity deutlich über der Margin};
+\draw[sell,zone] (26.2,9.5) -- (26.2,22);
+\draw[greya,line width=0.5pt,dash pattern=on 1.2mm off 0.9mm] (91.5,9.5) -- (91.5,22);
+\draw[greya,line width=0.5pt,dash pattern=on 1.2mm off 0.9mm] (130.8,9.5) -- (130.8,22);
+\node[inner sep=0,text=sell,font=\micro\bfseries\ls] at (13.1,16) {STOP OUT};
+\node[inner sep=0,text=muted,font=\micro\bfseries\ls] at (58.85,16) {RISIKOBEREICH};
+\node[inner sep=0,text=muted,font=\micro\bfseries\ls] at (111.15,16) {MARGIN CALL};
+\node[inner sep=0,text=buy,font=\micro\bfseries\ls] at (150.4,16) {NORMALBEREICH};
+\node[inner sep=0,text=sell,font=\micro\bfseries] at (26.2,6.8) {20\,\%};
+\node[inner sep=0,text=ink,font=\micro\bfseries] at (91.5,6.8) {70\,\%};
+\node[inner sep=0,text=ink,font=\micro\bfseries] at (130.8,6.8) {100\,\%};
+\node[anchor=west,inner sep=0,text=muted,font=\micro] at (0,1.5) {Niedriges Level: Equity nur wenig über der Margin};
+\node[anchor=east,inner sep=0,text=muted,font=\micro] at (170.0,1.5) {Hohes Level: Equity deutlich über der Margin};
 \draw[greya,line width=0.5pt,-{Stealth[length=1.8mm]}] (90,26) -- (60,26);
 \node[anchor=west,inner sep=0,text=soft,font=\micro] at (92,26) {Das Level sinkt bei Verlusten und mit jeder neuen Position.};
 \end{tikzpicture}
