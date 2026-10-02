@@ -19,3 +19,4 @@ Kontogrundlagen mit `docs/plattform/dom-kursliste-instrument-info.md` in Einklan
 
 ## Für HANDOFF.md
 Abschnitt 2.2: „Kein Ask/Bid“ nur Doku 1 (falls bestätigt); „Forex (Devisen)“ beim ersten Auftreten, danach „Forex“. Abschnitt 5.2/5.3: Weg zu Swap long/short, Spread, Leverage eines Instruments: Desktop Info-Zeichen am Zeilenende der Kursliste, mobil Quotes → Instrument antippen; Kategorien Forex, Stocks, Cryptos, Indices, Energies, Metals, Commodities, ETFs; Bid/Ask in der Grundbegriffe-Tabelle. Abschnitt 8.4: Fund „Info-Fenster, mobiler Weg fehlt“ erledigt.
+Nachtrag (kg-ohne-bid-ask): Bid/Ask wieder entfernt (Nutzerregel HANDOFF 2.2, gilt für beide Dokumente); S. 2 Zeile **Spread** „Der Unterschied zwischen dem Kurs für Buy und dem Kurs für Sell; er steht in den Angaben des Instruments.“, S. 7 Desktop „Jede Zeile zeigt die aktuellen Kurse des Instruments; das Info-Zeichen am Ende der Zeile öffnet seine Angaben.“ Damit entfällt Rückfrage 1 oben.
