@@ -166,7 +166,8 @@ auf die Seite mit der ausführlichen Erklärung.}\end{minipage}
 % Spalten im Flattersatz; 30 + 102 + 29,5 mm plus Spaltenabstaende = 170 mm (wie "Auf einen Blick");
 % "Mehr dazu" so breit, dass "→ In der Plattform" einzeilig bleibt (ca. 28,9 mm).
 % Zwei Gruppen (Handel; Sicherheit und Kosten), getrennt nur durch groesseren Abstand.
-% Swap: im Profit der Position enthalten, Balance erst beim Schliessen (Quelle: originals/...Kosten_2.pdf, 7.3/8).
+% Swap: in Total Profit der Position enthalten, Balance erst beim Schliessen (Quellen: originals/...Kosten_2.pdf,
+% 7.3/8; docs/plattform/dom-positionsliste.md).
 % Keine Commission auf dieser Plattform (Nutzer 02.10.2026); dafuer Bonus (Feld in der Kontouebersicht, S. 7).
 \newcommand{\gbz}[1]{\newline{\color{muted}\small #1}}
 \begin{tabular}{@{}>{\raggedright\arraybackslash}p{30mm}%
@@ -183,7 +184,7 @@ auf die Seite mit der ausführlichen Erklärung.}\end{minipage}
 \textbf{Buy / Sell} & Die Richtung einer Position: Buy (Kauf, auch long) oder Sell (Verkauf, auch short). Bei Buy
   entsteht mit steigendem Kurs ein Gewinn und mit fallendem ein Verlust, bei Sell umgekehrt. & \\ \addlinespace[2mm]
 \textbf{Spread} & Der Unterschied zwischen dem Kurs für Buy und dem Kurs für Sell; er steht in den Angaben des
-  Instruments. & \verw{s:plattform}{In der Plattform} \\ \addlinespace[2mm]
+  Instruments. & \verw{s:instrumente}{Instrumente und Positionen} \\ \addlinespace[2mm]
 \textbf{Volumen} & Der Wert einer Position. Gewinne und Verluste werden am gesamten Volumen berechnet.
   & \verw{s:hebel}{Hebel} \\ \addlinespace[2mm]
 \textbf{Broker} & Das Unternehmen, das Ihr Konto führt und über das Sie Positionen öffnen und schließen. Anders
@@ -195,10 +196,12 @@ auf die Seite mit der ausführlichen Erklärung.}\end{minipage}
 \textbf{Stop out} & Die Schwelle des Levels, bei der die Plattform offene Positionen selbstständig schließt. Das
   Level gibt die Equity im Verhältnis zur Margin an. & \verw{s:margin}{Margin} \\ \addlinespace[2mm]
 \textbf{Leverage}\gbz{(Hebel)} & Gibt an, welcher Teil des Volumens als Margin gebunden wird. Die Schreibweise
-  1:10 bedeutet: Die Margin beträgt ein Zehntel des Volumens. & \verw{s:hebel}{Hebel} \\ \addlinespace[2mm]
+  1:10 bedeutet: Die Margin beträgt ein Zehntel des Volumens. & \verw{s:hebel}{Hebel}\newline
+  \verw{s:instrumente}{Instrumente und Positionen} \\ \addlinespace[2mm]
 \textbf{Swap} & Ein Betrag für das Halten einer Position über den Tageswechsel, der ihr je nach Satz (Swap long
-  für Buy, Swap short für Sell) belastet oder gutgeschrieben wird. Er ist in ihrem angezeigten Profit enthalten
-  und geht beim Schließen in die Balance ein. & \verw{s:swap}{Swaps} \\ \addlinespace[2mm]
+  für Buy, Swap short für Sell) belastet oder gutgeschrieben wird. Er ist in ihrem Total Profit enthalten
+  und geht beim Schließen in die Balance ein. & \verw{s:swap}{Swaps}\newline
+  \verw{s:instrumente}{Instrumente und Positionen} \\ \addlinespace[2mm]
 \textbf{Bonus} & Ein Betrag auf Ihrem Konto, mit dem Sie handeln können. Gewinne, die Sie damit erzielen,
   sind gemäß den AGB des Brokers auszahlbar. & \verw{s:plattform}{In der Plattform} \\
 \end{tabular}
@@ -251,8 +254,8 @@ Grundlage dieses Werts berechnet.}\end{soft}\end{minipage}
 \hr
 \Htwo{Unrealisierte und realisierte Ergebnisse}
 {\color{body}\raggedright Solange eine Position offen ist, stellt ihr Gewinn oder Verlust lediglich eine Momentaufnahme dar.
-Die Plattform weist ihn unter \textbf{Profit/Losses} aus und berücksichtigt ihn in der Equity, nicht jedoch in der
-Balance. Erst mit dem Schließen der Position wird der Betrag realisiert.\par}
+Die Plattform weist ihn bei der Position unter \textbf{Total Profit} aus, das Ergebnis aller offenen Positionen
+zusammen unter \textbf{Profit/Losses}. Er fließt in die Equity ein, nicht jedoch in die Balance. Erst mit dem Schließen der Position wird der Betrag realisiert.\par}
 \par\vspace{5mm}
 \noindent \begin{tikzpicture}[x=1mm,y=1mm]
 \useasboundingbox (0,0) rectangle (170.0,30);
@@ -408,8 +411,7 @@ der Equity frei.}\end{soft}\end{minipage}\hfill
 Je höher der Hebel, desto schneller nähert sich das Level bei Verlusten dem Stop out.}\end{soft}\end{minipage}
 \par
 \begin{merk}\textbf{Wo der Hebel steht.} Den Hebel Ihres Kontos finden Sie unter \textbf{Information} als
-\textbf{Leverage}, den eines Instruments in dessen Angaben (am Desktop über das \textbf{Info-Zeichen} in der
-Kursliste, mobil durch Antippen des Instruments unter \textbf{Quotes}). Der Hebel eines Instruments kann niedriger sein
+\textbf{Leverage}, den eines Instruments in dessen Angaben (Abbildung unter~\titel{s:instrumente}{Instrumente und Positionen}). Der Hebel eines Instruments kann niedriger sein
 als der Hebel Ihres Kontos; maßgeblich ist stets der Wert des Instruments.\end{merk}
 \clearpage
 \kicker{}{Swaps}\phantomsection\label{s:swap}
@@ -478,7 +480,7 @@ von 10.000\,€.\par}
 (Währungen, z.\,B. EUR/USD) treten an ihre Stelle die Zinsen für das geliehene Geld. Der Risikoanteil soll den Liquiditätsanbieter vor~Verlusten~schützen.\par}
 \par\vspace{3mm}
 % Einheit der Saetze unbekannt (nicht nennen); Satz zur Gutschrift bleibt (Nutzerentscheidung)
-{\color{muted}\small\raggedright Die tatsächlichen Sätze nennen die Angaben jedes Instruments (Kursliste bzw. \textbf{Quotes}):
+{\color{muted}\small\raggedright Die tatsächlichen Sätze stehen bei jedem Instrument (\pfeil{s:instrumente}{Instrumente und Positionen}):
 \textbf{Swap long} für Buy, \textbf{Swap short} für Sell. In der Regel sind beide negativ, was eine Belastung bedeutet; ist ein Satz positiv,
 wird Ihnen der Betrag gutgeschrieben.\par}
 \hr
@@ -528,7 +530,7 @@ wird Ihnen der Betrag gutgeschrieben.\par}
 \begin{merk}\textbf{Zusammenfassung.} Für eine Position, die Sie am selben Tag schließen, fällt kein Swap an.
 Halten Sie eine Position über mehrere Nächte, wird für jede Nacht ein Swap gebucht, am Mittwoch in dreifacher Höhe.
 Der Swap wird bei der offenen Position verbucht und in der Spalte \textbf{Swap} ausgewiesen; er ist in ihrem
-angezeigten Profit enthalten und geht beim Schließen mit ihrem Ergebnis in die Balance ein.\end{merk}
+\textbf{Total Profit} enthalten und geht beim Schließen mit ihrem Ergebnis in die Balance ein.\end{merk}
 \clearpage
 \kicker{}{In der Plattform}\phantomsection\label{s:plattform}
 \Hone{Wo Sie die Werte finden}
@@ -579,17 +581,76 @@ am Anfang der Reihe.}
 \par\vspace{7mm}
 \noindent\begin{minipage}[t]{82mm}\vspace{0pt}\begin{soft}[equal height group=plattform]
 {\htwo\ls\color{muted}DESKTOP}\par\vspace{2.5mm}
-{\color{body}Offene Positionen stehen direkt unter dem Chart (der grafischen Darstellung des Kursverlaufs),
-einschließlich der Spalte \textbf{Swap}. Die \textbf{Kursliste} gliedert die Instrumente in die Kategorien
+{\color{body}Offene Positionen stehen direkt unter dem Chart (der grafischen Darstellung des Kursverlaufs).
+Die \textbf{Kursliste} gliedert die Instrumente in die Kategorien
 Forex, Stocks, Cryptos, Indices, Energies, Metals, Commodities und ETFs. Jede Zeile zeigt die aktuellen
-Kurse des Instruments; das \textbf{Info-Zeichen} am Ende der Zeile öffnet seine Angaben.}\end{soft}\end{minipage}\hfill
+Kurse des Instruments; das \textbf{Info-Zeichen} am Ende der Zeile öffnet seine Angaben
+(\pfeil{s:instrumente}{Instrumente und Positionen}).}\end{soft}\end{minipage}\hfill
 \begin{minipage}[t]{82mm}\vspace{0pt}\begin{soft}[equal height group=plattform]
 {\htwo\ls\color{muted}MOBILE}\par\vspace{2.5mm}
 {\color{body}Das Info-Zeichen oben rechts öffnet zunächst den Reiter \textbf{Information} mit
-\textbf{Leverage} und \textbf{Stop out}. Unter \textbf{Orders}~→~\textbf{Active} steht die Liste Ihrer
-offenen Positionen; aufgeklappt zeigen sie Swap und Margin. Unter \textbf{Quotes} stehen dieselben
-Kategorien als Reiter. Durch Antippen eines Instruments klappen seine Angaben auf, darunter Swap long,
-Swap short, Spread und Leverage.}\end{soft}\end{minipage}
+\textbf{Leverage} und \textbf{Stop out}. Unter \textbf{Orders}~→~\textbf{Active} stehen Ihre offenen
+Positionen, unter \textbf{Quotes} die Instrumente, nach denselben Kategorien in Reitern. Durch Antippen
+einer Position oder eines Instruments klappen deren Angaben auf
+(\pfeil{s:instrumente}{Instrumente und Positionen}).}\end{soft}\end{minipage}
+\clearpage
+\kicker{}{Instrumente und Positionen}\phantomsection\label{s:instrumente}
+\Hone{Die Angaben der Instrumente und Ihrer Positionen}
+\begin{minipage}{130mm}\lead{Jedes Instrument hat eigene Angaben, darunter die Sätze des Swaps und den Hebel.
+In den Abbildungen stehen wie unter~\titel{s:plattform}{In der Plattform} anstelle der Werte Wörter.}\end{minipage}
+\par\vspace{7mm}
+% Nachbauten info-desktop.pdf (Fenster 290 x 194,8 CSS-px, PDF mit 24 px Schattenrand je Seite)
+% und info-mobil.pdf (410 x 327,2 px) im selben Massstab: 1 px = 0,225 mm, Schrift (12 px) 7,7 pt.
+% Mobil 92,25 x 73,6 mm, Desktop-Fenster 65,25 x 43,8 mm; das Fenster beginnt am linken Satzrand,
+% sein Schatten liegt als overlay ausserhalb. Legende der Nummern 1-3 (Wegweiser wie auf
+% "In der Plattform") links unter dem Desktop-Fenster, gilt fuer beide Abbildungen.
+\newlength\ipx\setlength\ipx{0.225mm}
+\noindent\begin{minipage}[t]{70mm}\raggedright
+{\htwo\ls\color{muted}DESKTOP}\par\vspace{1.5mm}
+{\color{muted}\small Klicken Sie in der \textbf{Kursliste} auf das \textbf{Info-Zeichen} am Ende der Zeile
+des Instruments.}\end{minipage}\hfill
+\begin{minipage}[t]{410\ipx}\raggedright
+{\htwo\ls\color{muted}MOBILE}\par\vspace{1.5mm}
+{\color{muted}\small Tippen Sie unter \textbf{Quotes} auf das Instrument; seine Angaben klappen darunter
+auf.}\end{minipage}
+\par\vspace{4mm}
+\noindent\begin{minipage}[t]{70mm}\vspace{0pt}\raggedright
+\begin{tikzpicture}[x=\ipx,y={(0,-\ipx)}]
+\useasboundingbox (0,0) rectangle (290,194.8);
+\node[overlay,anchor=north west,inner sep=0,outer sep=0] at (-24,-24)
+  {\includegraphics[width=338\ipx]{info-desktop.pdf}};
+\end{tikzpicture}\par\vspace{5mm}
+{\renewcommand{\arraystretch}{1.55}%
+\begin{tabular}{@{}c@{\hspace{2.4mm}}l@{\hspace{2.4mm}}l@{}}
+\pfn{1} & \textbf{Swap long} & {\color{muted}\small Satz des Swaps für Buy} \\
+\pfn{2} & \textbf{Swap short} & {\color{muted}\small Satz des Swaps für Sell} \\
+\pfn{3} & \textbf{Leverage} & {\color{muted}\small Hebel des Instruments} \\
+\end{tabular}}
+\end{minipage}\hfill
+\begin{minipage}[t]{410\ipx}\vspace{0pt}
+\includegraphics[width=410\ipx]{info-mobil.pdf}
+\end{minipage}
+\hr
+% Liste der offenen Positionen (docs/plattform/dom-positionsliste.md): nur Text, ein Nachbau kann
+% spaeter unten auf der Seite folgen. Kein S/L, keine Commission (HANDOFF 2.2/2.3).
+\Htwo{Die Liste der offenen Positionen}
+{\color{body}\raggedright Am Desktop stehen Ihre offenen Positionen in der Tabelle unter dem Chart, im Reiter
+\textbf{Active} (daneben \textbf{Pending} und \textbf{History}), je Position eine Zeile. In der mobilen Ansicht
+finden Sie dieselben Reiter unter \textbf{Orders}; durch Antippen einer Position klappen ihre Angaben auf.
+Beide Ansichten nennen unter anderem:\par}
+\par\vspace{5mm}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{30mm}%
+  >{\raggedright\arraybackslash}p{102mm}>{\raggedright\arraybackslash}p{29.5mm}@{}}
+\hd{Angabe} & \hd{Bedeutung} & \hd{Mehr dazu} \\
+\addlinespace[1.6mm]\midrule\addlinespace[2.4mm]
+\textbf{Amount} & Die gehandelte Menge des Instruments. & \\ \addlinespace[2mm]
+\textbf{Trade volume} & Der Wert der Position, in dieser Einheit Volumen genannt. & \verw{s:hebel}{Hebel} \\ \addlinespace[2mm]
+\textbf{Swap} & Der bei der Position verbuchte Swap. Er ist in Total Profit enthalten. & \verw{s:swap}{Swaps} \\ \addlinespace[2mm]
+\textbf{Total Profit} & Das aktuelle Ergebnis der Position einschließlich ihres Swaps; es ändert sich mit jeder
+  Kursbewegung. Das Ergebnis aller offenen Positionen zusammen steht unter Profit/Losses.
+  & \verw{s:kontostand}{Kontostand} \\ \addlinespace[2mm]
+\textbf{Margin} & Der Teil Ihres Kontos, den diese Position als Sicherheit bindet. & \verw{s:margin}{Margin} \\
+\end{tabular}
 \clearpage
 \kicker{}{Auf einen Blick}\phantomsection\label{s:ueberblick}
 \Hone{Die Begriffe im Überblick}
@@ -603,6 +664,8 @@ Swap short, Spread und Leverage.}\end{soft}\end{minipage}
 \textbf{Balance} & Einzahlungen und Ergebnisse geschlossener Positionen & Bei Schließen sowie Ein- und Auszahlung \\ \addlinespace[2mm]
 \textbf{Equity} & Balance zuzüglich Profit/Losses & Mit jeder Kursbewegung \\ \addlinespace[2mm]
 \textbf{Profit/Losses} & Unrealisiertes Ergebnis der offenen Positionen & Mit jeder Kursbewegung \\ \addlinespace[2mm]
+\textbf{Total Profit} & Ergebnis einer offenen Position einschließlich ihres Swaps & Mit jeder Kursbewegung
+  und jedem Swap \\ \addlinespace[2mm]
 \textbf{Margin} & Als Sicherheit gebundener Teil der Equity & Beim Öffnen und Schließen von Positionen \\ \addlinespace[2mm]
 \textbf{Free} & Equity abzüglich Margin & Mit jeder Kursbewegung und jeder Position \\ \addlinespace[2mm]
 \textbf{Level} & Equity im Verhältnis zur Margin & Mit jeder Kursbewegung und jeder Position \\ \addlinespace[2mm]
