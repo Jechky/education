@@ -173,7 +173,7 @@ auf die Seite mit der ausführlichen Erklärung.}\end{minipage}
   >{\raggedright\arraybackslash}p{102mm}>{\raggedright\arraybackslash}p{29.5mm}@{}}
 \hd{Begriff} & \hd{Erklärung} & \hd{Mehr dazu} \\
 \addlinespace[1.6mm]\midrule\addlinespace[2.4mm]
-\textbf{Instrument} & Das handelbare Produkt, zum Beispiel ein Rohstoff oder eine Währung (Devisen). In den
+\textbf{Instrument} & Das handelbare Produkt, zum Beispiel ein Rohstoff oder eine Währung aus der Kategorie Forex (Devisen). In den
   Beispielen dieser Einheit steht dafür Instrument~XY. & \\ \addlinespace[2mm]
 \textbf{Kurs} & Der aktuelle Preis eines Instruments. Er ändert sich laufend; diese Änderungen heißen
   Kursbewegungen. & \\ \addlinespace[2mm]
@@ -182,6 +182,8 @@ auf die Seite mit der ausführlichen Erklärung.}\end{minipage}
   mit dem Schließen wird es realisiert. & \verw{s:kontostand}{Kontostand} \\ \addlinespace[2mm]
 \textbf{Buy / Sell} & Die Richtung einer Position: Buy (Kauf, auch long) oder Sell (Verkauf, auch short). Bei Buy
   entsteht mit steigendem Kurs ein Gewinn und mit fallendem ein Verlust, bei Sell umgekehrt. & \\ \addlinespace[2mm]
+\textbf{Bid / Ask}\gbz{(Spread)} & Bid ist der Kurs, zu dem Sie verkaufen, Ask der Kurs, zu dem Sie kaufen. Der
+  Unterschied zwischen beiden heißt Spread. & \verw{s:plattform}{In der Plattform} \\ \addlinespace[2mm]
 \textbf{Volumen} & Der Wert einer Position. Gewinne und Verluste werden am gesamten Volumen berechnet.
   & \verw{s:hebel}{Hebel} \\ \addlinespace[2mm]
 \textbf{Broker} & Das Unternehmen, das Ihr Konto führt und über das Sie Positionen öffnen und schließen. Anders
@@ -406,7 +408,8 @@ der Equity frei.}\end{soft}\end{minipage}\hfill
 Je höher der Hebel, desto schneller nähert sich das Level bei Verlusten dem Stop out.}\end{soft}\end{minipage}
 \par
 \begin{merk}\textbf{Wo der Hebel steht.} Den Hebel Ihres Kontos finden Sie unter \textbf{Information} als
-\textbf{Leverage}, den eines Instruments in dessen Info-Fenster. Der Hebel eines Instruments kann niedriger sein
+\textbf{Leverage}, den eines Instruments in dessen Angaben (am Desktop über das \textbf{Info-Zeichen} in der
+Kursliste, mobil durch Antippen des Instruments unter \textbf{Quotes}). Der Hebel eines Instruments kann niedriger sein
 als der Hebel Ihres Kontos; maßgeblich ist stets der Wert des Instruments.\end{merk}
 \clearpage
 \kicker{}{Swaps}\phantomsection\label{s:swap}
@@ -422,7 +425,7 @@ als Swap gebucht.}\end{minipage}
 % nicht Instrument XY der Hebel-Seite (der Bekannte kauft XY ueber sein Wertpapierdepot).
 % Ausnahme vom Zahlenverbot (Nutzerwunsch 02.10.2026): nur 1.000, 1:10, 10.000, 3, 3, 6, 1, 7.
 % Modell des Nutzers: Betrag des Liquiditaetsanbieters = Miete fuer die Aufbewahrung (Rohstoffe) bzw. Zinsen fuer
-% das geliehene Geld (Devisen) + Risikoanteil; dazu der Aufschlag des Brokers. Kein Gruen/Rot.
+% das geliehene Geld (Forex) + Risikoanteil; dazu der Aufschlag des Brokers. Kein Gruen/Rot.
 \Htwo{Zusammensetzung des Swaps}
 {\color{body}\raggedright Angenommen, Sie halten eine Position im Rohstoff Crude Oil (Rohöl) mit einem Volumen
 von 10.000\,€.\par}
@@ -471,12 +474,12 @@ von 10.000\,€.\par}
   {Die Beträge sind fiktiv und dienen ausschließlich der Veranschaulichung.};
 \end{tikzpicture}}
 \par\vspace{3mm}
-{\color{body}\raggedright Die Miete für die Aufbewahrung fällt bei Rohstoffen wie Crude Oil oder Natural Gas (Erdgas) an; bei Devisen
+{\color{body}\raggedright Die Miete für die Aufbewahrung fällt bei Rohstoffen wie Crude Oil oder Natural Gas (Erdgas) an; bei Forex
 (Währungen, z.\,B. EUR/USD) treten an ihre Stelle die Zinsen für das geliehene Geld. Der Risikoanteil soll den Liquiditätsanbieter vor~Verlusten~schützen.\par}
 \par\vspace{3mm}
 % Einheit der Saetze unbekannt (nicht nennen); Satz zur Gutschrift bleibt (Nutzerentscheidung)
-{\color{muted}\small\raggedright Die tatsächlichen Swap-Sätze stehen im Info-Fenster jedes Instruments: \textbf{Swap long} für Buy
-und \textbf{Swap short} für Sell. In der Regel sind beide negativ, was eine Belastung bedeutet; ist ein Satz positiv,
+{\color{muted}\small\raggedright Die tatsächlichen Sätze nennen die Angaben jedes Instruments (Kursliste bzw. \textbf{Quotes}):
+\textbf{Swap long} für Buy, \textbf{Swap short} für Sell. In der Regel sind beide negativ, was eine Belastung bedeutet; ist ein Satz positiv,
 wird Ihnen der Betrag gutgeschrieben.\par}
 \hr
 \Htwo{Zeitpunkt der Buchung}
@@ -571,21 +574,23 @@ gemäß den AGB des Brokers auszahlbar.}
 \Htwo{Am Desktop: dieselben Werte in einer Zeile}
 \noindent\includegraphics[width=170mm]{bar.pdf}
 \par\vspace{3mm}
-{\color{soft}\small Die Leiste befindet sich unten rechts und ist dauerhaft sichtbar. Sie enthält dieselben Werte
-wie die mobile Ansicht; die \textbf{Balance} steht hier am Anfang der Reihe.}
+{\color{soft}\small Die Leiste befindet sich unten rechts und ist dauerhaft sichtbar; die \textbf{Balance} steht hier
+am Anfang der Reihe.}
 \par\vspace{7mm}
 \noindent\begin{minipage}[t]{82mm}\vspace{0pt}\begin{soft}[equal height group=plattform]
 {\htwo\ls\color{muted}DESKTOP}\par\vspace{2.5mm}
-{\color{body}Die Kontoübersicht befindet sich in der \textbf{untersten Leiste}. Offene Positionen werden
-direkt unter dem Chart (der grafischen Darstellung des Kursverlaufs) angezeigt, einschließlich der Spalte
-\textbf{Swap}. Angaben zu einem Instrument erhalten Sie über das \textbf{Info-Zeichen} in der Kursliste, der
-Liste der Instrumente mit ihren aktuellen Kursen.}\end{soft}\end{minipage}\hfill
+{\color{body}Offene Positionen stehen direkt unter dem Chart (der grafischen Darstellung des Kursverlaufs),
+einschließlich der Spalte \textbf{Swap}. Die \textbf{Kursliste} gliedert die Instrumente in die Kategorien
+Forex, Stocks, Cryptos, Indices, Energies, Metals, Commodities und ETFs. Jede Zeile zeigt \textbf{Bid}
+(Kurs für Sell) und \textbf{Ask} (Kurs für Buy); das \textbf{Info-Zeichen} am Ende der Zeile öffnet
+die Angaben des Instruments.}\end{soft}\end{minipage}\hfill
 \begin{minipage}[t]{82mm}\vspace{0pt}\begin{soft}[equal height group=plattform]
 {\htwo\ls\color{muted}MOBILE}\par\vspace{2.5mm}
-{\color{body}Tippen Sie oben rechts auf das \textbf{Info-Zeichen}. Zunächst öffnet sich
-\textbf{Information}; nach Antippen von \textbf{Balance} erscheint die oben abgebildete Ansicht. Der Reiter
-\textbf{Information} zeigt \textbf{Leverage} und \textbf{Stop out}. Unter \textbf{Orders}~→~\textbf{Active}
-steht die Liste Ihrer offenen Positionen; aufgeklappt zeigen sie Swap und Margin.}\end{soft}\end{minipage}
+{\color{body}Das Info-Zeichen oben rechts öffnet zunächst den Reiter \textbf{Information} mit
+\textbf{Leverage} und \textbf{Stop out}. Unter \textbf{Orders}~→~\textbf{Active} steht die Liste Ihrer
+offenen Positionen; aufgeklappt zeigen sie Swap und Margin. Unter \textbf{Quotes} stehen dieselben
+Kategorien als Reiter. Durch Antippen eines Instruments klappen seine Angaben auf, darunter Swap long,
+Swap short, Spread und Leverage.}\end{soft}\end{minipage}
 \clearpage
 \kicker{}{Auf einen Blick}\phantomsection\label{s:ueberblick}
 \Hone{Die Begriffe im Überblick}
