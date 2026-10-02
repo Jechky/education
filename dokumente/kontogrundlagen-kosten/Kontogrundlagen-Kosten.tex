@@ -9,7 +9,7 @@
 % Trennmuster wie beim Original-Build (dort fehlten die deutschen Muster,
 % babel nahm die englischen). Ohne diese Zeile bricht die Swap-Seite (S. 6) anders um.
 \babelprovide[hyphenrules=english]{ngerman}
-\usepackage{hyperref}\hypersetup{hidelinks,pdftitle={Kontogrundlagen & Kosten – Schulungseinheit},pdfsubject={Balance, Equity, Margin, Free Margin, Leverage, Swap}}
+\usepackage{hyperref}\hypersetup{hidelinks,pdftitle={Kontogrundlagen \& Kosten – Schulungseinheit},pdfsubject={Balance, Equity, Margin, Free Margin, Leverage, Swap}}
 
 \setmainfont{IBMPlexSans-Regular.otf}[Path=../../fonts/,
   BoldFont={IBMPlexSans-SemiBold.otf}, ItalicFont={IBMPlexSans-Italic.otf},
@@ -115,6 +115,8 @@
 \pagestyle{fancy}\fancyhf{}\renewcommand{\headrulewidth}{0pt}
 
 \fancyfoot[L]{\micro\color{soft}\ls KONTOGRUNDLAGEN \& KOSTEN · EDUCATION – STANDARD PACKAGE}
+% Seitenzahl, weil der Text auf Seiten verweist (\seite, \verw); Deckblatt ohne Fusszeile
+\fancyfoot[R]{\micro\color{soft}\ls\thepage~/~\pageref*{s:ende}}
 \begin{document}
 \thispagestyle{empty}
 {\htwo\ls\color{muted}SCHULUNGSEINHEIT}\par\vspace{11mm}
@@ -180,7 +182,7 @@ auf die Seite mit der ausführlichen Erklärung.}\end{minipage}
 \textbf{Volumen} & Der Wert einer Position. Gewinne und Verluste werden am gesamten Volumen berechnet.
   & \verw{s:hebel} \\ \addlinespace[2mm]
 \textbf{Broker} & Das Unternehmen, das Ihr Konto führt und über das Sie Positionen öffnen und schließen. Anders
-  als beim Direktkauf über die Bank erwerben Sie das Instrument dabei nicht selbst. & \verw{s:hebel} \\ \addlinespace[2mm]
+  als beim Direktkauf erwerben Sie das Instrument dabei nicht selbst. & \verw{s:hebel} \\ \addlinespace[2mm]
 \textbf{Plattform} & Die Anwendung des Brokers, mobil und am Desktop. Dort öffnen und schließen Sie Positionen
   und sehen die Werte Ihres Kontos. & \verw{s:plattform} \\ \addlinespace[5mm]
 \textbf{Margin} & Der Teil Ihres Kontos, den offene Positionen als Sicherheit binden, solange sie offen sind.
@@ -525,7 +527,8 @@ angezeigten Profit enthalten und geht beim Schließen mit ihrem Ergebnis in die 
 \kicker{}{In der Plattform}\phantomsection\label{s:plattform}
 \Hone{Wo Sie die Werte finden}
 \begin{minipage}{130mm}\lead{Die mobile Ansicht und der Desktop zeigen dieselben Werte unter denselben
-Begriffen. Oben ist die mobile Kontoübersicht abgebildet, darunter die Leiste am Desktop.}\end{minipage}
+Begriffen. Oben ist die mobile Kontoübersicht abgebildet, darunter die Leiste am Desktop. In beiden
+Abbildungen stehen anstelle der Beträge Wörter, die den jeweiligen Wert umschreiben.}\end{minipage}
 \par\vspace{7mm}
 % Mobile Ansicht (mobil.pdf: Kopfleiste + Reiter + panel.pdf, 440 x 516 CSS-px) im Maßstab
 % des bisherigen Panels (78 mm für 452 px). Koordinaten unten in CSS-px, y nach unten.
@@ -557,8 +560,9 @@ Begriffen. Oben ist die mobile Kontoübersicht abgebildet, darunter die Leiste a
 \item {\bfseries Level}\newline{\color{muted}\small Das Verhältnis von Equity zu Margin; Maßstab für den Abstand zum Stop out.}
 \end{enumerate}
 \par\vspace{3mm}
-{\color{soft}\small Die \textbf{Balance} steht ganz oben. Die Felder \textbf{Bonus} und \textbf{Credit}
-sind für den regulären Handel ohne Bedeutung.}
+{\color{soft}\small Ganz oben steht die \textbf{Balance}, am Ende folgen die Felder \textbf{Bonus} und
+\textbf{Credit}. Der Bonus ist ein Betrag, mit dem Sie handeln können; Gewinne, die Sie damit erzielen, sind
+gemäß den AGB des Brokers auszahlbar.}
 \end{minipage}
 \hr
 \Htwo{Am Desktop: dieselben Werte in einer Zeile}
@@ -570,14 +574,15 @@ wie die mobile Ansicht; die \textbf{Balance} steht hier am Anfang der Reihe.}
 \noindent\begin{minipage}[t]{82mm}\vspace{0pt}\begin{soft}[equal height group=plattform]
 {\htwo\ls\color{muted}DESKTOP}\par\vspace{2.5mm}
 {\color{body}Die Kontoübersicht befindet sich in der \textbf{untersten Leiste}. Offene Positionen werden
-direkt unter dem Chart angezeigt, einschließlich der Spalten \textbf{Swap} und \textbf{Commission}. Angaben
-zu einem Instrument erhalten Sie über das \textbf{Info-Zeichen} in der Kursliste.}\end{soft}\end{minipage}\hfill
+direkt unter dem Chart (der grafischen Darstellung des Kursverlaufs) angezeigt, einschließlich der Spalte
+\textbf{Swap}. Angaben zu einem Instrument erhalten Sie über das \textbf{Info-Zeichen} in der Kursliste, der
+Liste der Instrumente mit ihren aktuellen Kursen.}\end{soft}\end{minipage}\hfill
 \begin{minipage}[t]{82mm}\vspace{0pt}\begin{soft}[equal height group=plattform]
 {\htwo\ls\color{muted}MOBILE}\par\vspace{2.5mm}
 {\color{body}Tippen Sie oben rechts auf das \textbf{Info-Zeichen}. Zunächst öffnet sich
 \textbf{Information}; nach Antippen von \textbf{Balance} erscheint die oben abgebildete Ansicht. Der Reiter
-\textbf{Information} zeigt \textbf{Leverage} und \textbf{Stop out}. Positionen finden Sie unter
-\textbf{Orders} → \textbf{Active}; aufgeklappt zeigen sie Swap und Margin.}\end{soft}\end{minipage}
+\textbf{Information} zeigt \textbf{Leverage} und \textbf{Stop out}. Unter \textbf{Orders}~→~\textbf{Active}
+steht die Liste Ihrer offenen Positionen; aufgeklappt zeigen sie Swap und Margin.}\end{soft}\end{minipage}
 \clearpage
 \kicker{}{Auf einen Blick}\phantomsection\label{s:ueberblick}
 \Hone{Die Begriffe im Überblick}
@@ -594,13 +599,18 @@ zu einem Instrument erhalten Sie über das \textbf{Info-Zeichen} in der Kurslist
 \textbf{Margin} & Als Sicherheit gebundener Teil der Equity & Beim Öffnen und Schließen von Positionen \\ \addlinespace[2mm]
 \textbf{Free} & Equity abzüglich Margin & Mit jeder Kursbewegung und jeder Position \\ \addlinespace[2mm]
 \textbf{Level} & Equity im Verhältnis zur Margin & Mit jeder Kursbewegung und jeder Position \\ \addlinespace[2mm]
-\textbf{Leverage} & Verhältnis von Volumen zu Margin & Fest je Konto und Instrument \\ \addlinespace[2mm]
-\textbf{Swap} & Kosten für das Halten über Nacht & Jede Nacht, am Mittwoch dreifach \\
+\textbf{Stop out} & Schwelle des Levels, an der die Plattform Positionen selbstständig schließt & Fest je Konto \\ \addlinespace[2mm]
+\textbf{Leverage} & Verhältnis von Margin zu Volumen; bei 1:10 beträgt die Margin ein Zehntel des Volumens
+  & Fest je Konto und Instrument \\ \addlinespace[2mm]
+\textbf{Swap} & Belastung oder Gutschrift für das Halten über Nacht; bei der Position verbucht, beim Schließen
+  in der Balance & Jede Nacht, am Mittwoch dreifach \\ \addlinespace[2mm]
+\textbf{Bonus} & Betrag, mit dem Sie handeln können; Gewinne daraus sind gemäß den AGB auszahlbar
+  & Nach den AGB des Brokers \\
 \end{tabular}
 \par\vspace{6mm}
 \begin{merk}\textbf{Kernaussagen.} Die Equity gibt den aktuellen Wert Ihres Kontos wieder, die Balance hingegen nur
 die bereits realisierten Ergebnisse. Free bezeichnet den Teil der Equity, der für weitere Positionen zur Verfügung
 steht. Der Hebel bestimmt nicht die Richtung eines Ergebnisses, sondern das Ausmaß, in dem eine Kursbewegung
-auf Ihr Konto wirkt.\end{merk}
+auf Ihr Konto wirkt.\end{merk}\label{s:ende}
 
 \end{document}
