@@ -65,7 +65,7 @@
 \hyphenpenalty=400\relax
 
 % ---- Bausteine ----------------------------------------------------------
-\newcommand{\kicker}[2]{{\htwo\ls\color{muted}\MakeUppercase{#2}\par}%
+\newcommand{\kicker}[2]{\pdfbookmark[0]{#2}{kicker\arabic{page}}{\htwo\ls\color{muted}\MakeUppercase{#2}\par}%
   \vspace{2mm}{\color{rule}\rule{\linewidth}{0.4pt}}\par\vspace{5.5mm}}
 \newcommand{\Hone}[1]{{\hone\color{ink}#1\par}\vspace{3.5mm}}
 \newcommand{\Htwo}[1]{{\htwo\ls\color{muted}\MakeUppercase{#1}\par}\vspace{4mm}}
@@ -170,6 +170,33 @@ auf der Plattform finden, zeigt die Abbildung unter~\titel{s:plattform}{In der P
 \par\vspace{0pt plus 1.35fill}
 {\color{rule}\rule{\linewidth}{0.4pt}}\par\vspace{2.5mm}
 {\micro\ls\color{soft}KONTOGRUNDLAGEN \& KOSTEN\hfill EDUCATION – STANDARD PACKAGE}
+\clearpage
+% Inhaltsverzeichnis (Nutzerwunsch 02.10.2026) ohne Seitenzahlen (Regel "keine Zahlen", HANDOFF 2.3):
+% jede Zeile ist ein Link auf den Seitentitel; dazu Lesezeichen über \kicker.
+\newcommand\inhaltzeile[3]{% {Label}{Seitentitel}{Inhalt in einer Zeile}
+  \noindent\hyperref[#1]{\parbox[t]{67mm}{\raggedright\leavevmode{\hthree\color{ink}#2}}\hspace{4mm}%
+    \parbox[t]{\dimexpr\linewidth-80mm\relax}{\raggedright\leavevmode{\color{muted}\small #3}}%
+    \hfill{\hthree\color{soft}→}}\par
+  \vspace{3.4mm}{\color{rule}\rule{\linewidth}{0.4pt}}\par\vspace{3.4mm}}
+\newcommand\inhaltgruppe[1]{\par\vspace{5mm}{\htwo\ls\color{muted}\MakeUppercase{#1}\par}\vspace{2.5mm}%
+  {\color{ink}\rule{\linewidth}{0.6pt}}\par\vspace{3.4mm}}
+\kicker{}{Inhalt}\phantomsection\label{s:inhalt}
+\Hone{Inhalt dieser Schulungseinheit}
+\begin{minipage}{128mm}\lead{Die Schulungseinheit führt von den Grundbegriffen über die einzelnen Kontowerte
+bis zu ihrer Darstellung auf der Plattform. Ein Klick auf einen Eintrag führt zur jeweiligen Seite.}\end{minipage}
+\par\vspace{4mm}
+\inhaltgruppe{Grundlagen}
+\inhaltzeile{s:grundbegriffe}{Grundbegriffe}{Die Begriffe, auf denen diese Einheit aufbaut}
+\inhaltzeile{s:kontostand}{Kontostand}{Balance und Equity und der Unterschied zwischen ihnen}
+\inhaltzeile{s:margin}{Margin}{Gebundene Sicherheit, Free, Level, Margin Call und Stop out}
+\inhaltzeile{s:hebel}{Hebel}{Die Wirkung des Hebels im Vergleich mit einem Direktkauf}
+\inhaltzeile{s:swap}{Swaps}{Warum über Nacht ein Swap anfällt und wann er gebucht wird}
+\inhaltgruppe{In der Plattform}
+\inhaltzeile{s:plattform}{In der Plattform}{Wo Sie die Werte mobil und am Desktop finden}
+\inhaltzeile{s:instrumente}{Angaben eines Instruments}{Der Weg zu den Angaben eines Instruments, alle Felder erklärt}
+\inhaltzeile{s:positionen}{Offene Positionen}{Die Tabelle Ihrer offenen Positionen, alle Spalten erklärt}
+\inhaltgruppe{Zusammenfassung}
+\inhaltzeile{s:ueberblick}{Auf einen Blick}{Alle Begriffe mit Bedeutung und Anlass ihrer Änderung}
 \clearpage
 \kicker{}{Grundbegriffe}\phantomsection\label{s:grundbegriffe}
 \Hone{Die Begriffe, auf denen diese Einheit aufbaut}

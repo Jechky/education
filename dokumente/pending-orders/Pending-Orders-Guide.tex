@@ -153,8 +153,37 @@
 \end{scope}
 \end{tikzpicture}
 \clearpage
+% Inhaltsverzeichnis (Nutzerwunsch 02.10.2026) ohne Seitenzahlen (Regel "keine Zahlen", HANDOFF 2.3):
+% jede Zeile ist ein Link auf die Seite; dazu Lesezeichen je Seite (\pdfbookmark hinter den Kickern).
+\newcommand\inhaltzeile[3]{% {Label}{Seitentitel}{Inhalt in einer Zeile}
+  \noindent\hyperref[#1]{\parbox[t]{67mm}{\raggedright\leavevmode{\hthree\color{ink}#2}}\hspace{4mm}%
+    \parbox[t]{\dimexpr\linewidth-80mm\relax}{\raggedright\leavevmode{\color{muted}\small #3}}%
+    \hfill{\hthree\color{soft}→}}\par
+  \vspace{2.8mm}{\color{rule}\rule{\linewidth}{0.4pt}}\par\vspace{2.8mm}}
+\newcommand\inhaltgruppe[1]{\par\vspace{3.5mm}{\htwo\ls\color{muted}\MakeUppercase{#1}\par}\vspace{2.5mm}%
+  {\color{ink}\rule{\linewidth}{0.6pt}}\par\vspace{2.8mm}}
+\kicker{}{Inhalt}\phantomsection\label{po:inhalt}\pdfbookmark[0]{Inhalt}{po:inhalt:bm}
+\Hone{Inhalt dieses Guides}
+\begin{minipage}{140mm}\lead{Der Guide erklärt zunächst, was eine Pending Order ist, stellt dann die vier
+Ordertypen einzeln vor und zeigt anschließend die Bedienung auf der Plattform. Ein Klick auf einen Eintrag
+führt zur jeweiligen Seite.}\end{minipage}
+\par\vspace{4mm}
+\inhaltgruppe{Fundament}
+\inhaltzeile{po:fundament}{Was eine Pending Order ist}{Sofortige und vorab geplante Order; was eine Pending Order im Ablauf verändert}
+\inhaltgruppe{Die Limit-Typen}
+\inhaltzeile{po:buylimit}{Buy Limit}{Kaufen, sobald der Kurs auf Ihren Aktivierungspunkt fällt; mit Trading-Log}
+\inhaltzeile{po:selllimit}{Sell Limit}{Verkaufen, sobald der Kurs auf Ihren Aktivierungspunkt steigt}
+\inhaltgruppe{Die Stop-Typen}
+\inhaltzeile{po:buystop}{Buy Stop}{Kaufen, sobald der Kurs auf Ihren Aktivierungspunkt steigt}
+\inhaltzeile{po:sellstop}{Sell Stop}{Verkaufen, sobald der Kurs auf Ihren Aktivierungspunkt fällt}
+\inhaltgruppe{Übersicht}
+\inhaltzeile{po:uebersicht}{Alle vier Ordertypen im Vergleich}{Chartreihe, Tabelle und die drei Grundregeln}
+\inhaltgruppe{In der Plattform}
+\inhaltzeile{po:fenster}{Der Reiter „New Pending Order“}{Eine Pending Order im Order-Fenster anlegen, Schritt für Schritt}
+\inhaltzeile{po:loeschen}{Eine wartende Order löschen}{Der Weg in der mobilen Ansicht}
+\clearpage
 % =========================================================================
-\kicker{}{Fundament}
+\kicker{}{Fundament}\phantomsection\label{po:fundament}\pdfbookmark[0]{Was eine Pending Order ist}{po:fundament:bm}
 \Hone{Was eine Pending Order ist}
 \begin{minipage}{140mm}\lead{Mit einer Pending Order kaufen oder verkaufen Sie nicht sofort.
 Sie legen vorab fest, bei welchem Kurs dies geschehen soll, und die Plattform wartet, bis der
@@ -210,7 +239,7 @@ Aktivierungspunkt ausgelöst. Erreicht der Markt ihn nicht, wird sie nicht ausge
 wartet weiter.}
 \clearpage
 % =========================================================================
-\kicker{}{Die Limit-Typen}
+\kicker{}{Die Limit-Typen}\phantomsection\label{po:buylimit}\pdfbookmark[0]{Buy Limit}{po:buylimit:bm}
 \Hone{Limit wartet auf einen günstigeren Kurs}
 \leadfix{Bei Buy Limit und Sell Limit warten Sie auf einen Kurs, der für Sie günstiger ist als
 der aktuelle. Diesen Wert tragen Sie bei At price ein; er ist Ihr Aktivierungspunkt. Bis der
@@ -261,7 +290,7 @@ löschen.}
   \draw[pfgruen,line width=0.9pt] ([xshift=3.3mm,yshift=-1.5mm]b.west) -- ([xshift=5.9mm,yshift=-1.5mm]b.west);}}\par
 \clearpage
 % -------------------------------------------------------------------------
-\kicker{}{Die Limit-Typen}
+\kicker{}{Die Limit-Typen}\phantomsection\label{po:selllimit}\pdfbookmark[0]{Sell Limit}{po:selllimit:bm}
 \Hone{Sell Limit ist das Gegenstück zu Buy Limit}
 \leadfix{Beim Verkaufen gilt ein höherer Kurs als günstig, da Sie zu einem höheren Preis
 verkaufen. Folglich verhält sich bei Sell Limit alles spiegelbildlich zu Buy Limit.}
@@ -296,7 +325,7 @@ und wartet weiter, bis der Kurs Ihren Aktivierungspunkt doch noch erreicht oder 
 Order löschen.}
 \clearpage
 % =========================================================================
-\kicker{}{Die Stop-Typen}
+\kicker{}{Die Stop-Typen}\phantomsection\label{po:buystop}\pdfbookmark[0]{Buy Stop}{po:buystop:bm}
 \Hone{Stop wartet auf die Bewegung}
 \leadfix{Bei Buy Stop und Sell Stop warten Sie nicht auf einen günstigeren Kurs, sondern auf
 eine Bewegung. Die Order wird erst ausgelöst, wenn sich der Markt bereits in die erwartete
@@ -333,7 +362,7 @@ sie nicht ausgelöst und wartet weiter, bis der Kurs Ihren Aktivierungspunkt doc
 erreicht oder bis Sie die Order löschen.}
 \clearpage
 % -------------------------------------------------------------------------
-\kicker{}{Die Stop-Typen}
+\kicker{}{Die Stop-Typen}\phantomsection\label{po:sellstop}\pdfbookmark[0]{Sell Stop}{po:sellstop:bm}
 \Hone{Sell Stop ist das Gegenstück zu Buy Stop}
 \leadfix{Hier warten Sie auf eine Bewegung nach unten statt nach oben. Folglich verhält sich
 bei Sell Stop alles spiegelbildlich zu Buy Stop.}
@@ -369,7 +398,7 @@ wird sie nicht ausgelöst und wartet weiter, bis der Kurs Ihren Aktivierungspunk
 erreicht oder bis Sie die Order löschen.}
 \clearpage
 % =========================================================================
-\kicker{}{Übersicht}
+\kicker{}{Übersicht}\phantomsection\label{po:uebersicht}\pdfbookmark[0]{Alle vier Ordertypen im Vergleich}{po:uebersicht:bm}
 \Hone{Alle vier Ordertypen im Vergleich}
 \leadfix{Diese Übersicht stellt die vier Ordertypen nebeneinander. So wird
 unmittelbar erkennbar, worin sie übereinstimmen und worin sie sich unterscheiden.}
@@ -406,7 +435,7 @@ Der Take-Profit liegt stets dort, wo ein Gewinn entsteht: bei einem Buy über de
 einem Sell darunter.\end{merk}
 \clearpage
 % =========================================================================
-\kicker{}{In der Plattform}
+\kicker{}{In der Plattform}\phantomsection\label{po:fenster}\pdfbookmark[0]{Der Reiter „New Pending Order“}{po:fenster:bm}
 \Hone{Der Reiter „New Pending Order“}
 \begin{minipage}{140mm}\lead{Links sehen Sie das Order-Fenster, rechts die fünf Stellen, auf
 die es ankommt. Die übrigen Felder können Sie zunächst unverändert lassen.}\end{minipage}
@@ -446,7 +475,7 @@ der grüne Button gesperrt. Beim Wechsel des Ordertyps füllt die Plattform den 
 auf der passenden Seite vor. Prüfen Sie ihn dennoch, bevor Sie die Order erteilen.\par}
 \clearpage
 % -------------------------------------------------------------------------
-\kicker{}{In der Plattform}
+\kicker{}{In der Plattform}\phantomsection\label{po:loeschen}\pdfbookmark[0]{Eine wartende Order löschen}{po:loeschen:bm}
 \Hone{Eine wartende Order löschen}
 \begin{minipage}{140mm}\lead{Solange eine Pending Order noch nicht ausgelöst wurde, können Sie
 sie jederzeit löschen. Die folgenden Schritte beziehen sich auf die mobile Ansicht der
