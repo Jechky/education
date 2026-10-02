@@ -599,17 +599,17 @@ Instruments}, die \textbf{Tabelle der Positionen} erläutert~\titel{s:positionen
 \quer
 \kicker{}{Angaben eines Instruments}\phantomsection\label{s:instrumente}
 \Hone{Wo Sie die Angaben eines Instruments finden}
-\begin{minipage}{170mm}\lead{Jedes Instrument hat eigene Angaben, darunter die Sätze des Swaps und den Hebel.
-Die Abbildungen zeigen den Weg dorthin am Beispiel Gold; anstelle der Werte stehen Wörter.}\end{minipage}
+\begin{minipage}{170mm}\lead{Jedes Instrument hat eigene Angaben. Die Abbildungen zeigen den Weg dorthin am Beispiel Gold;
+anstelle der Werte stehen Wörter, gleiche Nummern bezeichnen in beiden Ansichten dieselbe Angabe.}\end{minipage}
 \par\vspace{7mm}
-% Nachbauten im selben Massstab, 1 CSS-px = 0,22 mm (Schrift 12 px = 7,5 pt):
+% Nachbauten im selben Massstab, 1 CSS-px = 0,205 mm (Schrift 12 px = 7,0 pt):
 %   kursliste-desktop-ohne.pdf  304 x 410 px, gezeigt y 128-378 (Energies bis Commodities); Variante
 %     ohne Marke: xelatex -jobname=kursliste-desktop-ohne '\def\ohnemarken{}\input{kursliste-desktop}'
 %   info-desktop.pdf  Fenster 290 x 194,8 px, PDF mit 24 px Schattenrand je Seite
 %   info-mobil.pdf    410 x 327,2 px (rechts bündig, Spalte MOBILE)
 % Weg am Desktop von links nach rechts: Kursliste, Ring um das Info-Zeichen der Zeile Gold
 % (Mitte 285,6 / 239,5 px), Pfeil, Info-Fenster. Marken 1-3 im Fenster und mobil, Legende darunter.
-\newlength\ipx\setlength\ipx{0.22mm}
+\newlength\ipx\setlength\ipx{0.205mm}
 \noindent\begin{minipage}[t]{150mm}\raggedright
 {\htwo\ls\color{muted}DESKTOP}\par\vspace{1.5mm}
 {\color{muted}\small \textbf{Kursliste}~→ \textbf{Metals}~→ Zeile \textbf{Gold}}\par\vspace{5mm}
@@ -624,7 +624,9 @@ Die Abbildungen zeigen den Weg dorthin am Beispiel Gold; anstelle der Werte steh
 \draw[ink,line width=0.8pt,-{Stealth[length=2.4mm,width=2mm]}] (296.6,111.5) -- (388,111.5);
 \node[anchor=south,inner sep=0,outer sep=0,align=center,text=ink,font=\micro]
   at (347,103) {Klick auf das\\\textbf{Info-Zeichen (i)}};
-\node[overlay,anchor=north west,inner sep=0,outer sep=0] at (368,22)
+% Fenster so, dass der Pfeil auf den Kopf (XAUUSD) zeigt; die Marken der linken Spalte stehen
+% außen links neben dem Fenster (info-desktop.tex, \markelinks)
+\node[overlay,anchor=north west,inner sep=0,outer sep=0] at (368,43.5)
   {\includegraphics[width=338\ipx]{info-desktop.pdf}};
 \end{tikzpicture}
 \end{minipage}\hfill
@@ -633,10 +635,32 @@ Die Abbildungen zeigen den Weg dorthin am Beispiel Gold; anstelle der Werte steh
 {\color{muted}\small \textbf{Quotes}~→ \textbf{Metals}~→ \textbf{Gold} antippen}\par\vspace{5mm}
 \includegraphics[width=410\ipx]{info-mobil.pdf}
 \end{minipage}
-\par\vspace{10mm}
-\noindent\pfn{1}\hspace{2.4mm}\textbf{Swap long}\hspace{2.4mm}{\color{muted}\small Satz des Swaps für Buy}\hspace{14mm}%
-\pfn{2}\hspace{2.4mm}\textbf{Swap short}\hspace{2.4mm}{\color{muted}\small Satz des Swaps für Sell}\hspace{14mm}%
-\pfn{3}\hspace{2.4mm}\textbf{Leverage}\hspace{2.4mm}{\color{muted}\small Hebel des Instruments}
+\par\vspace{3mm}
+% Legende aller Angaben (Nutzerwunsch 02.10.2026): drei Spalten zu je fünf Nummern
+\newcommand\igtab[1]{\begin{tabular}[t]{@{}>{\raggedright\arraybackslash}p{6.6mm}@{}%
+  >{\raggedright\arraybackslash}p{29mm}@{\hspace{2mm}}>{\fine\raggedright\arraybackslash}p{46.5mm}@{}}
+#1\end{tabular}}
+% \leavevmode vor \color, sonst rutscht der Text in der p-Spalte um eine Zeile nach unten
+\newcommand\igz[3]{\pfn{#1} & \textbf{\small#2} & \leavevmode{\color{muted}#3} \\ \addlinespace[0.8mm]}
+\noindent\igtab{%
+\igz{1}{Symbol}{Bezeichnung des Instruments}
+\igz{2}{Type}{Kategorie in der Kursliste}
+\igz{3}{Spread}{Differenz der Kurse für Buy und Sell; Floating: veränderlich}
+\igz{4}{Digits}{Nachkommastellen des Kurses}
+\igz{5}{Commission}{Nur als Dormant-Gebühr (inaktives Konto)}
+}\hfill\igtab{%
+\igz{6}{Contract size}{Menge des Instruments je Kontrakt}
+\igz{7}{Swap long}{Satz des Swaps für Buy \verw{s:swap}{Swaps}}
+\igz{8}{Swap short}{Satz des Swaps für Sell \verw{s:swap}{Swaps}}
+\igz{9}{Leverage}{Hebel des Instruments \verw{s:hebel}{Hebel}}
+\igz{10}{Gap Level}{Schwelle für Kurslücken (nur mobil)}
+}\hfill\igtab{%
+\igz{11}{Stop Level}{Mindestabstand zum Kurs (nur mobil)}
+\igz{12}{New order}{Order-Fenster für eine sofortige Order}
+\igz{13}{New pending order}{Order-Fenster für eine Pending Order}
+\igz{14}{New chart}{Öffnet einen Chart des Instruments}
+\igz{15}{Trade Hours}{Handelszeiten des Instruments}
+}
 \clearpage
 \kicker{}{Offene Positionen}\phantomsection\label{s:positionen}
 \Hone{Die Angaben Ihrer offenen Positionen}

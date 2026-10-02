@@ -105,7 +105,14 @@
 \titelende{a}{145.3}{Swap long}
 \titelende{b}{280.7}{Swap short}
 \titelende{c}{145.3}{Leverage:}
+\titelende{sym}{10}{Symbol}\titelende{typ}{10}{Type}\titelende{dig}{10}{Digits}
+\titelende{con}{10}{Contract size:}\titelende{spr}{145.3}{Spread}\titelende{sto}{145.3}{Stop Level}
+\titelende{gap}{280.7}{Gap Level}\titelende{com}{280.7}{Commission}
 \makeatother
+% \knopfmarke{<x>}{<y>}{<Nummer>}: Marke links in der Schaltfläche (Mitte 19 px vom Rand)
+\newcommand\knopfmarke[3]{%
+  \fill[white] (#1+19,-#2-14.8) circle[radius=11];
+  \node[anchor=base,text=markentext,font=\schrift\halbfett] at (#1+19,-#2-14.8-4) {#3};}
 \newcommand\marke[3]{% {Ende des Titels in px}{y der Zelle}{Nummer}
   \fill[white] (#1+25+11,-#2-7) circle[radius=11];
   \node[anchor=base,text=markentext,font=\schrift\halbfett] at (#1+25+11,-#2-7-4) {#3};}
@@ -132,10 +139,14 @@
   \knopf{211}{240}{knopfb}{New pending order}
   \knopf{10}{281.6}{knopfc}{New chart}
   \knopf{211}{281.6}{knopfd}{Trade Hours}
-  \ifmarken
-    \marke{\markea}{56}{1}
-    \marke{\markeb}{56}{2}
-    \marke{\markec}{191}{3}
+  \ifmarken% alle Angaben und Schaltflächen nummeriert (Nutzerwunsch 02.10.2026),
+    % Nummern wie in info-desktop.tex
+    \marke{\markesym}{56}{1}\marke{\markea}{56}{7}\marke{\markeb}{56}{8}
+    \marke{\marketyp}{101}{2}\marke{\markespr}{101}{3}\marke{\markegap}{101}{10}
+    \marke{\markedig}{146}{4}\marke{\markesto}{146}{11}\marke{\markecom}{146}{5}
+    \marke{\markecon}{191}{6}\marke{\markec}{191}{9}
+    \knopfmarke{10}{240}{12}\knopfmarke{211}{240}{13}
+    \knopfmarke{10}{281.6}{14}\knopfmarke{211}{281.6}{15}
   \fi
 \end{tikzpicture}%
 \end{document}

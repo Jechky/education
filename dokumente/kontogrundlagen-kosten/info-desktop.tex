@@ -71,6 +71,12 @@
   \fill[white] (138.5,#1+7) circle[radius=8.5];
   \node[anchor=base,inner sep=0,outer sep=0,text=markenziffer,
     font=\fontsize{6.954bp}{8bp}\halbfett] at (138.5,#1+7+3.091) {#2};}% 12 px * 17/22
+% \markelinks{<Zeilenoberkante>}{<Nummer>}: Spalte 1 beginnt bei x10, davor kein Platz -> Marke
+% außen links neben dem Fenster (Mitte x -12, im Schattenrand)
+\newcommand\markelinks[2]{%
+  \fill[markenziffer] (-12,#1+7) circle[radius=8.5];% auf weißem Papier dunkel gefüllt
+  \node[anchor=base,inner sep=0,outer sep=0,text=white,
+    font=\fontsize{6.954bp}{8bp}\halbfett] at (-12,#1+7+3.091) {#2};}
 
 \begin{document}%
 \begin{tikzpicture}[x=\px,y={(0,-\px)},font=\schrift]
@@ -105,10 +111,10 @@
   \zeile{145.8}{150}{51.9875}{Leverage}{:}
   \node[anchor=base west,inner sep=0,outer sep=0,text=white] at (208.8,145.8+11.2) {Hebel};
   \zeile{164.8}{10}{80.1125}{Contract size:}{Größe}
-  \ifmarken
-    \marke{74.8}{1}
-    \marke{93.8}{2}
-    \marke{145.8}{3}
+  \ifmarken% alle Angaben nummeriert (Nutzerwunsch 02.10.2026), Nummern wie in info-mobil.tex
+    \markelinks{74.8}{1}\markelinks{93.8}{2}\markelinks{112.8}{3}
+    \markelinks{145.8}{5}\markelinks{164.8}{6}
+    \marke{74.8}{7}\marke{93.8}{8}\marke{112.8}{4}\marke{145.8}{9}
   \fi
 \end{tikzpicture}%
 \end{document}
