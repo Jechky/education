@@ -23,7 +23,9 @@ Kontogrundlagen S. 7 (In der Plattform) und S. 8 (Übersicht) nach den Punkten 1
 - Sonstiges: Kommentar in `mobil.tex` nennt „Seite 6“; S. 5 Tabellenzeile „Kosten über Nacht“ (dort Belastung, also stimmig); `pdfsubject` nennt „Free Margin“ statt „Free“; „Volume“ im Order-Fenster = Menge.
 
 ## Für HANDOFF.md
-Abschnitt 2.3: Seitenzahlen in Doku 2 wieder eingeführt (Fußzeile rechts „n / 8“, nicht auf S. 1), weil der Text auf Seiten verweist; #59 („Seitenzahlen entfernt“) damit überholt. Abschnitt 5.3: S. 7/S. 8 wie oben; Bonus erklärt, Credit nur genannt; keine Commission. Abschnitt 4: Guide-`pdftitle` „Pending Orders – Standard Tier“.
+~~Abschnitt 2.3: Seitenzahlen in Doku 2 wieder eingeführt (Fußzeile rechts „n / 8“, nicht auf S. 1), weil der Text auf Seiten verweist; #59 („Seitenzahlen entfernt“) damit überholt.~~ → überholt durch den Nachtrag unten. Abschnitt 5.3: S. 7/S. 8 wie oben; Bonus erklärt, Credit nur genannt; keine Commission. Abschnitt 4: Guide-`pdftitle` „Pending Orders – Standard Tier“.
+
+**Nachtrag (Aufgabe kg-verweise-ohne-zahlen):** Abschnitt 2.3 gilt unverändert: **Seitenzahlen bleiben entfernt** (#58/#59), auch in Doku 2. Fußzeile wieder nur „KONTOGRUNDLAGEN & KOSTEN · EDUCATION – STANDARD PACKAGE“. Verweise nennen den **Seitentitel (Kicker)** statt einer Zahl: Makros `\titel{label}{Titel}` → „Titel“ (Fließtext, z. B. „(Abbildung unter „In der Plattform“)“, „mehr dazu unter „Margin““), `\verw{label}{Titel}` → „→ Titel“ (Spalte „Mehr dazu“ in den Grundbegriffen, 30 + 102 + 29,5 mm), `\pfeil` (S. 5: „Swap: 7 € pro Nacht (→ Swaps)“); jeweils unsichtbarer Link, Titel bricht nicht um. S. 8 Bonus, Spalte „Änderung“: „–“ (Angabe war nicht belegt; Punkt 1 oben damit erledigt). `pdfsubject`: „Free“ statt „Free Margin“.
 
 ## Prüfkommandos
     cd dokumente/kontogrundlagen-kosten && xelatex -interaction=nonstopmode -halt-on-error -output-directory=../../build/agent-pu Kontogrundlagen-Kosten.tex

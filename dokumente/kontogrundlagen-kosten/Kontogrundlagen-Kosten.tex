@@ -9,7 +9,7 @@
 % Trennmuster wie beim Original-Build (dort fehlten die deutschen Muster,
 % babel nahm die englischen). Ohne diese Zeile bricht die Swap-Seite (S. 6) anders um.
 \babelprovide[hyphenrules=english]{ngerman}
-\usepackage{hyperref}\hypersetup{hidelinks,pdftitle={Kontogrundlagen \& Kosten – Schulungseinheit},pdfsubject={Balance, Equity, Margin, Free Margin, Leverage, Swap}}
+\usepackage{hyperref}\hypersetup{hidelinks,pdftitle={Kontogrundlagen \& Kosten – Schulungseinheit},pdfsubject={Balance, Equity, Margin, Free, Leverage, Swap}}
 
 \setmainfont{IBMPlexSans-Regular.otf}[Path=../../fonts/,
   BoldFont={IBMPlexSans-SemiBold.otf}, ItalicFont={IBMPlexSans-Italic.otf},
@@ -72,10 +72,13 @@
 \newcommand{\lead}[1]{{\leadf\color{body}\raggedright #1\par}}
 \newcommand{\hr}{\par\vspace{7mm}{\color{rule}\rule{\linewidth}{0.4pt}}\par\vspace{6mm}}
 \newcommand{\hd}[1]{{\micro\bfseries\ls\color{soft}\MakeUppercase{#1}}}
-% Seitenverweise automatisch (\pageref), damit neue Seiten die Nummern nicht verschieben;
-% Ziele stehen hinter den \kicker der Seiten (s:grundbegriffe, s:kontostand, s:margin, ...)
-\newcommand{\seite}[1]{S.~\pageref{#1}}
-\newcommand{\verw}[1]{\leavevmode{\color{muted}→~\seite{#1}}}
+% Verweise ohne Seitenzahl (Nutzerregel "keine Zahlen", HANDOFF 2.3): Ziel ist der Seitentitel
+% (Kicker), als unsichtbarer Link; Labels hinter den \kicker (s:grundbegriffe, s:kontostand, ...).
+%   \titel{label}{Titel}  -> „Titel“ im Fliesstext, z. B. (Abbildung unter~\titel{...}{In der Plattform})
+%   \pfeil{label}{Titel}  -> „→ Titel“ in Tabellen; \verw wie \pfeil, in muted
+\newcommand{\titel}[2]{\hyperref[#1]{\mbox{„#2“}}}% Titel bricht nicht um
+\newcommand{\pfeil}[2]{\hyperref[#1]{→~#2}}
+\newcommand{\verw}[2]{\leavevmode{\color{muted}\pfeil{#1}{#2}}}
 \tikzset{cnum/.style={circle,fill=ink,text=white,inner sep=0,minimum size=3.2mm,
   font=\bfseries\fontsize{5.6}{6}\selectfont}}
 \newcommand{\cn}[1]{\tikz[baseline=-0.65ex]\node[cnum]{#1};}
@@ -115,8 +118,7 @@
 \pagestyle{fancy}\fancyhf{}\renewcommand{\headrulewidth}{0pt}
 
 \fancyfoot[L]{\micro\color{soft}\ls KONTOGRUNDLAGEN \& KOSTEN · EDUCATION – STANDARD PACKAGE}
-% Seitenzahl, weil der Text auf Seiten verweist (\seite, \verw); Deckblatt ohne Fusszeile
-\fancyfoot[R]{\micro\color{soft}\ls\thepage~/~\pageref*{s:ende}}
+% keine Seitenzahl (Nutzerregel "keine Zahlen"); Deckblatt ohne Fusszeile
 \begin{document}
 \thispagestyle{empty}
 {\htwo\ls\color{muted}SCHULUNGSEINHEIT}\par\vspace{11mm}
@@ -124,7 +126,7 @@
 {\color{ink}\rule{28mm}{2pt}}\par\vspace{6mm}
 \begin{minipage}{126mm}\lead{Diese Schulungseinheit erläutert die Begriffe Balance, Equity, Margin,
 Free, Level, Leverage (Hebel) und Swap sowie ihren Zusammenhang innerhalb Ihres Kontos. Wo Sie diese Werte
-auf der Plattform finden, zeigt die Abbildung auf \seite{s:plattform}.}\end{minipage}
+auf der Plattform finden, zeigt die Abbildung unter~\titel{s:plattform}{In der Plattform}.}\end{minipage}
 \par\vspace{6mm}
 \tikz\node[draw=rule,line width=0.4pt,rounded corners=1.6mm,inner xsep=3mm,inner ysep=1.5mm,
   text=muted,font=\micro\bfseries\ls]{KONTOWERTE UND KOSTEN};
@@ -149,7 +151,7 @@ auf der Plattform finden, zeigt die Abbildung auf \seite{s:plattform}.}\end{mini
 \node[inner sep=0,text=muted,font=\lbl] at (111,24.2) {verfügbar für neue Positionen};
 \draw[greya,line width=0.5pt,dash pattern=on 1.2mm off 0.9mm] (0,14) -- (170,14);
 \node[inner sep=0,fill=white,inner xsep=2mm,text=muted,font=\micro\bfseries\ls] at (85,14) {LEVEL = EQUITY IM VERHÄLTNIS ZUR MARGIN};
-\node[inner sep=0,text=soft,font=\micro] at (85,5) {Je höher das Level, desto größer ist der Abstand zum Stop out, bei dem die Plattform Positionen schließt (\seite{s:margin}).};
+\node[inner sep=0,text=soft,font=\micro] at (85,5) {Je höher das Level, desto größer ist der Abstand zum Stop out, bei dem die Plattform Positionen schließt (mehr dazu unter~\titel{s:margin}{Margin}).};
 \end{tikzpicture}
 \par\vspace{0pt plus 1.35fill}
 {\color{rule}\rule{\linewidth}{0.4pt}}\par\vspace{2.5mm}
@@ -161,14 +163,15 @@ auf der Plattform finden, zeigt die Abbildung auf \seite{s:plattform}.}\end{mini
 auf die Seite mit der ausführlichen Erklärung.}\end{minipage}
 \par\vspace{8mm}
 % Reihenfolge: jeder Begriff wird erst erklaert, dann in einer spaeteren Zeile benutzt.
-% Spalten im Flattersatz; 30 + 119,5 + 12 mm plus Spaltenabstaende = 170 mm (wie "Auf einen Blick").
+% Spalten im Flattersatz; 30 + 102 + 29,5 mm plus Spaltenabstaende = 170 mm (wie "Auf einen Blick");
+% "Mehr dazu" so breit, dass "→ In der Plattform" einzeilig bleibt (ca. 28,9 mm).
 % Zwei Gruppen (Handel; Sicherheit und Kosten), getrennt nur durch groesseren Abstand.
 % Swap: im Profit der Position enthalten, Balance erst beim Schliessen (Quelle: originals/...Kosten_2.pdf, 7.3/8).
 % Keine Commission auf dieser Plattform (Nutzer 02.10.2026); dafuer Bonus (Feld in der Kontouebersicht, S. 7).
 \newcommand{\gbz}[1]{\newline{\color{muted}\small #1}}
 \begin{tabular}{@{}>{\raggedright\arraybackslash}p{30mm}%
-  >{\raggedright\arraybackslash}p{119.5mm}>{\raggedright\arraybackslash}p{12mm}@{}}
-\hd{Begriff} & \hd{Erklärung} & \hd{Seite} \\
+  >{\raggedright\arraybackslash}p{102mm}>{\raggedright\arraybackslash}p{29.5mm}@{}}
+\hd{Begriff} & \hd{Erklärung} & \hd{Mehr dazu} \\
 \addlinespace[1.6mm]\midrule\addlinespace[2.4mm]
 \textbf{Instrument} & Das handelbare Produkt, zum Beispiel ein Rohstoff oder eine Währung (Devisen). In den
   Beispielen dieser Einheit steht dafür Instrument~XY. & \\ \addlinespace[2mm]
@@ -176,26 +179,26 @@ auf die Seite mit der ausführlichen Erklärung.}\end{minipage}
   Kursbewegungen. & \\ \addlinespace[2mm]
 \textbf{Position}\gbz{(offen, geschlossen)} & Ein Handel in einem Instrument, den Sie öffnen und später
   schließen. Solange die Position offen ist, ändert sich ihr Ergebnis, also Gewinn oder Verlust, mit dem Kurs;
-  mit dem Schließen wird es realisiert. & \verw{s:kontostand} \\ \addlinespace[2mm]
+  mit dem Schließen wird es realisiert. & \verw{s:kontostand}{Kontostand} \\ \addlinespace[2mm]
 \textbf{Buy / Sell} & Die Richtung einer Position: Buy (Kauf, auch long) oder Sell (Verkauf, auch short). Bei Buy
   entsteht mit steigendem Kurs ein Gewinn und mit fallendem ein Verlust, bei Sell umgekehrt. & \\ \addlinespace[2mm]
 \textbf{Volumen} & Der Wert einer Position. Gewinne und Verluste werden am gesamten Volumen berechnet.
-  & \verw{s:hebel} \\ \addlinespace[2mm]
+  & \verw{s:hebel}{Hebel} \\ \addlinespace[2mm]
 \textbf{Broker} & Das Unternehmen, das Ihr Konto führt und über das Sie Positionen öffnen und schließen. Anders
-  als beim Direktkauf erwerben Sie das Instrument dabei nicht selbst. & \verw{s:hebel} \\ \addlinespace[2mm]
+  als beim Direktkauf erwerben Sie das Instrument dabei nicht selbst. & \verw{s:hebel}{Hebel} \\ \addlinespace[2mm]
 \textbf{Plattform} & Die Anwendung des Brokers, mobil und am Desktop. Dort öffnen und schließen Sie Positionen
-  und sehen die Werte Ihres Kontos. & \verw{s:plattform} \\ \addlinespace[5mm]
+  und sehen die Werte Ihres Kontos. & \verw{s:plattform}{In der Plattform} \\ \addlinespace[5mm]
 \textbf{Margin} & Der Teil Ihres Kontos, den offene Positionen als Sicherheit binden, solange sie offen sind.
-  & \verw{s:margin} \\ \addlinespace[2mm]
+  & \verw{s:margin}{Margin} \\ \addlinespace[2mm]
 \textbf{Stop out} & Die Schwelle des Levels, bei der die Plattform offene Positionen selbstständig schließt. Das
-  Level gibt die Equity im Verhältnis zur Margin an. & \verw{s:margin} \\ \addlinespace[2mm]
+  Level gibt die Equity im Verhältnis zur Margin an. & \verw{s:margin}{Margin} \\ \addlinespace[2mm]
 \textbf{Leverage}\gbz{(Hebel)} & Gibt an, welcher Teil des Volumens als Margin gebunden wird. Die Schreibweise
-  1:10 bedeutet: Die Margin beträgt ein Zehntel des Volumens. & \verw{s:hebel} \\ \addlinespace[2mm]
+  1:10 bedeutet: Die Margin beträgt ein Zehntel des Volumens. & \verw{s:hebel}{Hebel} \\ \addlinespace[2mm]
 \textbf{Swap} & Ein Betrag für das Halten einer Position über den Tageswechsel, der ihr je nach Satz (Swap long
   für Buy, Swap short für Sell) belastet oder gutgeschrieben wird. Er ist in ihrem angezeigten Profit enthalten
-  und geht beim Schließen in die Balance ein. & \verw{s:swap} \\ \addlinespace[2mm]
+  und geht beim Schließen in die Balance ein. & \verw{s:swap}{Swaps} \\ \addlinespace[2mm]
 \textbf{Bonus} & Ein Betrag auf Ihrem Konto, mit dem Sie handeln können. Gewinne, die Sie damit erzielen,
-  sind gemäß den AGB des Brokers auszahlbar. & \verw{s:plattform} \\
+  sind gemäß den AGB des Brokers auszahlbar. & \verw{s:plattform}{In der Plattform} \\
 \end{tabular}
 \par
 \begin{merk}\textbf{Zur Schreibweise.} Begriffe der Plattform stehen in deren Schreibweise, etwa Buy, Margin
@@ -203,7 +206,7 @@ oder Stop out. Wo es das Verständnis erleichtert, folgt die deutsche Entsprechu
 \clearpage
 \kicker{}{Kontostand}\phantomsection\label{s:kontostand}
 \Hone{Der Unterschied zwischen Balance und Equity}
-\begin{minipage}{128mm}\lead{Die Plattform weist für Ihr Konto zwei Werte aus (Abbildung \seite{s:plattform}). Die Differenz zwischen
+\begin{minipage}{128mm}\lead{Die Plattform weist für Ihr Konto zwei Werte aus (Abbildung unter~\titel{s:plattform}{In der Plattform}). Die Differenz zwischen
 ihnen entspricht dem aktuellen Ergebnis Ihrer offenen Positionen.}\end{minipage}
 \par\vspace{8mm}
 \noindent\begin{minipage}[t]{82mm}\vspace{0pt}\begin{soft}[equal height group=konto]
@@ -277,7 +280,7 @@ als Sicherheit für mögliche Verluste. Dieser Betrag wird nicht verbraucht, son
 \par\vspace{8mm}
 \noindent\begin{minipage}[t]{54mm}\vspace{0pt}\raggedright
 {\bfseries Margin}\par\vspace{1mm}
-{\color{muted}\small Der als Sicherheit gebundene Teil der Equity. Er wird in der Kontoübersicht (Abbildung \seite{s:plattform}) und bei jeder Position einzeln ausgewiesen.}
+{\color{muted}\small Der als Sicherheit gebundene Teil der Equity. Er wird in der Kontoübersicht (Abbildung unter~\titel{s:plattform}{In der Plattform}) und bei jeder Position einzeln ausgewiesen.}
 \end{minipage}\hfill
 \begin{minipage}[t]{54mm}\vspace{0pt}\raggedright
 {\bfseries Free}\par\vspace{1mm}
@@ -320,7 +323,7 @@ zudem die Equity. Der Wert unter Free nimmt folglich aus zwei Gründen ab.\par}
 {\color{body}\raggedright Solange die Equity deutlich über der gebundenen Margin liegt, ist das Level hoch. Sinkt die Equity
 durch Verluste, sinkt folglich auch das Level. Ab einer bestimmten Schwelle gibt die Plattform eine Warnung aus.
 Erreicht das Level den \textbf{Stop out}, schließt die Plattform Positionen selbstständig, beginnend mit der Position
-mit dem größten Verlust. Den Stop-out-Wert Ihres Kontos finden Sie unter \textbf{Information} (Abbildung \seite{s:plattform}).\par}
+mit dem größten Verlust. Den Stop-out-Wert Ihres Kontos finden Sie unter \textbf{Information} (siehe~\titel{s:plattform}{In der Plattform}).\par}
 \par\vspace{5mm}
 \noindent \begin{tikzpicture}[x=1mm,y=1mm]
 \useasboundingbox (0,0) rectangle (170.0,30);
@@ -381,7 +384,7 @@ Bank, also ohne Hebel. Sie öffnen hingegen beim Broker eine Position mit Hebel~
 \addlinespace[1.6mm]\midrule\addlinespace[2.4mm]
 \textbf{Kurs von Instrument~XY} & 105\,€ & 105\,€ \\ \addlinespace[1.6mm]
 \textbf{Ergebnis vor Swap} & +50\,€ & +500\,€ \\ \addlinespace[1.6mm]
-\textbf{Kosten über Nacht} & kein Swap & Swap: 7\,€ pro Nacht (\seite{s:swap}) \\ \addlinespace[1.6mm]
+\textbf{Kosten über Nacht} & kein Swap & Swap: 7\,€ pro Nacht (\pfeil{s:swap}{Swaps}) \\ \addlinespace[1.6mm]
 \textbf{Ergebnis nach Swap} & +50\,€ & +493\,€ \\ \addlinespace[1.6mm]
 \textbf{Ergebnis vor Swap, gemessen an\newline Einsatz bzw. Margin} & +5\,\% & +50\,\% \\
 \end{tabular}
@@ -605,12 +608,12 @@ steht die Liste Ihrer offenen Positionen; aufgeklappt zeigen sie Swap und Margin
 \textbf{Swap} & Belastung oder Gutschrift für das Halten über Nacht; bei der Position verbucht, beim Schließen
   in der Balance & Jede Nacht, am Mittwoch dreifach \\ \addlinespace[2mm]
 \textbf{Bonus} & Betrag, mit dem Sie handeln können; Gewinne daraus sind gemäß den AGB auszahlbar
-  & Nach den AGB des Brokers \\
+  & – \\
 \end{tabular}
 \par\vspace{6mm}
 \begin{merk}\textbf{Kernaussagen.} Die Equity gibt den aktuellen Wert Ihres Kontos wieder, die Balance hingegen nur
 die bereits realisierten Ergebnisse. Free bezeichnet den Teil der Equity, der für weitere Positionen zur Verfügung
 steht. Der Hebel bestimmt nicht die Richtung eines Ergebnisses, sondern das Ausmaß, in dem eine Kursbewegung
-auf Ihr Konto wirkt.\end{merk}\label{s:ende}
+auf Ihr Konto wirkt.\end{merk}
 
 \end{document}
