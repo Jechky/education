@@ -18,6 +18,7 @@
 8. [Offene Punkte / nächste Schritte](#8-offene-punkte--nächste-schritte)
 9. [Fehlende Dateien](#9-fehlende-dateien)
 10. [Unklarheiten und Widersprüche im Verlauf](#10-unklarheiten-und-widersprüche-im-verlauf)
+11. [Stand Wiederherstellung](#11-stand-wiederherstellung)
 
 ---
 
@@ -704,3 +705,32 @@ Im Repo liegt dafür bereits **`scripts/setup.sh`** (Commit `ecc5820`). Laut Com
 - **CSV-Tabelle mit Spalte „Auslöser“** (#119): Herkunft und genaue Position im Dokument sind im Export nicht sichtbar.
 - **Mehrfach leere Antworten** (#11, #27, #31, #53, #57, #105–#115, #135–#145, #159): Dort fehlen Inhalte im Export oder die Antworten sind abgebrochen. Der Nutzer hat Nachrichten deshalb mehrfach wiederholt.
 - **Zeitsprung:** Der Chat endet inhaltlich am 07.09.2026 (#157); die Übergabe-Bitte (#158) ist vom 01.10.2026.
+
+---
+
+## 11. Stand Wiederherstellung
+
+Stand 02.10.2026: Dokument 1 („Pending Orders“) ist aus `Pending-Orders-Guide_ORIGINAL.tex` wieder baubar und **optisch identisch** mit dem ORIGINAL-PDF. Dokument 2 fehlt weiterhin (Abschnitt 9).
+
+**Struktur**
+
+| Pfad | Inhalt |
+|---|---|
+| `dokumente/pending-orders/Pending-Orders-Guide.tex` | Quelle; gegenüber `originals/…_ORIGINAL.tex` nur `Path=../../fonts/` und eine Zeile `\babelprovide[hyphenrules=english]{ngerman}` (siehe unten) |
+| `dokumente/pending-orders/charts.tikz` | `\chartbl/sl/bs/ss` (+ `…mini`), erzeugt von `tools/charts_aus_pdf.py` |
+| `dokumente/pending-orders/fenster-bl.pdf`, `type-menu.pdf` | aus Seite 6 des ORIGINAL-PDFs extrahierte Form-XObjects (`tools/grafiken_aus_pdf.py`), Inter eingebettet |
+| `fonts/` | IBM Plex Sans (Regular, SemiBold, Italic, SemiBoldItalic, Light, LightItalic) und Mono (Regular, SemiBold) als OTF, GitHub-Release IBM/plex 1.1.0, OFL-Lizenz |
+| `originals/` | unveränderte Uploads: `Pending-Orders-Guide_ORIGINAL.pdf/.tex`, `…_GESCHUETZT_3.pdf`, `Order-Trigger-Guide_2.tex` (ältere Fassung), `scramble.py` (nur abgelegt, nicht im Build), `pending_orders_DE.pdf` |
+| `scripts/build.sh` | Build; `tools/pdf_vergleich.py` Pixel-/Inhaltsstrom-Vergleich |
+
+**Build:** `scripts/build.sh` (oder `scripts/build.sh pending-orders`) → `build/Pending-Orders-Guide.pdf` (`build/` ist ignoriert). Prüfen: `python3 tools/pdf_vergleich.py` (Standard: Neubau gegen `originals/Pending-Orders-Guide_ORIGINAL.pdf`, 150 dpi).
+
+**Vergleichsergebnis:** 6 Seiten; auf allen Seiten 0,0000 % abweichende Pixel (max. Abweichung 0) bei 150 und 600 dpi; die Inhaltsströme aller sechs Seiten sind bytegleich. 11 Schriften, alle eingebettet (IBM Plex Sans Light/Regular/SemiBold, Inter im Fenster und Menü); `pdfimages` findet keine Rasterbilder.
+
+**Erkenntnisse aus der Rekonstruktion**
+
+- **Charts:** Je Bild 37 Rechtecke, 2 Kreise, 1 Dreieck (TikZ `rectangle`, `circle`, `-- cycle`), Werte mit höchstens 3 Nachkommastellen, bitgenau zurückgerechnet. Farben `pfrot`, `pfgrau` (#97A5B4), `pfgruen`. Die **Mini-Fassungen sind im Original identisch** mit den großen (gleiche Geometrie, gleiche Farben, kein gröberer Detailgrad) – nur kleiner skaliert. In `charts.tikz` sind sie daher Verweise.
+- **Silbentrennung:** Der Original-Build lief ohne deutsche Trennmuster (babel fiel auf Englisch zurück). Mit deutschen Mustern trennt TeX auf Seite 2 „Verkau-fen“ und alle Folgezeilen verschieben sich. Die Zeile `hyphenrules=english` stellt das alte Verhalten her. ⚠ Bei neuen Texten auf deutsche Muster umstellen (Zeile entfernen) und die Umbrüche prüfen.
+- Die Plex-OTFs aus `fonts/` erzeugen exakt dieselben Glyphen und Metriken wie im Original (CFF-Version 3.5).
+
+**Offen:** keine Abweichungen. Die geschützte Fassung wurde nicht neu erzeugt (`scramble.py` liegt nur in `originals/`).
