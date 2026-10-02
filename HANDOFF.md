@@ -22,6 +22,7 @@
 12. [Wiederherstellung Kontogrundlagen](#12-wiederherstellung-kontogrundlagen)
 13. [Farbrollen Kontogrundlagen](#13-farbrollen-kontogrundlagen)
 14. [Hebel-Vergleich mit Zahlen (Kontogrundlagen S. 4)](#14-hebel-vergleich-mit-zahlen-kontogrundlagen-s-4)
+15. [Sprachdurchgang Kontogrundlagen: Sie-Form, C1, neutral](#15-sprachdurchgang-kontogrundlagen-sie-form-c1-neutral-02102026)
 
 ---
 
@@ -909,3 +910,8 @@ Fazit: „Gemessen am Einsatz ergibt dieselbe Kursbewegung bei Ihrem Bekannten �
 **Layout:** Spalte „Mit Hebel 1:10“ beginnt bei 88 mm, genau unter „Mit Hebel“ in der Grafik (Spalten 34 / 45,53 / 82 mm, zusammen mit 2 × 2 `\tabcolsep` exakt 170 mm, kein Overfull). Alle Spalten Flattersatz (`>{\raggedright\arraybackslash}`). Zahlen in IBM Plex Sans (nicht Mono), schmales Leerzeichen `\,` vor € und %, Minus U+2212, Tausenderpunkt; `Hebel~1:10`, `Instrument~XY`, `Ihre~100\,€` gegen Umbrüche. Die Seite ist bis ca. 275 mm gefüllt (Satzspiegel endet bei 279 mm): **Jede zusätzliche Zeile auf S. 4 schiebt den Merk-Kasten auf eine neue Seite** – nach Textänderungen Seitenzahl prüfen.
 
 **Prüfung:** 7 Seiten; einzige Warnung weiterhin Overfull \hbox 1,24 pt in der Spickzettel-Tabelle (alt); 10 Schriften eingebettet; keine Rasterbilder; Starthöhe S. 4 unverändert 20,3 mm (pdftotext). Seiten 1–3 und 5–7 pixelgleich mit `86b22e4` (60 dpi). Bild (nicht eingecheckt): `build/Hebel-Neu.png` (S. 4, 110 dpi); Test-PDF `build/Kontogrundlagen-Kosten_TEST.pdf`.
+
+## 15. Sprachdurchgang Kontogrundlagen: Sie-Form, C1, neutral (02.10.2026)
+
+Alle Texte von `Kontogrundlagen-Kosten.tex` (S. 1–7: Lead, Überschriften, Kästen, Grafik-Beschriftungen, Tabelle S. 7, Merk-Kästen, Texte neben den Plattform-Grafiken auf S. 6) auf **Sie-Form, gehobenes Deutsch (C1), rein informativ** umgestellt. Keine Umgangssprache, keine Slogans, keine Wertungen („Gesundheitsanzeige“, „genug Puffer“, „ehrliche Zahl“, „fressen“ … entfernt). „Spickzettel“ → „Auf einen Blick“, „Drei Faustregeln“ → „Kernaussagen“, „Margin Call“ → „Warnbereich“ (kein Plattform-Begriff), Skala S. 3 „GENUG PUFFER“ → „NORMALBEREICH“. Hebel-Tabelle und -Zahlen S. 4 unverändert; nur Lead und Merk-Kasten dort umformuliert (Länge gleich). Plattform-Elemente (`bar.*`, `mobil.*`, `panel.pdf`, Marken A/B/1–5) unverändert – sie enthalten weiterhin den Platzhalter **„dein Guthaben“** (einzige du-Form im PDF; bei Bedarf mit dem Nutzer klären).
+Nebenbei: Tabelle S. 7 im Flattersatz, letzte Spalte 62 → 61,5 mm (alter Overfull 1,24 pt weg); Kästen S. 2 gleich hoch (`equal height group=konto`). Prüfung: 7 Seiten, kein Overfull, keine Ziffern außer S. 4-Vergleich und Schrittmarken, kein Stop-Loss. Übersicht (nicht eingecheckt): `build/KG-Text-Uebersicht.png`.
