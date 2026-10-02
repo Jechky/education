@@ -37,16 +37,19 @@ def codes_aus(cmap):
     return sorted(codes)
 
 
-def neue_cmap(codes, zufall):
+def neue_cmap(codes, zufall, bytes_je_code=2):
+    """bytes_je_code=2: CID-Schriften (Identity-H); 1: einfache Schriften (Type1/TrueType)."""
+    stellen = 2 * bytes_je_code
+    bereich = "<00> <FF>" if bytes_je_code == 1 else "<0000> <FFFF>"
     kopf = ("/CIDInit /ProcSet findresource begin\n12 dict begin\nbegincmap\n"
             "/CIDSystemInfo << /Registry (Adobe) /Ordering (UCS) /Supplement 0 >> def\n"
             "/CMapName /Adobe-Identity-UCS def\n/CMapType 2 def\n"
-            "1 begincodespacerange\n<0000> <FFFF>\nendcodespacerange\n")
+            f"1 begincodespacerange\n{bereich}\nendcodespacerange\n")
     teile = []
     for i in range(0, len(codes), 100):
         gruppe = codes[i:i + 100]
         teile.append(f"{len(gruppe)} beginbfchar\n" + "".join(
-            f"<{c:04X}> <{ord(zufall.choice(ALPHABET)):04X}>\n" for c in gruppe) + "endbfchar\n")
+            f"<{c:0{stellen}X}> <{ord(zufall.choice(ALPHABET)):04X}>\n" for c in gruppe) + "endbfchar\n")
     fuss = "endcmap\nCMapName currentdict /CMap defineresource pop\nend\nend"
     return kopf + "".join(teile) + fuss
 
@@ -63,6 +66,15 @@ def schuetzen(quelle, ziel):
         neu.set_data(neue_cmap(codes_aus(alt) or list(range(1, 512)), zufall).encode("latin-1"))
         obj[NameObject("/ToUnicode")] = writer._add_object(neu)
         getauscht += 1
+    # Einfache Schriften ohne ToUnicode (z. B. Helvetica mit WinAnsiEncoding): Text wäre über die
+    # Kodierung lesbar -> vergiftete 1-Byte-Tabelle ergänzen (Leseprogramme ziehen ToUnicode vor)
+    for obj in list(writer._objects):
+        if (hasattr(obj, "get") and obj.get("/Type") == "/Font" and "/ToUnicode" not in obj
+                and obj.get("/Subtype") in ("/Type1", "/TrueType", "/MMType1", "/Type3")):
+            neu = DecodedStreamObject()
+            neu.set_data(neue_cmap(list(range(32, 256)), zufall, 1).encode("latin-1"))
+            obj[NameObject("/ToUnicode")] = writer._add_object(neu)
+            getauscht += 1
     writer.pdf_header = b"%PDF-2.0"
     writer.encrypt(user_password="", owner_password=secrets.token_hex(16),
                    algorithm="AES-256", permissions_flag=P_WERT)
