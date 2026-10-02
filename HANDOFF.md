@@ -721,6 +721,7 @@ Stand 02.10.2026: Dokument 1 („Pending Orders“) ist aus `Pending-Orders-Guid
 | `dokumente/pending-orders/fenster-bl.pdf`, `type-menu.pdf` | aus Seite 6 des ORIGINAL-PDFs extrahierte Form-XObjects (`tools/grafiken_aus_pdf.py`), Inter eingebettet |
 | `fonts/` | IBM Plex Sans (Regular, SemiBold, Italic, SemiBoldItalic, Light, LightItalic) und Mono (Regular, SemiBold) als OTF, GitHub-Release IBM/plex 1.1.0, OFL-Lizenz |
 | `originals/` | unveränderte Uploads: `Pending-Orders-Guide_ORIGINAL.pdf/.tex`, `…_GESCHUETZT_3.pdf`, `Order-Trigger-Guide_2.tex` (ältere Fassung), `scramble.py` (nur abgelegt, nicht im Build), `pending_orders_DE.pdf` |
+| `originals/messungen/new-order-fenster.json` | DOM-Messung des Plattform-Fensters „NEW ORDER“ (Reiter New Pending Order, Buy Limit; Modal 475 × 573,3 px, Inter) – Messgrundlage, aus der `fenster-bl.pdf` im alten Chat gebaut wurde. Nur Referenz; maßgeblich bleibt das aus dem ORIGINAL-PDF extrahierte `fenster-bl.pdf` |
 | `scripts/build.sh` | Build; `tools/pdf_vergleich.py` Pixel-/Inhaltsstrom-Vergleich |
 
 **Build:** `scripts/build.sh` (oder `scripts/build.sh pending-orders`) → `build/Pending-Orders-Guide.pdf` (`build/` ist ignoriert). Prüfen: `python3 tools/pdf_vergleich.py` (Standard: Neubau gegen `originals/Pending-Orders-Guide_ORIGINAL.pdf`, 150 dpi).
