@@ -1,0 +1,81 @@
+% Mobile Ansicht „Info-Zeichen -> Reiter Balance“ (blaues Design) – Vektor-Nachbau.
+% Kopfleiste + Reiterleiste nach Messung originals/messungen/mobil-kopf-reiter.json
+% (Viewport 440 x 956 CSS-px), darunter die vorhandene Kontoübersicht panel.pdf.
+% scripts/build.sh baut diese Datei vor dem Dokument und legt mobil.pdf daneben;
+% Seite 6 bindet sie ein und setzt dort die Marken A/B (Info-Zeichen, Reiter Balance).
+%
+% Gemessen (CSS-px):
+%   <header>     x0 y0 440 x 60, Fläche rgb(5,27,58), padding 0 15px, flex space-between
+%                Logo (img x15 y18 48 x 24) – WEGGELASSEN, der Platz bleibt leer
+%   .mobile-header  x63 y10 362 x 40, flex-end, gap 4 px; vier a.btn-item 40 x 40 bei
+%                x 253/297/341/385; darin <i> 24 x 24 bei x 261/305/349/393, y 18
+%   Icons        Webfont „icomoon“ 24 px, rgb(34,100,134); Glyphen U+E938 Glocke,
+%                U+E937 Zahnrad, U+E90C Liste mit Plus, U+E93A Info (icons.tikz,
+%                aus der Font extrahiert mit tools/icons_aus_font.py)
+%   ul.nav-tabs  x0 y60 440 x 40, Fläche rgb(0,19,40), Radius 3 px, margin-bottom 16 px;
+%                Inter 14 px / line-height 16 px, weiß; zwei Reiter je 220 x 40
+%                aktiver Reiter rgb(14,80,114), Radius außen (rechts: 0 3px 3px 0)
+%                Textboxen: „Information“ x72,3 y71,2 75,5 x 16,8; „Balance“ x303,6 y71,2 52,7 x 16,8
+% Gezeigt wird der Zustand NACH dem Antippen von „Balance“: Reiter Balance aktiv,
+% Info-Zeichen weiß (aktiv, die Info-Seite ist offen), die anderen drei rgb(34,100,134).
+%
+% Darunter: panel.pdf unverändert im Maßstab 1 px = 1 px (339,12 x 300 bp = 452 x 400 px,
+% Fläche #04273C). Es stammt aus der älteren Messung (Zeilen 400 px breit ab x 15) und ist
+% breiter als der 440-px-Viewport; rechts ist es leer und wird bei 440 px abgeschnitten.
+% Oberkante des Panels = Unterkante Reiterleiste + margin-bottom 16 px (y 116).
+% Ecken des Ausschnitts: Radius 8 px wie panel.pdf.
+\documentclass[border=0pt]{standalone}
+\usepackage{fontspec}
+\usepackage{tikz}
+\setmainfont{Inter}% Inter 4.0 Regular (Paket fonts-inter), wie bar.tex
+
+\newlength\px \setlength\px{0.75bp}% 1 CSS-px
+\definecolor{kopf}{RGB}{5,27,58}%       header
+\definecolor{reiter}{RGB}{0,19,40}%     ul.nav-tabs
+\definecolor{aktiv}{RGB}{14,80,114}%    aktiver Reiter
+\definecolor{symbol}{RGB}{34,100,134}%  Icons (Normalzustand)
+\definecolor{seite}{HTML}{04273C}%      Seite unter den Reitern = Fläche von panel.pdf
+\input{icons.tikz}
+
+\newcommand\breite{440}
+\newcommand\panely{116}% 60 Kopf + 40 Reiter + 16 margin-bottom
+\newcommand\hoehe{516}%  116 + 400 (Höhe panel.pdf)
+
+% Text der Reiter: Inter 14 px. Grundlinie: Textbox-Oberkante 71,2 px + Ascent; die
+% gemessene Box ist 16,8 px hoch, der Ascent-Anteil bei Inter 1984/(1984+494).
+\newcommand\reiterschrift{\fontsize{10.5bp}{12bp}\selectfont}
+\newcommand\grundlinie{84.65}% 71,2 + 16,8 * 1984/2478
+\newlength\wa \newlength\wb
+\settowidth\wa{\reiterschrift Information}
+\settowidth\wb{\reiterschrift Balance}
+\typeout{MOBIL: Breite Information \the\dimexpr\wa*7200/7227*4/3\relax\space(gemessen 75,5 px),
+  Balance \the\dimexpr\wb*7200/7227*4/3\relax\space(gemessen 52,7 px) [Angabe in px, nicht pt]}
+
+% \icon{<x der i-Box>}{<Farbe>}{<Makro>}: 24-px-Box, Oberkante y 18, Unterkante y 42
+\newcommand\icon[3]{\begin{scope}[shift={(#1,-42)},color=#2]#3\end{scope}}
+
+\begin{document}%
+\begin{tikzpicture}[x=\px,y=\px]
+  \path[use as bounding box] (0,0) rectangle (\breite,-\hoehe);
+  \clip[rounded corners=8\px] (0,0) rectangle (\breite,-\hoehe);
+  % Seite unter Kopf und Reitern
+  \fill[seite] (0,-60) rectangle (\breite,-\hoehe);
+  % vorhandene Kontoübersicht, 1 px = 1 px
+  \node[anchor=north west,inner sep=0,outer sep=0] at (0,-\panely)
+    {\includegraphics{panel.pdf}};
+  % Kopfleiste (ohne Logo)
+  \fill[kopf] (0,0) rectangle (\breite,-60);
+  \icon{261}{symbol}{\iconbell}
+  \icon{305}{symbol}{\icongear}
+  \icon{349}{symbol}{\iconorders}
+  \icon{393}{white}{\iconinfo}
+  % Reiterleiste: Information inaktiv, Balance aktiv
+  \fill[reiter,rounded corners=3\px] (0,-60) rectangle (\breite,-100);
+  \fill[aktiv] (220,-60) -- (437,-60) arc[start angle=90,end angle=0,radius=3]
+    -- (440,-97) arc[start angle=0,end angle=-90,radius=3] -- (220,-100) -- cycle;
+  \node[anchor=base west,inner sep=0,outer sep=0,text=white,font=\reiterschrift]
+    at (72.3,-\grundlinie) {Information};
+  \node[anchor=base west,inner sep=0,outer sep=0,text=white,font=\reiterschrift]
+    at (303.6,-\grundlinie) {Balance};
+\end{tikzpicture}%
+\end{document}

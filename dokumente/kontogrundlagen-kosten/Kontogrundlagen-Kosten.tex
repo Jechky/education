@@ -88,9 +88,9 @@
 \newtcolorbox{prule}[1]{enhanced,colback=white,colframe=rule,boxrule=0.4pt,arc=1mm,
   borderline west={2pt}{0pt}{#1},left=4mm,right=4mm,top=2.6mm,bottom=2.6mm,boxsep=0pt,
   before skip=2.2mm,after skip=0pt,fontupper=\small\color{body}}
-\newtcolorbox{soft}{enhanced,colback=paper,colframe=paper,boxrule=0pt,arc=1.5mm,
+\newtcolorbox{soft}[1][]{enhanced,colback=paper,colframe=paper,boxrule=0pt,arc=1.5mm,
   left=5mm,right=5mm,top=4mm,bottom=4mm,boxsep=0pt,before skip=0pt,after skip=0pt,
-  before upper={\raggedright\hyphenpenalty=10000\relax\exhyphenpenalty=10000\relax}}
+  before upper={\raggedright\hyphenpenalty=10000\relax\exhyphenpenalty=10000\relax},#1}
 
 \pagestyle{fancy}\fancyhf{}\renewcommand{\headrulewidth}{0pt}
 
@@ -409,8 +409,28 @@ Profit bereits enthalten.\end{merk}
 \begin{minipage}{130mm}\lead{Dieselben Werte auf beiden Oberflächen, gleiche Begriffe. So sieht die
 Kontoübersicht aus – oben mobil, darunter am Desktop.}\end{minipage}
 \par\vspace{7mm}
-\noindent\begin{minipage}[t]{78mm}\vspace{0pt}\includegraphics[width=78mm]{panel.pdf}\end{minipage}\hfill
+% Mobile Ansicht (mobil.pdf: Kopfleiste + Reiter + panel.pdf, 440 x 516 CSS-px) im Maßstab
+% des bisherigen Panels (78 mm für 452 px). Koordinaten unten in CSS-px, y nach unten.
+% Marken A/B: weißer Ring/Rahmen im Bild, Linie nach rechts zur Marke in der Spalte der
+% Nummern 1–5 (Mittelpunkt 86 mm, Text ab 90,6 mm wie in der Liste).
+\newlength\mpx\setlength\mpx{\dimexpr78mm/452\relax}
+% Kreis wie \pfn, aber als eigener Knoten (ein \tikz in einem Knoten erbt dessen Anker).
+% Grundlinie des Textes 0,7ex unter der Kreismitte, wie bei \pfn in der Liste.
+\newcommand\tippmarke[3]{% {y in px}{Buchstabe}{Text}
+  \draw[ink,line width=0.5pt,overlay] (440,#1) -- ($(0,#1)+(82.6mm,0)$);
+  \node[overlay,circle,fill=ink,text=white,inner sep=0,minimum size=4.4mm,
+    font=\bfseries\fontsize{7}{8}\selectfont] at ($(0,#1)+(86mm,0)$) {#2};
+  \node[overlay,anchor=base west,inner sep=0,outer sep=0,text=body]
+    at ($(0,#1)+(90.6mm,-0.7ex)$) {#3};}
+\noindent\begin{minipage}[t]{78mm}\vspace{0pt}\begin{tikzpicture}[x=\mpx,y={(0,-\mpx)}]
+\node[anchor=north west,inner sep=0,outer sep=0] at (0,0) {\includegraphics[width=440\mpx]{mobil.pdf}};
+\draw[white,line width=1.5\mpx] (405,30) circle[radius=16] (421.75,30) -- (440,30);
+\draw[white,line width=1.5\mpx,rounded corners=2\mpx] (222.75,62.75) rectangle (437.25,97.25);
+\tippmarke{30}{A}{{\bfseries Info-Zeichen} antippen {\color{muted}\small – oben rechts}}
+\tippmarke{80}{B}{{\bfseries Balance} antippen {\color{muted}\small – zuerst ist Information offen}}
+\end{tikzpicture}\end{minipage}\hfill
 \begin{minipage}[t]{86mm}\vspace{1mm}\raggedright
+\vspace{20mm}
 \begin{enumerate}[label=\protect\pfn{\arabic*},leftmargin=6.6mm,labelsep=2.4mm,itemsep=3mm,topsep=0pt]
 \item {\bfseries Equity}\newline{\color{muted}\small Dein Konto in diesem Moment – Balance plus offene Positionen.}
 \item {\bfseries Profit/Losses}\newline{\color{muted}\small Was die offenen Positionen gerade wert sind. Schwebend, nicht fest.}
@@ -429,15 +449,16 @@ den normalen Handel ohne Bedeutung.}
 {\color{soft}\small Unterste Leiste, rechts – dauerhaft sichtbar. Dieselben Werte wie mobil,
 die \textbf{Balance} steht hier vorn mit in der Reihe.}
 \par\vspace{7mm}
-\noindent\begin{minipage}[t]{82mm}\vspace{0pt}\begin{soft}
+\noindent\begin{minipage}[t]{82mm}\vspace{0pt}\begin{soft}[equal height group=plattform]
 {\htwo\ls\color{muted}DESKTOP}\par\vspace{2.5mm}
 {\color{body}Kontoübersicht in der \textbf{untersten Leiste}. Offene Positionen direkt unter dem Chart –
 mit den Spalten \textbf{Swap} und \textbf{Commission}. Daten zu einem Instrument über das
 \textbf{Info-Zeichen} in der Kursliste.}\end{soft}\end{minipage}\hfill
-\begin{minipage}[t]{82mm}\vspace{0pt}\begin{soft}
+\begin{minipage}[t]{82mm}\vspace{0pt}\begin{soft}[equal height group=plattform]
 {\htwo\ls\color{muted}MOBILE}\par\vspace{2.5mm}
-{\color{body}\textbf{Info-Zeichen} oben rechts, dann Reiter \textbf{Balance} – die Ansicht oben.
-Reiter \textbf{Information} zeigt \textbf{Leverage} und \textbf{Stop out}. Positionen unter
+{\color{body}Tippe oben rechts auf das \textbf{Info-Zeichen}. Es öffnet sich zuerst
+\textbf{Information} – tippe dann auf \textbf{Balance}: die Ansicht oben. Reiter
+\textbf{Information} zeigt \textbf{Leverage} und \textbf{Stop out}. Positionen unter
 \textbf{Orders} → \textbf{Active}, aufgeklappt mit Swap und Margin.}\end{soft}\end{minipage}
 \clearpage
 \kicker{}{Spickzettel}

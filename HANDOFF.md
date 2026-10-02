@@ -133,9 +133,10 @@ Verworfen: Liberation Sans (Nutzer-Vorgabe #18, ersetzt durch #30/#33), Carlito/
 | Hex | Bedeutung | Quelle |
 |---|---|---|
 | `#04273C` | Fensterhintergrund (Order-Fenster); auch Hintergrund der mobilen Kontoübersicht (blaues Design) | #39, #41, #155 |
-| `#001328` | Eingabefelder im Order-Fenster | #39, #41 |
+| `#001328` | Eingabefelder im Order-Fenster; mobile Reiterleiste (`ul.nav-tabs`) | #39, #41, `…/mobil-kopf-reiter.json` |
 | `#0E5072` | aktiver Reiter; Hintergrund des aufgeklappten Type-Menüs; Kasten hinter „Equity“ in der Desktop-Leiste (`.item-bg`, gemessen 02.10.2026) | #41, #47, #157, `originals/messungen/kontoleiste-desktop.json` |
-| `#051B3A` | Desktop-Kontoleiste (`<footer>`, blaues Design) – **nicht** `#04273C` | `originals/messungen/kontoleiste-desktop.json` |
+| `#051B3A` | Desktop-Kontoleiste (`<footer>`, blaues Design) – **nicht** `#04273C`; auch mobile Kopfleiste (`<header>`) | `originals/messungen/kontoleiste-desktop.json`, `…/mobil-kopf-reiter.json` |
+| `#226486` | Symbole der mobilen Kopfleiste (Normalzustand; aktiv weiß) | `originals/messungen/mobil-kopf-reiter.json` |
 | `#53BC51` | Plattform-Grün (Button, „Estimated Profit“-Zahl, Balance-Wert mobil) | #39, #41, #155 |
 | `#A8BBBE` | Labels/Bezeichnungen (Order-Fenster, mobile Kontoübersicht, Desktop-Leiste) | #41, #155 |
 | `#64747F` | Preis-Badges im Order-Fenster | #41 |
@@ -325,7 +326,7 @@ Plattform-Fakten aus dem Referenzdokument: Balance, Equity, Free Margin, Margin 
    - Der Moment der Buchung: den ganzen Tag nichts, zum **Tageswechsel** alles auf einmal; wer eine Minute vorher schließt, zahlt nichts.
    - Aus der ersten Fassung (#147): Woche mit einem Punkt pro Nacht, **am Mittwoch drei**; Swap long, Swap short und wo der Swap bei der Position auftaucht. ⚠ Ob das nach dem Straffen (#149) noch alles drin ist, ist unklar.
    - Abweichung von der Skizze: **Beträge weggelassen**, stattdessen Wörter (Zahlenverbot). Rechenbeispiel als eigener Kasten auf Wunsch (#151). ⚠ Die Skizze selbst ist nicht im Export.
-6. **In der Plattform** – oben die **mobile Kontoübersicht** als Vektor-Nachbau (blaues Design, Maße 3.6) mit fünf Nummern (Equity, Profit/Losses, Margin, Free, Level) und „Konto jetzt“ statt einer Summe; darunter dieselben Werte als **Desktop-Leiste** (blaues Design, teils geschätzt). Unter der Leiste der Hinweis, dass **Level am Desktop fehlt** (#151, #157). ⚠ **Falsch** laut DOM-Messung vom 02.10.2026: Level steht auch am Desktop; Leiste und Hinweis sind korrigiert (Abschnitt 12).
+6. **In der Plattform** – oben die **mobile Kontoübersicht** als Vektor-Nachbau (blaues Design, Maße 3.6) mit fünf Nummern (Equity, Profit/Losses, Margin, Free, Level) und „Konto jetzt“ statt einer Summe; darunter dieselben Werte als **Desktop-Leiste** (blaues Design, teils geschätzt). Unter der Leiste der Hinweis, dass **Level am Desktop fehlt** (#151, #157). ⚠ **Falsch** laut DOM-Messung vom 02.10.2026: Level steht auch am Desktop; Leiste und Hinweis sind korrigiert (Abschnitt 12). Seit 02.10.2026 zeigt die mobile Ansicht auch Kopf- und Reiterleiste mit den Marken A (Info-Zeichen) und B (Reiter Balance) (Abschnitt 12).
 7. **Spickzettel** mit allen Begriffen. Er bekam eine eigene Seite, weil die Plattform-Seite sonst überladen war (#151).
 
 Geprüft (#147): null Rasterbilder, alle Schriften eingebettet; die geschützte Fassung liefert null echte Wörter, neun Rechte gesperrt. ⚠ Ob nach den Änderungen in #151–#157 die geschützte Fassung neu erzeugt wurde, steht nicht im Text.
@@ -749,6 +750,7 @@ Stand 02.10.2026: Dokument 2 („Kontogrundlagen & Kosten“) ist aus `Kontogrun
 | `dokumente/kontogrundlagen-kosten/Kontogrundlagen-Kosten.tex` | Quelle; gegenüber dem Original nur `Path=../../fonts/` und `\babelprovide[hyphenrules=english]{ngerman}` (ohne die Zeile trennt Seite 5 „zwi-schen“ statt „zwis-chen“) |
 | `…/panel.pdf` | mobile Kontoübersicht, Form-XObject `/Fm16` von Seite 6, 339,12 × 300 pt, gesetzt 78 mm |
 | `…/bar.pdf` | Desktop-Kontoleiste, gesetzt 170 mm. Ursprünglich Form-XObject `/Fm17` von Seite 6 (594 × 35,04 pt); seit 02.10.2026 aus `bar.tex` gebaut (siehe unten) |
+| `…/mobil.tex/.pdf`, `…/icons.tikz` | mobile Ansicht Kopf + Reiter + `panel.pdf`; Icons aus der Plattform-Font (siehe unten). `panel.pdf` wird seitdem nur noch über `mobil.pdf` eingebunden |
 | `originals/Kontogrundlagen-Kosten_ORIGINAL.tex/.pdf` | unveränderte Uploads |
 
 **Befehle:** `scripts/build.sh kontogrundlagen-kosten` · `python3 tools/grafiken_aus_pdf.py kontogrundlagen-kosten` (ohne Argument: Pending Orders) · `python3 tools/pdf_vergleich.py --dokument kontogrundlagen-kosten`.
@@ -774,4 +776,13 @@ Stand 02.10.2026: Dokument 2 („Kontogrundlagen & Kosten“) ist aus `Kontogrun
 - Text Seite 6: „Unterste Leiste, rechts – dauerhaft sichtbar. Dieselben Werte wie mobil, die **Balance** steht hier vorn mit in der Reihe.“ (vorher: „**Level** fehlt dort; es steht nur in der mobilen Ansicht.“).
 - Vergleich mit dem ORIGINAL-PDF: Seiten 1–5 und 7 pixelgleich (0,0000 %, Inhaltsströme identisch); Seite 6 weicht erwartungsgemäß ab. Seite 6 bricht ohne Trennungen um; die Zeile `hyphenrules=english` bleibt vorerst.
 
-**Offen:** Geschützte Fassung nicht neu erzeugt.
+**Mobiler Weg zur Kontoübersicht (02.10.2026)**
+
+- Messung: `originals/messungen/mobil-kopf-reiter.json` (Konsolenmessung des Nutzers, zusammengefasst; Viewport 440 × 956 px, dpr 3, blaues Design): `<header>` 60 px `#051B3A`, vier Symbol-Buttons 40 × 40 (Icons 24 px, `#226486`, Webfont „icomoon“), Logo links (im Dokument **weggelassen**, Wunsch des Nutzers); `ul.nav-tabs` 40 px `#001328`, Radius 3 px, margin-bottom 16 px, Reiter Information / Balance je 220 px, aktiv `#0E5072`, Inter 14 px weiß.
+- `dokumente/kontogrundlagen-kosten/mobil.tex` (standalone, wird von `build.sh` gebaut) → `mobil.pdf`, 440 × 516 px: Kopf + Reiter nach Messung, darunter `panel.pdf` unverändert 1:1 (y 116). Zustand **nach** dem Antippen: Balance aktiv, Info-Zeichen weiß, die anderen drei `#226486`. XeTeX-Breiten der Reitertexte 75,45 / 52,71 px (gemessen 75,5 / 52,7).
+- ⚠ `panel.pdf` ist 452 px breit, seine Zeilen 400 px ab x 15 (ältere Messung, vermutlich 430-px-Viewport). Bei 440 px abgeschnitten (rechts nur leere Fläche); rechts bleiben 25 px statt 15 px Rand. Für exakte 410-px-Zeilen müsste die Kontoübersicht bei 440 px neu gemessen werden.
+- Icons: `icons.tikz` (`\iconbell`, `\icongear`, `\iconorders`, `\iconinfo`) mit den **echten Glyphen** aus der Plattform-Font, erzeugt von `tools/icons_aus_font.py` (TTF/OTF/WOFF/WOFF2, fontTools + brotli; Box wie das `<i>` im Browser: 24 px, Grundlinie 1,5 px über der Unterkante, nonzero). Geprüft: Pfade decken sich mit dem XeTeX-Rendering der Font auf < 0,05 px. Die Fontdateien (`icomoon.b9abfeda36b81d3e.ttf`, `icomoon.47a83e5a26e26197.woff`, inhaltlich identisch) liegen **nicht** im Repo (Lizenz unklar). Neu erzeugen: `python3 tools/icons_aus_font.py <font>`.
+- Seite 6: Bild im Maßstab des alten Panels (78 mm / 452 px → 75,9 × 89,0 mm). Marken: weißer Ring um das Info-Zeichen und weißer Rahmen um den Reiter Balance, Linie nach rechts zu **A** / **B** (Kreis wie `\pfn`, in der Spalte der Nummern 1–5) mit „Info-Zeichen antippen – oben rechts“ / „Balance antippen – zuerst ist Information offen“. Liste 1–5 darunter (20 mm tiefer). Mobile-Box: „Tippe oben rechts auf das Info-Zeichen. Es öffnet sich zuerst Information – tippe dann auf Balance: die Ansicht oben. Reiter Information zeigt Leverage und Stop out. …“; Desktop- und Mobile-Box gleich hoch (`soft` hat ein optionales Argument, hier `equal height group`).
+- Prüfung: 7 Seiten, Seiten 1–5 und 7 pixelgleich (150 und 600 dpi, Inhaltsströme identisch), alle Schriften eingebettet, keine Rasterbilder; Seite 6 passt ohne Kürzungen und ohne Trennungen.
+
+**Offen:** Geschützte Fassung nicht neu erzeugt. Kontoübersicht mobil bei 440 px nachmessen (siehe ⚠ oben).
