@@ -19,6 +19,7 @@
 9. [Fehlende Dateien](#9-fehlende-dateien)
 10. [Unklarheiten und Widersprüche im Verlauf](#10-unklarheiten-und-widersprüche-im-verlauf)
 11. [Stand Wiederherstellung](#11-stand-wiederherstellung)
+12. [Wiederherstellung Kontogrundlagen](#12-wiederherstellung-kontogrundlagen)
 
 ---
 
@@ -710,7 +711,7 @@ Im Repo liegt dafür bereits **`scripts/setup.sh`** (Commit `ecc5820`). Laut Com
 
 ## 11. Stand Wiederherstellung
 
-Stand 02.10.2026: Dokument 1 („Pending Orders“) ist aus `Pending-Orders-Guide_ORIGINAL.tex` wieder baubar und **optisch identisch** mit dem ORIGINAL-PDF. Dokument 2 fehlt weiterhin (Abschnitt 9).
+Stand 02.10.2026: Dokument 1 („Pending Orders“) ist aus `Pending-Orders-Guide_ORIGINAL.tex` wieder baubar und **optisch identisch** mit dem ORIGINAL-PDF. Dokument 2 ist inzwischen ebenfalls wiederhergestellt (Abschnitt 12).
 
 **Struktur**
 
@@ -735,3 +736,29 @@ Stand 02.10.2026: Dokument 1 („Pending Orders“) ist aus `Pending-Orders-Guid
 - Die Plex-OTFs aus `fonts/` erzeugen exakt dieselben Glyphen und Metriken wie im Original (CFF-Version 3.5).
 
 **Offen:** keine Abweichungen. Die geschützte Fassung wurde nicht neu erzeugt (`scramble.py` liegt nur in `originals/`).
+
+---
+
+## 12. Wiederherstellung Kontogrundlagen
+
+Stand 02.10.2026: Dokument 2 („Kontogrundlagen & Kosten“) ist aus `Kontogrundlagen-Kosten_ORIGINAL.tex` wieder baubar und **optisch identisch** mit dem ORIGINAL-PDF. Vorgehen wie in Abschnitt 11.
+
+| Pfad | Inhalt |
+|---|---|
+| `dokumente/kontogrundlagen-kosten/Kontogrundlagen-Kosten.tex` | Quelle; gegenüber dem Original nur `Path=../../fonts/` und `\babelprovide[hyphenrules=english]{ngerman}` (ohne die Zeile trennt Seite 5 „zwi-schen“ statt „zwis-chen“) |
+| `…/panel.pdf` | mobile Kontoübersicht, Form-XObject `/Fm16` von Seite 6, 339,12 × 300 pt, gesetzt 78 mm |
+| `…/bar.pdf` | Desktop-Kontoleiste, Form-XObject `/Fm17` von Seite 6, 594 × 35,04 pt, gesetzt 170 mm |
+| `originals/Kontogrundlagen-Kosten_ORIGINAL.tex/.pdf` | unveränderte Uploads |
+
+**Befehle:** `scripts/build.sh kontogrundlagen-kosten` · `python3 tools/grafiken_aus_pdf.py kontogrundlagen-kosten` (ohne Argument: Pending Orders) · `python3 tools/pdf_vergleich.py --dokument kontogrundlagen-kosten`.
+
+**Vergleichsergebnis:** 7 Seiten; alle Seiten 0,0000 % abweichende Pixel (max. 0) bei 150 und 600 dpi; Inhaltsströme der Seiten und der beiden Formen bytegleich. 10 Schriften, alle eingebettet (IBM Plex Sans Light/Regular/SemiBold, Inter in Panel und Leiste); keine Rasterbilder.
+
+**Aufbau `bar.pdf`** (Grundlage für den geplanten Neubau nach Messdaten): Koordinaten in CSS-px, 1 px = 0,75 pt; im Dokument 1 px = 0,2146 mm.
+
+- Seite 792 × 46,72 px; Leiste 792 × 46 px (594 × 34,5 pt, im Dokument 170 × 9,87 mm), Radius 5 px, Fläche `#04273C`.
+- Schrift Inter Regular (4.001), 12,5 px (im Dokument 7,6 pt), Grundlinie 28 px unter der Oberkante, Glyphen auf ganze px gesetzt. Labels `#A8BBBE`, Werte Weiß.
+- Kasten hinter Equity: `#0E5072`, x 215–343, y 11–36 px (128 × 25 px), Radius 3 px – **geschätzt** (Abschnitt 3.6).
+- Felder (x Label / x Wert in px): Balance: 51 / 106 „dein Guthaben“ · Equity: 224 / 270 „Konto jetzt“ · Profit/Losses: 367 / 457 „schwebend“ · Margin: 549 / 599 „gebunden“ · Free: 682 / 717 „verfügbar“. Gruppenabstand ca. 24 px (**geschätzt**), rechter Rand ca. 16 px. Level fehlt (wie auf der Plattform).
+
+**Offen:** Desktop-Leiste nach echten Messdaten neu bauen (Befehl 7.1, Lauf 1); danach weicht Seite 6 erwartungsgemäß vom ORIGINAL-PDF ab. Geschützte Fassung nicht neu erzeugt.
