@@ -20,6 +20,7 @@
 10. [Unklarheiten und Widersprüche im Verlauf](#10-unklarheiten-und-widersprüche-im-verlauf)
 11. [Stand Wiederherstellung](#11-stand-wiederherstellung)
 12. [Wiederherstellung Kontogrundlagen](#12-wiederherstellung-kontogrundlagen)
+13. [Akzentfarbe Kontogrundlagen](#13-akzentfarbe-kontogrundlagen)
 
 ---
 
@@ -151,6 +152,7 @@ Verworfen: Liberation Sans (Nutzer-Vorgabe #18, ersetzt durch #30/#33), Carlito/
 - **Rot**: dasselbe Rot wie in den Überschriften statt des grellen Pink-Rots der Plattform (#89). ⚠ Hex unbekannt. Claude bot an, das Original-Rot zurückzuholen – keine Antwort.
 - Graue Kerzen der Plattformbilder sind für dunklen Grund gemacht → auf Weiß **etwas abgedunkelt** (#83).
 - Kurslinie und Hilfselemente neutral grau/dunkelgrau (#102).
+- **Doku 2 seit 02.10.2026:** Akzentfarbe Plattform-Blau statt Schwarz für die eigenen Erklärgrafiken, helle Flächen in einer Tönung davon (Nutzerwunsch, Abschnitt 13).
 
 ### 3.4 Chart-Bildsprache (Plattform-Chartbilder)
 
@@ -755,6 +757,8 @@ Stand 02.10.2026: Dokument 2 („Kontogrundlagen & Kosten“) ist aus `Kontogrun
 
 **Befehle:** `scripts/build.sh kontogrundlagen-kosten` · `python3 tools/grafiken_aus_pdf.py kontogrundlagen-kosten` (ohne Argument: Pending Orders) · `python3 tools/pdf_vergleich.py --dokument kontogrundlagen-kosten`.
 
+⚠ **Pixeltreue zum ORIGINAL-PDF ab 02.10.2026 bewusst aufgegeben** (Farbänderung auf Nutzerwunsch, Abschnitt 13): `tools/pdf_vergleich.py --dokument kontogrundlagen-kosten` meldet seitdem auf allen Seiten Abweichungen – das ist gewollt. Der folgende Befund beschreibt den Stand davor.
+
 **Vergleichsergebnis:** 7 Seiten; alle Seiten 0,0000 % abweichende Pixel (max. 0) bei 150 und 600 dpi; Inhaltsströme der Seiten und der beiden Formen bytegleich. 10 Schriften, alle eingebettet (IBM Plex Sans Light/Regular/SemiBold, Inter in Panel und Leiste); keine Rasterbilder.
 
 **Aufbau des alten `bar.pdf`** (bis 02.10.2026, überholt): Koordinaten in CSS-px, 1 px = 0,75 pt; im Dokument 1 px = 0,2146 mm.
@@ -786,3 +790,35 @@ Stand 02.10.2026: Dokument 2 („Kontogrundlagen & Kosten“) ist aus `Kontogrun
 - Prüfung: 7 Seiten, Seiten 1–5 und 7 pixelgleich (150 und 600 dpi, Inhaltsströme identisch), alle Schriften eingebettet, keine Rasterbilder; Seite 6 passt ohne Kürzungen und ohne Trennungen.
 
 **Offen:** Geschützte Fassung nicht neu erzeugt. Kontoübersicht mobil bei 440 px nachmessen (siehe ⚠ oben).
+
+---
+
+## 13. Akzentfarbe Kontogrundlagen
+
+Stand 02.10.2026, Nutzerwunsch: „Kannst du eine andere Akzentfarbe benutzen? Z. B. bei ‚Hebel' sieht man das Weiße nicht, und das Schwarze passt nicht rein.“ Präzisierung: „Alles, was mit Plattform-Elementen zu tun hat, bleibt original.“
+
+**Pixeltreue zum ORIGINAL-PDF ist ab hier bewusst aufgegeben.** `tools/pdf_vergleich.py --dokument kontogrundlagen-kosten` meldet auf allen sieben Seiten Abweichungen (Seiten 1–5 und 7 max. 88, Seite 6 zusätzlich durch die früheren Änderungen) – gewollt.
+
+**Neue Farben** (zentral in `Kontogrundlagen-Kosten.tex`, `ink`/`paper`/`rule` bleiben unverändert definiert):
+
+| Name | Hex | Rolle | Kontrast |
+|---|---|---|---|
+| `akzent` | `#0E5072` | Plattform-Blau (aktiver Reiter, Kasten hinter Equity). Alle bisher schwarzen Flächen, Linien und Punkte der eigenen Grafiken | Weiß darauf 8,72:1; gegen Weiß 8,72:1 |
+| `akzenttint` | `#E8EFF4` | helle Flächen (vorher `paper` `#F7F8F9`) | gegen Weiß 1,16:1 (vorher 1,06:1) |
+| `akzentrand` | `#C5D5E0` | Rand der hellen Flächen (vorher `rule` `#E2E5E9`) | gegen Weiß 1,50:1 (vorher 1,26:1) |
+
+Text auf `akzenttint`: ink 15,6:1 · body 8,75:1 · buy 4,62:1 · sell 5,11:1 · **muted 4,02:1** (vorher auf `paper` 4,39:1; Textfarben bleiben laut Vorgabe, ⚠ knapp unter 4,5:1, betrifft nur Kleinschrift-Labels wie „Free“, „eingezahlt und abgeschlossen“, BALANCE/EQUITY in den soft-Kästen). Eine eigene dunklere Navy-Variante für feine Linien war nicht nötig: `akzent` ist auch als 0,5-pt-Linie klar.
+
+**Geändert je Seite**
+
+1. Deckblatt: Akzentlinie unter dem Titel; Kästen Balance und Profit/Losses (Tönung + Rand), Equity-Kasten (weiß, Rand); Margin-Block (`akzent`), Free-Teil (`akzenttint`, vorher weiß) mit Rahmen und Trennlinie in `akzent`; Rand des Badges „Sechs Begriffe“.
+2. Kontostand: soft-Kästen Balance/Equity; Balken Balance/Equity (Tönung + Rand, auch der gestrichelte Verlustteil); drei Zeitleisten-Punkte; Merk-Kasten (Fläche + linke Kante).
+3. Margin: drei Margin-Balken (`akzent`), Free-Teile (Tönung), Balkenränder; Level-Skala: Warnbereich (Tönung) und Rand.
+4. Hebel: zwei Margin-Quadrate (`akzent`), Trade-volume-Quadrat und -Balken (Tönung + Rand); soft-Kästen; Merk-Kasten.
+5. Swaps: Margin-Block, „Der Rest ist geliehen“ (Tönung + Rand); Kästen Zins/Aufschlag (Tönung + Rand), „Dein Swap“ (weiß, Rand); Tageslinie „Wann gebucht wird“; Wochenpunkte Mo/Di/Do/Fr; Merk-Kasten.
+6. In der Plattform: **nur** die soft-Kästen Desktop/Mobile. Unverändert (Plattform): `mobil.pdf`, `bar.pdf`, Ring/Rahmen, Verbindungslinien und Marken A/B, Nummernkreise 1–5 (`\pfn`, bleibt `ink`). Pixelvergleich bei 150 dpi: Handy-Ausschnitt mit Marken und Liste (y 58–160 mm) und Desktop-Leiste (y 186–200 mm) 0 abweichende Pixel; die Seite weicht nur in y 214,5–253,2 mm ab (soft-Kästen).
+7. Spickzettel: Merk-Kasten.
+
+Nicht geändert: Text- und Überschriftenfarben, Buy/Sell und ihre Tints, `greya`-Hilfslinien und Pfeile, Trennlinien (`\kicker`, `\hr`, Fußlinie) in `rule`, Plattform-Nachbauten (`bar.*`, `mobil.*`, `panel.pdf`, `icons.tikz`). Ungenutzte Stile `cnum`/`pfnum`/`prule` unverändert.
+
+**Prüfung:** 7 Seiten, keine Seitenüberläufe (einzige Warnung: Overfull \hbox 1,24 pt in der Spickzettel-Tabelle, schon vorher vorhanden), 10 Schriften eingebettet, keine Rasterbilder. Vergleichsbilder (nicht eingecheckt, `build/` ist ignoriert): `build/Farben-Vergleich.png` (alle Seiten, alt oben/neu unten, 70 dpi), `build/Farben-Hebel.png` (Seite 4 alt|neu, 110 dpi).
