@@ -1,0 +1,39 @@
+{
+ "bereich": "mobil-kopf-reiter",
+ "quelle": "Konsolenmessung des Nutzers, zusammengefasst",
+ "einheit": "CSS-px, relativ zum Viewport",
+ "viewport": {"w": 440, "h": 956, "dpr": 3},
+ "theme": "blau",
+ "font": "Inter",
+ "kopfleiste": {
+  "t": "header", "x": 0, "y": 0, "w": 440, "h": 60,
+  "backgroundColor": "rgb(5, 27, 58)", "padding": "0 15px",
+  "display": "flex", "justifyContent": "space-between",
+  "logo": {"t": "img", "x": 15, "y": 18, "w": 48, "h": 24, "hinweis": "im Dokument weggelassen (Wunsch des Nutzers)"},
+  "symbolgruppe": {"c": "mobile-header", "x": 63, "y": 10, "w": 362, "h": 40, "justifyContent": "flex-end", "gap": "4px"},
+  "buttons": {"t": "a", "c": "btn-item", "w": 40, "h": 40, "y": 10, "x": [253, 297, 341, 385]},
+  "icons": {
+   "t": "i", "w": 24, "h": 24, "y": 18, "x": [261, 305, 349, 393],
+   "fontFamily": "icomoon", "fontSize": "24px", "color": "rgb(34, 100, 134)",
+   "glyphen": [
+    {"c": "icon-notifications", "codepoint": "U+E938", "bild": "Glocke"},
+    {"c": "icon-settings", "codepoint": "U+E937", "bild": "Zahnrad"},
+    {"c": "icon-orders", "codepoint": "U+E90C", "bild": "Liste mit Plus"},
+    {"c": "icon-information", "codepoint": "U+E93A", "bild": "Kreis mit i"}
+   ],
+   "hinweis": "Info-Zeichen laut Screenshots weiß, solange die Info-Seite offen ist (aktiv); sonst rgb(34, 100, 134)"
+  }
+ },
+ "reiterleiste": {
+  "t": "ul", "c": "nav-tabs", "x": 0, "y": 60, "w": 440, "h": 40,
+  "backgroundColor": "rgb(0, 19, 40)", "borderRadius": "3px", "marginBottom": "16px",
+  "fontFamily": "Inter", "fontSize": "14px", "lineHeight": "16px", "color": "rgb(255, 255, 255)", "textTransform": "capitalize",
+  "reiter": [
+   {"txt": "Information", "x": 0, "w": 220, "h": 40, "textBox": {"x": 72.3, "y": 71.2, "w": 75.5, "h": 16.8}, "aktiv": {"borderRadius": "3px 0 0 3px"}},
+   {"txt": "Balance", "x": 220, "w": 220, "h": 40, "textBox": {"x": 303.6, "y": 71.2, "w": 52.7, "h": 16.8}, "aktiv": {"borderRadius": "0 3px 3px 0"}}
+  ],
+  "aktiverReiter": {"backgroundColor": "rgb(14, 80, 114)"},
+  "standard": "Information aktiv; nach Antippen von Balance ist Balance aktiv"
+ },
+ "seiteDarunter": {"hinweis": "laut Screenshots ähnlich #04273C/#062741; im Dokument #04273C wie panel.pdf"}
+}
