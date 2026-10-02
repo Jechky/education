@@ -349,21 +349,24 @@ Je höher der Hebel, desto schneller nähert sich das Level bei Verlusten dem St
 maßgeblich ist stets der Wert des Instruments.\end{merk}
 \clearpage
 \kicker{}{Swaps}
+% Liquiditaetsanbieter statt Bank (Nutzervorgabe 02.10.2026). Seite ist voll (Rest < 1 pt): Lead 132 mm,
+% Abstaende 6/3/3 mm, Pfeil "pro Nacht" und Wochen-Grafik oben je knapper.
 \Hone{Warum über Nacht ein Swap anfällt}
-\begin{minipage}{130mm}\lead{Bleibt eine Position über Nacht offen, verlangen die Bank und der Broker dafür je einen
-Betrag. Zusammen werden sie als Swap gebucht.}\end{minipage}
-\par\vspace{7mm}
+\begin{minipage}{132mm}\lead{Bleibt eine Position über Nacht offen, verlangen der Liquiditätsanbieter – das Finanzinstitut,
+über das der Broker seine Positionen abwickelt – und der Broker dafür je einen Betrag. Zusammen werden sie
+als Swap gebucht.}\end{minipage}
+\par\vspace{6mm}
 % Rechenbeispiel nach der Skizze des Nutzers (originals/skizze-hebel-swap.png), Fortsetzung von S. 4.
 % Ausnahme vom Zahlenverbot (Nutzerwunsch 02.10.2026): nur 1.000, 1:10, 10.000, 3, 3, 6, 1, 7.
-% Modell des Nutzers: Betrag der Bank = Miete fuer die Aufbewahrung (Rohstoffe) bzw. Zinsen fuer
+% Modell des Nutzers: Betrag des Liquiditaetsanbieters = Miete fuer die Aufbewahrung (Rohstoffe) bzw. Zinsen fuer
 % das geliehene Geld (Devisen) + Risikoanteil; dazu der Aufschlag des Brokers. Kein Gruen/Rot.
 \Htwo{Zusammensetzung des Swaps}
 {\color{body}\raggedright Angenommen, Instrument XY aus dem Vergleich auf der vorherigen Seite ist der Rohstoff
 Crude Oil.\par}
-\par\vspace{4mm}
+\par\vspace{3mm}
 % Position massstaeblich: Margin 17 mm = ein Zehntel von 170 mm (Hebel 1:10)
 \noindent \begin{tikzpicture}[x=1mm,y=1mm]
-\useasboundingbox (0,5.6) rectangle (170.0,35.2);
+\useasboundingbox (0,6.6) rectangle (170.0,35.2);
 \fill[pfgrau] (0,22) rectangle (17.0,28);
 \draw[greya,line width=0.4pt] (0,22) rectangle (170.0,28);
 \draw[hilfslinie] (0,28.8) -- (0,33.4) (170,28.8) -- (170,33.4)
@@ -372,8 +375,8 @@ Crude Oil.\par}
 \masslinie{0}{17.0}{17.4}
 \node[anchor=west,inner sep=0,font=\lbl] at (20.5,17.4)
   {\textbf{\color{ink}Margin: 1.000\,€}\hspace{2.2mm}{\color{muted}bei Hebel 1:10 ein Zehntel der Position}\strut};
-\draw[greya,line width=0.5pt,-{Stealth[length=2mm]}] (85,13.4) -- (85,6.6);
-\node[anchor=west,inner sep=0,text=muted,font=\micro] at (88,10.0) {pro Nacht};
+\draw[greya,line width=0.5pt,-{Stealth[length=2mm]}] (85,13.4) -- (85,7.6);
+\node[anchor=west,inner sep=0,text=muted,font=\micro] at (88,10.5) {pro Nacht};
 \end{tikzpicture}
 \par
 \noindent\makebox[\linewidth][c]{\begin{tikzpicture}[x=1mm,y=1mm,
@@ -394,13 +397,13 @@ Crude Oil.\par}
 \node[betrag] at ([yshift=-8.6mm]b.base) {3\,€};
 \node[betrag] at ([yshift=-8.6mm]c.base) {1\,€};
 \node[betrag,font=\small\bfseries] at ([yshift=-8.6mm]d.base) {7\,€ pro Nacht};
-% zweite Stufe: Miete und Risikoanteil zusammen = Betrag der Bank
+% zweite Stufe: Miete und Risikoanteil zusammen = Betrag des Liquiditaetsanbieters
 \draw[klammer] ([yshift=-11.4mm]a.base west) -- ([yshift=-11.4mm]b.base east);
-\node[betrag] at ($([yshift=-17.4mm]a.base west)!0.5!([yshift=-17.4mm]b.base east)$) {Betrag der Bank: 6\,€};
+\node[betrag] at ($([yshift=-17.4mm]a.base west)!0.5!([yshift=-17.4mm]b.base east)$) {Betrag des Liquiditätsanbieters: 6\,€};
 \end{tikzpicture}}
-\par\vspace{3.5mm}
+\par\vspace{3mm}
 {\color{body}\raggedright Die Miete für die Aufbewahrung fällt bei Rohstoffen wie Crude Oil oder Natural Gas an; bei Devisen
-treten an ihre Stelle die Zinsen für das geliehene Geld. Der Risikoanteil soll die Bank vor Verlusten schützen.\par}
+treten an ihre Stelle die Zinsen für das geliehene Geld. Der Risikoanteil soll den Liquiditätsanbieter vor~Verlusten~schützen.\par}
 \par\vspace{3mm}
 {\color{muted}\small\raggedright Für jedes Instrument gelten zwei Sätze: \textbf{Swap long} für Buy und \textbf{Swap short}
 für Sell. In der Regel sind beide negativ; ist ein Satz positiv, wird Ihnen der Betrag gutgeschrieben.
@@ -423,7 +426,7 @@ Beide Werte finden Sie im Info-Fenster des Instruments.\par}
 \end{tikzpicture}
 \par\vspace{3mm}
 \noindent \begin{tikzpicture}[x=1mm,y=1mm]
-\useasboundingbox (0,1) rectangle (170.0,31);
+\useasboundingbox (0,1) rectangle (170.0,28);
 \draw[body,line width=0.7pt,-{Stealth[length=2mm]}] (0,18) -- (170.0,18);
 \node[inner sep=0,text=ink,font=\lbl\bfseries] at (10.0,26) {Montag};
 \fill[ink] (10.0,18) circle (1.1);

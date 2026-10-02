@@ -33,6 +33,10 @@ Devisen Zinsen + Risikoanteil, dazu Aufschlag des Brokers) mit Rechenbeispiel au
 - Prüfung: 7 Seiten, Log ohne Warnung, 10 Schriften eingebettet, keine Rasterbilder. 60 dpi gegen
   `706317e`: S. 2–4, 6 nur Fußzeile; S. 1 nur Fuß (276–279 mm); S. 7 nur Swap-Zeile und Fußzeile.
   S. 5 unterer Teil ab „Zeitpunkt der Buchung“ 1,2 mm höher als vorher.
+- Nachtrag (Aufgabe kg-liquiditaetsanbieter, 02.10.2026): Auf S. 5 heißt es statt „Bank“ jetzt
+  „Liquiditätsanbieter“ (Lead, Klammer „Betrag des Liquiditätsanbieters: 6 €“, Risikoanteil-Satz); Lead erklärt
+  „der Liquiditätsanbieter – das Finanzinstitut, über das der Broker seine Positionen abwickelt –“. S. 4 („Bank“
+  beim Direktkauf) unverändert. S. 5 ist voll (Rest < 1 pt): Lead 132 mm, Abstände knapper (siehe Kommentar im .tex).
 
 ## Prüfkommandos
     mkdir -p build/agent-swap && cd dokumente/kontogrundlagen-kosten && xelatex -interaction=nonstopmode -output-directory=../../build/agent-swap Kontogrundlagen-Kosten.tex
