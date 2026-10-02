@@ -640,11 +640,11 @@ Die Abbildungen zeigen den Weg dorthin am Beispiel Gold; anstelle der Werte steh
 \clearpage
 \kicker{}{Offene Positionen}\phantomsection\label{s:positionen}
 \Hone{Die Angaben Ihrer offenen Positionen}
-\begin{minipage}{170mm}\lead{Jede offene Position steht mit ihren eigenen Angaben in einer Liste, darunter ihr
-Swap, ihr Total Profit und ihre Margin. Anstelle der Werte stehen in der Abbildung Wörter.}\end{minipage}
+\begin{minipage}{170mm}\lead{Jede offene Position steht mit ihren Angaben in einer Zeile der Tabelle. Die Nummern
+führen zur Erklärung jeder Spalte; anstelle der Werte stehen in der Abbildung Wörter.}\end{minipage}
 \par\vspace{7mm}
 % positionen-desktop-voll.pdf: 1484 x 145 px, bei 257 mm 1 px = 0,173 mm (Schrift 5,9 pt),
-% Marken 1 Swap, 2 Total Profit, 3 Margin. Spalten S/L, T/P, Commission: Plattform-Original, ohne
+% Marken 1-13 an allen Spalten, Erklärung in zwei Tabellen (1-7, 8-13). Spalten S/L, T/P, Commission: Plattform-Original, ohne
 % Erklärung (HANDOFF 2.2/2.3: kein Stop-Loss, keine Commission).
 \noindent\begin{minipage}[t]{150mm}\raggedright
 {\htwo\ls\color{muted}DESKTOP}\par\vspace{1.5mm}
@@ -657,20 +657,34 @@ Kursverlaufs)~→ Reiter \textbf{Active} (daneben \textbf{Pending} und \textbf{H
 \end{minipage}
 \par\vspace{5mm}
 \noindent\includegraphics[width=\linewidth]{positionen-desktop-voll.pdf}
-\par\vspace{10mm}
-% Nummern 1-3 in eigener schmaler Spalte links vor den Namen (wie die Marken in der Abbildung)
-\noindent\begin{tabular}{@{}>{\raggedright\arraybackslash}p{6.6mm}@{}>{\raggedright\arraybackslash}p{30mm}%
-  >{\raggedright\arraybackslash}p{181mm}>{\raggedright\arraybackslash}p{30mm}@{}}
- & \hd{Angabe} & \hd{Bedeutung} & \hd{Mehr dazu} \\
+\par\vspace{8mm}
+% Nummern 1-13 in eigener schmaler Spalte links vor den Namen (wie die Marken in der Abbildung);
+% zwei Tabellen nebeneinander, je 123,6 mm. S/L nur benannt (kein Stop-Loss, HANDOFF 2.3).
+% Verweis (\verw) am Ende der Bedeutung statt eigener Spalte, damit die Zeilen einzeilig bleiben.
+\newcommand\spaltentab[1]{\begin{tabular}[t]{@{}>{\raggedright\arraybackslash}p{6.6mm}@{}%
+  >{\raggedright\arraybackslash}p{24mm}>{\small\raggedright\arraybackslash}p{88.7mm}@{}}
+ & \hd{Spalte} & \hd{Bedeutung} \\
 \addlinespace[1.6mm]\midrule\addlinespace[2.4mm]
- & \textbf{Amount} & Die gehandelte Menge des Instruments. & \\ \addlinespace[2mm]
- & \textbf{Trade Volume} & Der Wert der Position, in dieser Einheit Volumen genannt. & \verw{s:hebel}{Hebel} \\ \addlinespace[2mm]
-\pfn{1} & \textbf{Swap} & Der bei der Position verbuchte Swap. Er ist in Total Profit enthalten. & \verw{s:swap}{Swaps} \\ \addlinespace[2mm]
-\pfn{2} & \textbf{Total Profit} & Das aktuelle Ergebnis der Position einschließlich ihres Swaps; es ändert sich mit jeder
-  Kursbewegung. Das Ergebnis aller offenen Positionen zusammen steht unter Profit/Losses.
-  & \verw{s:kontostand}{Kontostand} \\ \addlinespace[2mm]
-\pfn{3} & \textbf{Margin} & Der Teil Ihres Kontos, den diese Position als Sicherheit bindet. & \verw{s:margin}{Margin} \\
-\end{tabular}
+#1\end{tabular}}
+\newcommand\spzeile[4]{\pfn{#1} & \textbf{#2} & #3\ifx\relax#4\relax\else\hspace{2mm}#4\fi \\ \addlinespace[1.4mm]}
+\noindent\spaltentab{%
+\spzeile{1}{ID}{Die Nummer der Position auf der Plattform.}{}
+\spzeile{2}{Instrument}{Das gehandelte Instrument.}{\verw{s:instrumente}{Angaben eines Instruments}}
+\spzeile{3}{Type}{Die Richtung der Position: Buy oder Sell.}{\verw{s:grundbegriffe}{Grundbegriffe}}
+\spzeile{4}{Amount}{Die gehandelte Menge des Instruments.}{}
+\spzeile{5}{Trade Volume}{Der Wert der Position, ihr Volumen.}{\verw{s:hebel}{Hebel}}
+\spzeile{6}{Open Rate}{Der Kurs, zu dem die Position eröffnet wurde.}{}
+\spzeile{7}{Open Time}{Der Zeitpunkt, zu dem die Position eröffnet wurde.}{}
+}\hfill\spaltentab{%
+\spzeile{8}{S/L}{Der hinterlegte Stop-Loss; ihn erläutert eine eigene Schulungseinheit.}{}
+\spzeile{9}{T/P}{Der hinterlegte Take-Profit.}{}
+\spzeile{10}{Swap}{Der bei der Position verbuchte Swap; er ist in Total Profit enthalten.}{\verw{s:swap}{Swaps}}
+\spzeile{11}{Commission}{Fällt auf dieser Plattform nur als Dormant-Gebühr an, also als Gebühr für ein
+  inaktives Konto.}{}
+\spzeile{12}{Total Profit}{Das aktuelle Ergebnis der Position einschließlich ihres Swaps; alle offenen
+  Positionen zusammen ergeben Profit/Losses.}{\verw{s:kontostand}{Kontostand}}
+\spzeile{13}{Margin}{Der Teil Ihres Kontos, den die Position als Sicherheit bindet.}{\verw{s:margin}{Margin}}
+}
 \hoch
 \kicker{}{Auf einen Blick}\phantomsection\label{s:ueberblick}
 \Hone{Die Begriffe im Überblick}

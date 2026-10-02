@@ -199,10 +199,9 @@
       \zelle{1249.85}{\y}{white}{—}
       \zelle{1382.5}{\y}{\farbe}{Ergebnis}
       \zelle{1495}{\y}{white}{Betrag}}
-    \ifmarken
-      \marke{1113.6}{1}
-      \marke{1344.2}{2}
-      \marke{1467.9}{3}
+    \ifmarken% alle Spalten nummeriert (Nutzerwunsch 02.10.2026), Legende im Dokument
+      \foreach \x [count=\n] in {102.5,177,298,383.8,493.5,640,787.5,941,1030.9,1113.6,
+          1207.4,1344.2,1467.9} {\marke{\x}{\n}}
     \fi
   \end{scope}
 \end{tikzpicture}%
