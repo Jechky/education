@@ -30,3 +30,8 @@ Quelle: HTML-Ausschnitte, die der Nutzer am 02.10.2026 aus dem WebTrader kopiert
 - **„Trade volume“ ist der Wert der Position**, entspricht also dem „Volumen“ im Dokument. **„Amount“ ist die Menge.** Damit ist der Prüfbefund Volume/Volumen geklärt: Im Order-Fenster ist „Volume“ die Menge.
 - Pro Position werden **Margin** und **Commission** angezeigt. Die Commission steht bei null, was zur Angabe des Nutzers passt, dass es keine gibt.
 - Die Spalten S/L und T/P gehören zum Plattform-Original. Das Dokument behandelt den Stop-Loss nicht.
+
+## Abgleich mit dem Screenshot des Nutzers (02.10.2026)
+- Die Summe der Total-Profit-Werte aller offenen Positionen ergibt genau den Wert **Profit/Losses** in der untersten Leiste. Außerdem gilt Equity − Balance = Profit/Losses, bis auf die Rundung. Die Zahlen werden hier nicht festgehalten, weil es Kontodaten sind.
+- Damit ist belegt: Profit/Losses ist die Summe von Total Profit, und Total Profit enthält den Swap.
+- Die Kopfleiste am Desktop zeigt außerdem Equity und Balance. Die unterste Leiste zeigt Balance, Equity (hervorgehoben), Profit/Losses, Margin, Free, Level, Bonus und Credit.
