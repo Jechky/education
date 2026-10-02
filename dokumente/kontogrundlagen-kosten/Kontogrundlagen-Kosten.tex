@@ -286,7 +286,7 @@ findest du unter \textbf{Information}.\par}
 \Hone{Der Hebel vergrößert beides}
 \begin{minipage}{128mm}\lead{Mit Hebel bewegst du am Markt deutlich mehr, als du an Margin hinterlegst.
 Das gilt in beide Richtungen: Gewinne und Verluste werden am ganzen Volumen gerechnet, nicht am Einsatz.}\end{minipage}
-\par\vspace{9mm}
+\par\vspace{8mm}
 \noindent \begin{tikzpicture}[x=1mm,y=1mm]
 \useasboundingbox (0,5) rectangle (170.0,56);
 \node[anchor=west,inner sep=0,text=ink,font=\lbl\bfseries] at (0,53) {Ohne Hebel};
@@ -310,21 +310,44 @@ Das gilt in beide Richtungen: Gewinne und Verluste werden am ganzen Volumen gere
 \node[anchor=south west,inner sep=0,text=buy,font=\micro] at (88,23) {Gewinn bei gleicher Bewegung};
 \node[anchor=north west,inner sep=0,text=sell,font=\micro] at (88,9) {Verlust bei gleicher Bewegung};
 \end{tikzpicture}
-\par\vspace{7mm}
-\noindent\begin{minipage}[t]{82mm}\vspace{0pt}\begin{soft}
-{\htwo\ls\color{buy}WAS DAFÜR SPRICHT}\par\vspace{2mm}
-{\color{body}Du brauchst wenig Kapital, um eine Position zu halten, die am Markt viel bewegt. Die gebundene
-Margin bleibt klein, der freie Teil groß.}\end{soft}\end{minipage}\hfill
-\begin{minipage}[t]{82mm}\vspace{0pt}\begin{soft}
-{\htwo\ls\color{sell}WAS DAGEGEN SPRICHT}\par\vspace{2mm}
-{\color{body}Schon eine kleine Kursbewegung gegen dich ist – gemessen an deinem Einsatz – ein großer Verlust.
-Je höher der Hebel, desto schneller nähert sich das Level dem Stop out.}\end{soft}\end{minipage}
-\par\vspace{7mm}
+\par\vspace{6mm}
+% Einzige bewusste Ausnahme vom Zahlenverbot (Nutzerwunsch, HANDOFF Abschnitt 14):
+% Vergleich mit einfachen Zahlen nach dem Lehrbuchbeispiel "you vs. your friend".
+% Schreibweise: 1.000\,€, 5\,%, echtes Minuszeichen U+2212.
+\Htwo{Ein Vergleich mit einfachen Zahlen}
+{\color{body}\raggedright Angenommen, Sie und ein Bekannter verfügen über je 100\,€ und erwarten, dass
+Instrument~XY steigt. Ihr Bekannter kauft ohne Hebel und bewegt folglich genau 100\,€. Sie handeln hingegen mit Hebel~1:10:
+Ihre~100\,€ sind als Margin gebunden, bewegt werden jedoch 1.000\,€. Die fehlenden 900\,€ sind geliehen.\par}
+\par\vspace{4mm}
+% Spalte "Mit Hebel" beginnt bei 88 mm wie "Mit Hebel" in der Grafik darueber.
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{34mm}>{\raggedright\arraybackslash}p{45.53mm}%
+  >{\raggedright\arraybackslash}p{82mm}@{}}
+ & \hd{Ohne Hebel} & \hd{Mit Hebel 1:10} \\
+\addlinespace[1.6mm]\midrule\addlinespace[2.4mm]
+\textbf{Einsatz} & 100\,€ & 100\,€ als Margin \\ \addlinespace[1.6mm]
+\textbf{Bewegtes Volumen} & 100\,€ & 1.000\,€ \\ \addlinespace[1.6mm]
+\textbf{Kurs steigt um 5\,\%} & \textcolor{buy}{+5\,€} & \textcolor{buy}{+50\,€} \\ \addlinespace[1.6mm]
+\textbf{Kurs fällt um 5\,\%} & \textcolor{sell}{−5\,€} & \textcolor{sell}{−50\,€} \\ \addlinespace[1.6mm]
+\textbf{Kurs fällt um 10\,\%} & \textcolor{sell}{−10\,€} & \textcolor{sell}{−100\,€, also der gesamte Einsatz}\newline
+  {\color{muted}\small Der Stop out schließt die Position in der Regel vorher.} \\ \addlinespace[1.6mm]
+\textbf{Halten über Nacht} & kein Swap & Swap für die geliehenen 900\,€ \\
+\end{tabular}
+\par\vspace{4mm}
+{\color{body}\raggedright Gemessen am Einsatz ergibt dieselbe Kursbewegung bei Ihrem Bekannten ±5\,\%, bei Ihnen hingegen
++50\,\% oder −50\,\%. Der Hebel vergrößert folglich Gewinn und Verlust im gleichen Verhältnis.\par}
+\par\vspace{6mm}
+\noindent\begin{minipage}[t]{82mm}\vspace{0pt}\begin{soft}[equal height group=hebel]
+{\htwo\ls\color{muted}AUSWIRKUNG AUF DEN KAPITALEINSATZ}\par\vspace{2mm}
+{\color{body}Ein großes Volumen erfordert nur eine geringe Margin. Folglich bleibt ein größerer Teil
+der Equity frei.}\end{soft}\end{minipage}\hfill
+\begin{minipage}[t]{82mm}\vspace{0pt}\begin{soft}[equal height group=hebel]
+{\htwo\ls\color{muted}AUSWIRKUNG AUF KURSBEWEGUNGEN}\par\vspace{2mm}
+{\color{body}Jede Kursbewegung wirkt im Verhältnis zum Einsatz stärker, und zwar in beide Richtungen.
+Je höher der Hebel, desto schneller nähert sich das Level bei Verlusten dem Stop out.}\end{soft}\end{minipage}
+\par
 \begin{merk}\textbf{Wo der Hebel steht.} Für dein Konto unter \textbf{Information} als \textbf{Leverage}.
 Für ein einzelnes Instrument in dessen Info-Fenster – dort kann er niedriger sein als der Kontohebel.
 Es gilt immer der Wert des Instruments.\end{merk}
-\par\vspace{5mm}
-{\color{muted}\small\raggedright Der Hebel ist kein Gewinnverstärker. Er ist ein Bewegungsverstärker – nach oben wie nach unten.\par}
 \clearpage
 \kicker{}{Swaps}
 \Hone{Warum Halten über Nacht Geld kostet}

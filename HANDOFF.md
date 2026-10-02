@@ -21,6 +21,7 @@
 11. [Stand Wiederherstellung](#11-stand-wiederherstellung)
 12. [Wiederherstellung Kontogrundlagen](#12-wiederherstellung-kontogrundlagen)
 13. [Farbrollen Kontogrundlagen](#13-farbrollen-kontogrundlagen)
+14. [Hebel-Vergleich mit Zahlen (Kontogrundlagen S. 4)](#14-hebel-vergleich-mit-zahlen-kontogrundlagen-s-4)
 
 ---
 
@@ -76,6 +77,7 @@ Diese Regeln gelten für **beide** Dokumente, sofern nicht anders vermerkt. Vor 
 - [ ] **Keine Zahlen im Dokument** – „generell keine Zahlen“, sie verwirren Laien (#58). Entfernt wurden Preise, Kapitelnummern, „Typ 1–4“, Datum und Seitenzahlen (#59).
   - Ausnahme 1: **Schrittnummern 1–5** (Wegweiser, keine Preise) (#59, #67).
   - Ausnahme 2: **Badge auf dem Deckblatt** „4 Ordertypen. 1 klare Entscheidungslogik.“ – vom Nutzer selbst vorgegeben (#102); Claude hat auf den Konflikt hingewiesen (#103), keine Antwort.
+  - Ausnahme 3 (nur Doku 2): **Vergleichstabelle „Ohne Hebel / Mit Hebel 1:10“ auf der Hebel-Seite** mit einfachen Beträgen (100 €, 1.000 €, 5 %) – ausdrücklicher Wunsch des Nutzers (02.10.2026), Abschnitt 14. Sonst gilt das Zahlenverbot weiter.
   - Im Fenster stehen statt Werten „deine Menge“, „dein Wert“, „dein Ziel“ (#59); in der Kontoübersicht „Konto jetzt“ statt einer Summe (#151).
 - [ ] **Take-Profit-Regel bei jedem Typ nennen**: bei Buy **über**, bei Sell **unter** dem At price (#48, #49).
 - [ ] Kein **historischer Trade / Hebel-Rechenbeispiel** im Guide. Claude riet ab (Zahlen, Hebel ohne Absicherung, falsche Erwartungen, Größen- statt Richtungsfrage) und bot ein separates Anhangsblatt „Rechenbeispiel“ an (#65). ⚠ Der Nutzer hat nicht geantwortet.
@@ -322,7 +324,7 @@ Plattform-Fakten aus dem Referenzdokument: Balance, Equity, Free Margin, Margin 
 1. **Deckblatt** – Konto-Anatomie als Bild: Balance + Profit/Losses ergibt Equity; Equity teilt sich in Margin und Free; darunter Level als Verhältnis (#147).
 2. **Kontostand** (deckt Themen 1 und 2 ab) – Balance („was fest ist“) gegen Equity („was jetzt gilt“) als zwei Kästen; Grafik mit Position im Plus und im Minus; unten der Weg von schwebend zu fest: öffnen → Kurs bewegt sich → schließen (#147).
 3. **Margin** (Themen 3 und 4) – Margin, Free, Level nebeneinander; Balken in drei Zuständen (eine Position, mehrere, Positionen im Minus); Level-Skala „genug Puffer“ → Warnbereich → Stop out. **Stop-out-Wert bewusst nicht genannt**, Verweis auf das Feld unter „Information“, weil er je Konto anders sein kann (#147).
-4. **Hebel** (Thema 5) – „ohne“ und „mit“ nebeneinander: gleicher Einsatz, unterschiedlich viel bewegtes Volumen; darunter symmetrisch, wie stark dieselbe Bewegung nach oben und unten wirkt; Vor- und Nachteil als zwei gleichwertige Kästen, keine Gewinnversprechen. Die Grafik „ohne Hebel“ ist **bewusst winzig** (das ist die Aussage) (#147).
+4. **Hebel** (Thema 5) – „ohne“ und „mit“ nebeneinander: gleicher Einsatz, unterschiedlich viel bewegtes Volumen; darunter symmetrisch, wie stark dieselbe Bewegung nach oben und unten wirkt; Vor- und Nachteil als zwei gleichwertige Kästen, keine Gewinnversprechen. Die Grafik „ohne Hebel“ ist **bewusst winzig** (das ist die Aussage) (#147). Seit 02.10.2026 zusätzlich Vergleichstabelle mit Zahlen; die Vor-/Nachteil-Kästen sind neutral umgebaut (Abschnitt 14).
 5. **Swaps** (Thema 6) – neu nach der **Skizze des Nutzers** (#148, #151):
    - Das Warum: Dir gehört nur die Margin, der Rest ist geliehen, und geliehenes Geld kostet Zinsen.
    - Die Kette: **Geldmarkt-Zins + Broker-Aufschlag = dein Swap**.
@@ -862,3 +864,48 @@ Nutzer: „Im Pending-Orders-Dokument ist das Gute, dass alle Grafiken wie LaTeX
 `soft`-Kästen wieder genau wie in Doku 1 (`paper`, ohne Rand). ⚠ Ihre `muted`-Kicker (8 pt fett, Versalien) haben darauf 4,39:1 – wie in Doku 1. Merk-Kasten und Badge unverändert wie Doku 1.
 
 **Prüfung:** 7 Seiten; einzige Warnung Overfull \hbox 1,24 pt in der Spickzettel-Tabelle (alt); 10 Schriften eingebettet; keine Rasterbilder. Fließtext an derselben Stelle wie in `c615842` (Seiten 1–3, 5–7; nur Grafik-Beschriftungen bewegt), Seite 4 rückt unter der kleineren Hebel-Grafik nach oben. Seite 6 bei 300 dpi gegen `dc384c3` und `c615842`: Handy-Ausschnitt mit Marken und Liste (y 58–160 mm), Desktop-Leiste (y 186–200 mm) und alles oberhalb der Kästen (y 0–214 mm) **0 abweichende Pixel**. Bilder (nicht eingecheckt): `build/Grafik-Vergleich.png` (7 Seiten, oben `c615842`, unten neu, 70 dpi), `build/Grafik-Reihe.png` (Doku 1 S. 2 und 3 neben Doku 2 S. 3 und 4, 80 dpi).
+
+---
+
+## 14. Hebel-Vergleich mit Zahlen (Kontogrundlagen S. 4)
+
+Stand 02.10.2026. Nutzerwunsch: ein Vergleich wie im englischen Lehrbuchbeispiel „you vs. your friend“ (CFD mit Hebel gegen direkten Kauf, Tabelle „Opening the Positions / Closing the Positions“), aber mit **einfachen Zahlen wie 100 und 1:10**.
+
+⚠ **Einzige bewusste Ausnahme vom Zahlenverbot** (Abschnitt 2.3, Ausnahme 3). Nicht als Freigabe für weitere Beträge im Dokument verstehen; Rechenbeispiel auf der Swap-Seite bleibt offen (Abschnitt 5.4).
+
+**Vorgaben aus derselben Runde (über den Koordinator weitergegeben):**
+
+- Register: gehobenes, präzises Standarddeutsch (C1, seriöses Schulungsdokument einer Bank), ganze Sätze mit klarer Logik (folglich, demnach, hingegen, sofern), keine saloppen Bilder („fressen“, „wird es eng“, „kostet dich“), keine Slogans, keine Gedankenstrich-Ketten; für Laien verständlich.
+- **Anrede „Sie“** (Entscheidung des Nutzers). Der neue Hebel-Abschnitt und die beiden Kästen sind schon in der Sie-Form; die übrigen Texte (auch Lead und Merk-Kasten der Hebel-Seite) stellt ein eigener Durchgang um. Bis dahin stehen auf S. 4 „du“ und „Sie“ nebeneinander.
+- **Rein informativ:** keine Handelsentscheidung nahelegen oder bewerten. Keine Wertungen wie „Vorteil/Nachteil“, „was dafür/dagegen spricht“, „lohnt sich“, „sinnvoll“, „Gewinnverstärker“. Grün/Rot nur für Gewinn/Verlust (Tabelle, Grafik), nicht für Kästen.
+
+**Aufbau der Seite (von oben):** Kicker, Titel, Lead, Grafik (unverändert, maßstäblich 1 : 10) · „EIN VERGLEICH MIT EINFACHEN ZAHLEN“ (`\Htwo`) · Geschichte (3 Zeilen) · Tabelle · Fazit (2 Zeilen) · zwei `soft`-Kästen (gleich hoch, `equal height group=hebel`) · Merk-Kasten „Wo der Hebel steht“ (Information → Leverage, unverändert; deshalb kein zweiter Hinweis).
+
+Geschichte: „Angenommen, Sie und ein Bekannter verfügen über je 100 € und erwarten, dass Instrument XY steigt. Ihr Bekannter kauft ohne Hebel und bewegt folglich genau 100 €. Sie handeln hingegen mit Hebel 1:10: Ihre 100 € sind als Margin gebunden, bewegt werden jedoch 1.000 €. Die fehlenden 900 € sind geliehen.“
+
+| | Ohne Hebel | Mit Hebel 1:10 |
+|---|---|---|
+| **Einsatz** | 100 € | 100 € als Margin |
+| **Bewegtes Volumen** | 100 € | 1.000 € |
+| **Kurs steigt um 5 %** | +5 € (`buy`) | +50 € (`buy`) |
+| **Kurs fällt um 5 %** | −5 € (`sell`) | −50 € (`sell`) |
+| **Kurs fällt um 10 %** | −10 € (`sell`) | −100 €, also der gesamte Einsatz (`sell`); darunter klein `muted`: „Der Stop out schließt die Position in der Regel vorher.“ |
+| **Halten über Nacht** | kein Swap | Swap für die geliehenen 900 € |
+
+Fazit: „Gemessen am Einsatz ergibt dieselbe Kursbewegung bei Ihrem Bekannten ±5 %, bei Ihnen hingegen +50 % oder −50 %. Der Hebel vergrößert folglich Gewinn und Verlust im gleichen Verhältnis.“
+
+**Rechnungen geprüft:** Margin = 1.000 € : 10 = 100 €; geliehen 1.000 − 100 = 900 €; 5 % von 100 € = 5 €, von 1.000 € = 50 €; 10 % von 100 € = 10 €, von 1.000 € = 100 € (= ganzer Einsatz); 50 € : 100 € = 50 %, 5 € : 100 € = 5 %.
+
+**Stop-out-Aussage:** Mit 100 € auf dem Konto und 100 € Margin steht das Level nach dem Öffnen bei Equity : Margin = 100 % und sinkt mit jedem Verlust. Liegt der Stop-out-Wert des Kontos über null, schließt die Plattform, bevor die Equity null erreicht – also vor −100 €. „In der Regel“, weil der Wert je Konto verschieden ist und Kurssprünge möglich sind; **keine Prozentschwelle genannt** (wie S. 3). ⚠ Je nach Stop-out-Wert kann schon die Zeile −5 % (Level dann 50 %) zum Stop out führen; der Betrag −50 € stimmt trotzdem.
+
+⚠ **„kein Swap“ ohne Hebel** folgt dem Modell der Swap-Seite (Swap = Zins für geliehenes Geld) und dem Lehrbuchbeispiel (direkter Kauf). Auf CFD-Plattformen wird ein Swap meist auf das ganze Volumen berechnet, auch bei Hebel 1:1. Die Geschichte sagt deshalb „kauft ohne Hebel“, nicht „handelt auf der Plattform ohne Hebel“.
+
+**Geändert außerhalb des neuen Abschnitts (auf Wunsch):**
+
+- Kästen „WAS DAFÜR SPRICHT“ (`buy`) / „WAS DAGEGEN SPRICHT“ (`sell`) → neutral, Überschriften `muted`: „AUSWIRKUNG AUF DEN KAPITALEINSATZ“ – „Ein großes Volumen erfordert nur eine geringe Margin. Folglich bleibt ein größerer Teil der Equity frei.“ · „AUSWIRKUNG AUF KURSBEWEGUNGEN“ – „Jede Kursbewegung wirkt im Verhältnis zum Einsatz stärker, und zwar in beide Richtungen. Je höher der Hebel, desto schneller nähert sich das Level bei Verlusten dem Stop out.“
+- Schlusszeile „Der Hebel ist kein Gewinnverstärker. Er ist ein Bewegungsverstärker – nach oben wie nach unten.“ **entfernt**: Aussage steckt jetzt im Fazit (keine Doppelung), „Gewinnverstärker“ ist wertend, und die Seite wäre sonst übergelaufen.
+- Abstände: Lead → Grafik 9 → 8 mm (wie S. 2/3), Kästen → Merk 7 mm + 6 mm → nur die 6 mm des Merk-Kastens.
+
+**Layout:** Spalte „Mit Hebel 1:10“ beginnt bei 88 mm, genau unter „Mit Hebel“ in der Grafik (Spalten 34 / 45,53 / 82 mm, zusammen mit 2 × 2 `\tabcolsep` exakt 170 mm, kein Overfull). Alle Spalten Flattersatz (`>{\raggedright\arraybackslash}`). Zahlen in IBM Plex Sans (nicht Mono), schmales Leerzeichen `\,` vor € und %, Minus U+2212, Tausenderpunkt; `Hebel~1:10`, `Instrument~XY`, `Ihre~100\,€` gegen Umbrüche. Die Seite ist bis ca. 275 mm gefüllt (Satzspiegel endet bei 279 mm): **Jede zusätzliche Zeile auf S. 4 schiebt den Merk-Kasten auf eine neue Seite** – nach Textänderungen Seitenzahl prüfen.
+
+**Prüfung:** 7 Seiten; einzige Warnung weiterhin Overfull \hbox 1,24 pt in der Spickzettel-Tabelle (alt); 10 Schriften eingebettet; keine Rasterbilder; Starthöhe S. 4 unverändert 20,3 mm (pdftotext). Seiten 1–3 und 5–7 pixelgleich mit `86b22e4` (60 dpi). Bild (nicht eingecheckt): `build/Hebel-Neu.png` (S. 4, 110 dpi); Test-PDF `build/Kontogrundlagen-Kosten_TEST.pdf`.
