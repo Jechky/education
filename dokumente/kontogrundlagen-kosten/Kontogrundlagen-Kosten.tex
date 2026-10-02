@@ -314,17 +314,18 @@ hinterlegen. Gewinne und Verluste werden folglich am gesamten Volumen berechnet,
 \end{tikzpicture}
 \par\vspace{6mm}
 % Einzige bewusste Ausnahme vom Zahlenverbot (Nutzerwunsch, HANDOFF Abschnitt 14):
-% Vergleich mit einfachen Zahlen nach dem Lehrbuchbeispiel "you vs. your friend".
+% Vergleich mit einfachen Zahlen nach dem Lehrbuchbeispiel "you vs. your friend":
+% Direktkauf ueber die Bank (ohne Hebel, ohne Swap) gegen Handel beim Broker mit Hebel 1:10.
 % Schreibweise: 1.000\,€, 5\,%, echtes Minuszeichen U+2212.
 \Htwo{Ein Vergleich mit einfachen Zahlen}
-{\color{body}\raggedright Angenommen, Sie und ein Bekannter verfügen über je 100\,€ und erwarten, dass
-Instrument~XY steigt. Ihr Bekannter kauft ohne Hebel und bewegt folglich genau 100\,€. Sie handeln hingegen mit Hebel~1:10:
-Ihre~100\,€ sind als Margin gebunden, bewegt werden jedoch 1.000\,€. Die fehlenden 900\,€ sind geliehen.\par}
+{\color{body}\raggedright Angenommen, Sie und ein Bekannter setzen je 100\,€ ein und erwarten, dass Instrument~XY
+steigt. Ihr Bekannter kauft es direkt über das Wertpapierdepot seiner Bank, also ohne Hebel. Sie handeln hingegen
+beim Broker mit Hebel~1:10 und bewegen 1.000\,€: Ihre~100\,€ sind als Margin gebunden, 900\,€ sind geliehen.\par}
 \par\vspace{4mm}
-% Spalte "Mit Hebel" beginnt bei 88 mm wie "Mit Hebel" in der Grafik darueber.
+% Spalte "Broker" beginnt bei 88 mm wie "Mit Hebel" in der Grafik darueber.
 \begin{tabular}{@{}>{\raggedright\arraybackslash}p{34mm}>{\raggedright\arraybackslash}p{45.53mm}%
   >{\raggedright\arraybackslash}p{82mm}@{}}
- & \hd{Ohne Hebel} & \hd{Mit Hebel 1:10} \\
+ & \hd{Direktkauf über die Bank} & \hd{Handel beim Broker, Hebel 1:10} \\
 \addlinespace[1.6mm]\midrule\addlinespace[2.4mm]
 \textbf{Einsatz} & 100\,€ & 100\,€ als Margin \\ \addlinespace[1.6mm]
 \textbf{Bewegtes Volumen} & 100\,€ & 1.000\,€ \\ \addlinespace[1.6mm]
@@ -332,11 +333,11 @@ Ihre~100\,€ sind als Margin gebunden, bewegt werden jedoch 1.000\,€. Die feh
 \textbf{Kurs fällt um 5\,\%} & \textcolor{sell}{−5\,€} & \textcolor{sell}{−50\,€} \\ \addlinespace[1.6mm]
 \textbf{Kurs fällt um 10\,\%} & \textcolor{sell}{−10\,€} & \textcolor{sell}{−100\,€, also der gesamte Einsatz}\newline
   {\color{muted}\small Der Stop out schließt die Position in der Regel vorher.} \\ \addlinespace[1.6mm]
-\textbf{Halten über Nacht} & kein Swap & Swap für die geliehenen 900\,€ \\
+\textbf{Halten über Nacht} & keine Finanzierungskosten & Swap für die geliehenen 900\,€ \\
 \end{tabular}
 \par\vspace{4mm}
-{\color{body}\raggedright Gemessen am Einsatz ergibt dieselbe Kursbewegung bei Ihrem Bekannten ±5\,\%, bei Ihnen hingegen
-+50\,\% oder −50\,\%. Der Hebel vergrößert folglich Gewinn und Verlust im gleichen Verhältnis.\par}
+{\color{body}\raggedright Gemessen am Einsatz ergibt dieselbe Kursbewegung beim Direktkauf ±5\,\%, beim Handel mit
+Hebel~1:10 hingegen +50\,\% oder −50\,\%. Der Hebel vergrößert folglich Gewinn und Verlust im gleichen Verhältnis.\par}
 \par\vspace{6mm}
 \noindent\begin{minipage}[t]{82mm}\vspace{0pt}\begin{soft}[equal height group=hebel]
 {\htwo\ls\color{muted}AUSWIRKUNG AUF DEN KAPITALEINSATZ}\par\vspace{2mm}
