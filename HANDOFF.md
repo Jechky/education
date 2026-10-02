@@ -444,6 +444,7 @@ Vorgabe des Nutzers (#118, #120):
 5. **PDF-Version von 1.3 auf 2.0** korrigiert (1.3 passte nicht zu AES-256) (#125).
 6. **Pixelvergleich** Original vs. geschützt: maximale Farbabweichung **0** auf allen Seiten (#121, #123, #125).
 7. Das Skript (laut Aufgabenstellung `scramble.py`, ⚠ Name nicht im Export) soll **nach jeder Textänderung erneut über die frische PDF** laufen (#121).
+8. **Werkzeug seit 02.10.2026:** `python3 tools/schutz.py build/<Name>.pdf build/<Name>_GESCHUETZT.pdf` setzt 2.–5. um (ToUnicode über alle Objekte, AES-256 R6 mit leerem Benutzerpasswort, P = −3904 direkt per pypdf, PDF 2.0) und prüft selbst (Seitenzahl/-größen, Pixelvergleich 100 dpi = 0, Extrakt ohne echte Wörter, `qpdf --show-encryption`, Header). Endet bei einem Fehler mit Code 1. Die PDFs in `build/` werden nicht eingecheckt.
 
 **Grenzen** (vom Nutzer zur Kenntnis genommen): Berechtigungen sind nur eine Bitte an den Reader, der echte Schutz ist der vergiftete Textlayer; „Saving a copy“ lässt sich prinzipiell nicht abschalten; Vorlesesoftware für Sehbehinderte ist ausgesperrt, was je nach Land rechtlich relevant sein kann (#119, #121, #125).
 
@@ -680,7 +681,7 @@ Erste, gröbere Fassung (Suche über den Text „NEW ORDER“ + „Place pending
 2. ~~**Doku 2: Desktop-Leiste im blauen Design messen**~~ → erledigt 02.10.2026 (Abschnitt 12).
 3. ~~**Doku 2: Instrument-Info-Feld messen**~~ → erledigt 02.10.2026: Desktop und mobil gemessen, nachgebaut, auf „Instrumente und Positionen“ eingebunden (5.4, Abschnitt 18).
 4. Optional: **Mobile, Reiter Information** (Lauf 3).
-5. Nach jeder Textänderung: Druck-Prüfungen (6.1) und **Schutz neu aufspielen** (6.3), Pixelvergleich = 0, Extrakt ohne echte Wörter. ⚠ Stand `5455781`: Die geschützten Fassungen sind nach den Änderungen der Nachträge 2 und 3 (Abschnitte 17, 18) **weiterhin nicht neu erzeugt**.
+5. Nach jeder Textänderung: Druck-Prüfungen (6.1) und **Schutz neu aufspielen** (6.3), Pixelvergleich = 0, Extrakt ohne echte Wörter. ✓ Stand `fe8c471`: Beide geschützten Fassungen sind mit `tools/schutz.py` neu erzeugt und geprüft (Abschnitt 19).
 6. **Offene Funde der Prüfung Kontogrundlagen** (Plattform-Bilder Prio 1–5, „Wertpapierdepot“, Kommentar in `mobil.tex`) sowie Einbau der gebauten Nachbauten und offene Messbefehle: Abschnitt 8.4 und 18.
 
 ### 8.2 Entscheidungen, die beim Nutzer liegen (offen)
@@ -1175,3 +1176,22 @@ Umfang: `git log --oneline 3b34934..5455781` (18 Commits; der erste, `bee5507`, 
 - Ohne Befehl bisher: mobile Liste der offenen Positionen (Orders → Active), Reiter „Information“ (8.4).
 
 **Prüfstand** (laut Übergabe `kg-seite-instrumente.md`, Stand `0850815`): 9 Seiten, Log ohne Over-/Underfull, 15 Schriften eingebettet, 0 Rasterbilder; Zahlen nur an den freigegebenen Stellen, Nummern auf S. 7 und 8; S. 1 und 4 pixelgleich. Für diesen Nachtrag nicht neu gebaut. Die geschützten Fassungen sind weiterhin nicht neu erzeugt (8.1, 6.3).
+
+## 19. Nachtrag 4 (02.10.2026): Einbau der Querformat-Seiten, Schutz-Werkzeug
+
+Die alte Sitzung hatte den Einbau fertig, aber nicht committet (Limit). Er ist nach ihren Screenshots neu gebaut (`fe8c471`):
+
+| Seite | Inhalt |
+|---|---|
+| 7 „In der Plattform“ (hoch) | Einleitung und Notiz gekürzt (Bonus-Satz entfällt, steht in „Grundbegriffe“; neu: Reiter **Information** nennt Leverage und Stop out); `desktop-schema.pdf` (170 mm) über `bar.pdf`; Verweissatz auf S. 8/9. Kästen DESKTOP/MOBILE entfallen. |
+| 8 „Angaben eines Instruments“ (quer) | Kursliste (`kursliste-desktop-ohne.pdf`, gezeigt Energies bis Commodities) → Ring um das Info-Zeichen bei Gold → Pfeil „Klick auf das **Info-Zeichen (i)**“ → `info-desktop.pdf`; rechts MOBILE `info-mobil.pdf`; Legende 1–3 in einer Zeile. Maßstab 1 px = 0,22 mm. Label `s:instrumente`. |
+| 9 „Offene Positionen“ (quer) | Wege DESKTOP/MOBILE, `positionen-desktop-voll.pdf` auf 257 mm, Erklärungstabelle (Amount, Trade Volume, 1 Swap, 2 Total Profit, 3 Margin). Label `s:positionen`. |
+| 10 „Auf einen Blick“ (hoch) | unverändert |
+
+- Querformat per `\quer` / `\hoch` (Präambel): Seitengröße je Seite, Ränder und Kickerhöhe wie hochkant, Fußzeile über `\headwidth`.
+- `kursliste-desktop-ohne.pdf`: Variante ohne Marke, gebaut mit `xelatex -jobname=kursliste-desktop-ohne '\def\ohnemarken{}\input{kursliste-desktop}'` (nicht in `scripts/build.sh`).
+- `positionen-desktop.pdf` (Ausschnitt mit Bruchkante) ist nicht mehr eingebunden.
+- Verweise „Instrumente und Positionen“ → „Angaben eines Instruments“ (S. 2, 5, 6); Text „Trade Volume“ wie auf der Plattform.
+- **Achtung Build:** `scripts/build.sh` ersetzt die eingecheckten Nachbau-PDFs, wenn TeX Live eine andere Version hat (nur binär verschieden). Vor dem Commit mit `git checkout dokumente/kontogrundlagen-kosten/*.pdf` zurücksetzen, außer ein Nachbau wurde absichtlich geändert.
+
+**Prüfstand `fe8c471`:** Doku 2 mit 10 Seiten (S. 8/9 quer), Log ohne Over-/Underfull, 21 Schriften eingebettet, 0 Rasterbilder, Ziffern nur Wegweiser 1–5 und 1:10. Guide mit 9 Seiten, 0 Warnungen, alles eingebettet. Schutz (`tools/schutz.py`): Doku 2 21/21 und Guide 11/11 ToUnicode ersetzt, Pixelabweichung 0, P = −3904, AES-256, PDF 2.0.
