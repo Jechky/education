@@ -37,6 +37,7 @@
 \definecolor{pfbg}{HTML}{001328}\definecolor{pfgruen}{HTML}{0E7A4E}
 \definecolor{pfgrau}{HTML}{97A5B4}\definecolor{pfrot}{HTML}{B23A2E}
 \definecolor{pfgrey}{HTML}{6A6A6A}
+\definecolor{pfseite}{HTML}{04273C}% Seitenhintergrund der Plattform (Rand um den Kursliste-Ausschnitt)
 \definecolor{wbg}{HTML}{0E2939} \definecolor{whead}{HTML}{0B2130} \definecolor{wfield}{HTML}{102B3C}
 \definecolor{wborder}{HTML}{1D4256} \definecolor{waccent}{HTML}{1B6CA8} \definecolor{wgreen}{HTML}{3CB44A}
 \definecolor{wtext}{HTML}{E7EEF2} \definecolor{wmuted}{HTML}{8FA6B3} \definecolor{wmark}{HTML}{3F88BD}
@@ -104,6 +105,29 @@
 \newcommand{\shadowfig}[2][80mm]{%
   \tikz[baseline=(current bounding box.north)]\node[inner sep=0,softshadow]
     {\includegraphics[width=#1]{#2}};}
+
+% Querformat-Seiten ("Angaben eines Instruments", "Offene Positionen"; Nutzerwunsch 02.10.2026):
+% echte Seitengroesse 297 x 210 mm, Raender und Fusszeile wie im Hochformat (Satz 257 x 173 mm).
+% \querformat und \hochformat beginnen jeweils eine neue Seite.
+% (\newgeometry stellt zuerst das Papier der Praeambel wieder her; daher wird das Querformat
+% unmittelbar danach eingesetzt, Geometrie-intern ueber \Gm@restore@org.)
+\makeatletter
+\newcommand{\querformat}{\clearpage
+  \let\Gm@restore@org@hoch\Gm@restore@org
+  \def\Gm@restore@org{\Gm@restore@org@hoch
+    \setlength{\paperwidth}{297mm}\setlength{\paperheight}{210mm}}%
+  \newgeometry{top=19mm,bottom=18mm,left=20mm,right=20mm,footskip=9mm}%
+  \let\Gm@restore@org\Gm@restore@org@hoch
+  \setlength{\pdfpagewidth}{\paperwidth}\setlength{\pdfpageheight}{\paperheight}%
+  \setlength{\headwidth}{\textwidth}}
+\makeatother
+\newcommand{\hochformat}{\clearpage
+  \setlength{\paperwidth}{210mm}\setlength{\paperheight}{297mm}%
+  \setlength{\pdfpagewidth}{\paperwidth}\setlength{\pdfpageheight}{\paperheight}%
+  \restoregeometry\setlength{\headwidth}{\textwidth}}
+% Nachbau der Positionstabelle am Desktop (1484 x 145 CSS-px; bei 257 mm: 257 x 25,1 mm,
+% Schrift 5,9 pt). Tausch der Fassung nur hier.
+\newcommand{\positionstabelle}{\includegraphics[width=\linewidth]{positionen-desktop-voll.pdf}}
 
 \newtcolorbox{merk}{enhanced,colback=paper,colframe=paper,boxrule=0pt,arc=0pt,
   borderline west={2pt}{0pt}{ink},left=5mm,right=5mm,top=3.5mm,bottom=3.5mm,boxsep=0pt,
@@ -184,7 +208,7 @@ auf die Seite mit der ausführlichen Erklärung.}\end{minipage}
 \textbf{Buy / Sell} & Die Richtung einer Position: Buy (Kauf, auch long) oder Sell (Verkauf, auch short). Bei Buy
   entsteht mit steigendem Kurs ein Gewinn und mit fallendem ein Verlust, bei Sell umgekehrt. & \\ \addlinespace[2mm]
 \textbf{Spread} & Der Unterschied zwischen dem Kurs für Buy und dem Kurs für Sell; er steht in den Angaben des
-  Instruments. & \verw{s:instrumente}{Instrumente und Positionen} \\ \addlinespace[2mm]
+  Instruments. & \verw{s:instrumente}{Angaben eines Instruments} \\ \addlinespace[2mm]
 \textbf{Volumen} & Der Wert einer Position. Gewinne und Verluste werden am gesamten Volumen berechnet.
   & \verw{s:hebel}{Hebel} \\ \addlinespace[2mm]
 \textbf{Broker} & Das Unternehmen, das Ihr Konto führt und über das Sie Positionen öffnen und schließen. Anders
@@ -197,11 +221,11 @@ auf die Seite mit der ausführlichen Erklärung.}\end{minipage}
   Level gibt die Equity im Verhältnis zur Margin an. & \verw{s:margin}{Margin} \\ \addlinespace[2mm]
 \textbf{Leverage}\gbz{(Hebel)} & Gibt an, welcher Teil des Volumens als Margin gebunden wird. Die Schreibweise
   1:10 bedeutet: Die Margin beträgt ein Zehntel des Volumens. & \verw{s:hebel}{Hebel}\newline
-  \verw{s:instrumente}{Instrumente und Positionen} \\ \addlinespace[2mm]
+  \verw{s:instrumente}{Angaben eines Instruments} \\ \addlinespace[2mm]
 \textbf{Swap} & Ein Betrag für das Halten einer Position über den Tageswechsel, der ihr je nach Satz (Swap long
   für Buy, Swap short für Sell) belastet oder gutgeschrieben wird. Er ist in ihrem Total Profit enthalten
   und geht beim Schließen in die Balance ein. & \verw{s:swap}{Swaps}\newline
-  \verw{s:instrumente}{Instrumente und Positionen} \\ \addlinespace[2mm]
+  \verw{s:instrumente}{Angaben eines Instruments} \\ \addlinespace[2mm]
 \textbf{Bonus} & Ein Betrag auf Ihrem Konto, mit dem Sie handeln können. Gewinne, die Sie damit erzielen,
   sind gemäß den AGB des Brokers auszahlbar. & \verw{s:plattform}{In der Plattform} \\
 \end{tabular}
@@ -411,7 +435,7 @@ der Equity frei.}\end{soft}\end{minipage}\hfill
 Je höher der Hebel, desto schneller nähert sich das Level bei Verlusten dem Stop out.}\end{soft}\end{minipage}
 \par
 \begin{merk}\textbf{Wo der Hebel steht.} Den Hebel Ihres Kontos finden Sie unter \textbf{Information} als
-\textbf{Leverage}, den eines Instruments in dessen Angaben (Abbildung unter~\titel{s:instrumente}{Instrumente und Positionen}). Der Hebel eines Instruments kann niedriger sein
+\textbf{Leverage}, den eines Instruments in dessen Angaben (Abbildung unter~\titel{s:instrumente}{Angaben eines Instruments}). Der Hebel eines Instruments kann niedriger sein
 als der Hebel Ihres Kontos; maßgeblich ist stets der Wert des Instruments.\end{merk}
 \clearpage
 \kicker{}{Swaps}\phantomsection\label{s:swap}
@@ -480,7 +504,7 @@ von 10.000\,€.\par}
 (Währungen, z.\,B. EUR/USD) treten an ihre Stelle die Zinsen für das geliehene Geld. Der Risikoanteil soll den Liquiditätsanbieter vor~Verlusten~schützen.\par}
 \par\vspace{3mm}
 % Einheit der Saetze unbekannt (nicht nennen); Satz zur Gutschrift bleibt (Nutzerentscheidung)
-{\color{muted}\small\raggedright Die tatsächlichen Sätze stehen bei jedem Instrument (\pfeil{s:instrumente}{Instrumente und Positionen}):
+{\color{muted}\small\raggedright Die tatsächlichen Sätze stehen bei jedem Instrument (\pfeil{s:instrumente}{Angaben eines Instruments}):
 \textbf{Swap long} für Buy, \textbf{Swap short} für Sell. In der Regel sind beide negativ, was eine Belastung bedeutet; ist ein Satz positiv,
 wird Ihnen der Betrag gutgeschrieben.\par}
 \hr
@@ -534,9 +558,8 @@ Der Swap wird bei der offenen Position verbucht und in der Spalte \textbf{Swap} 
 \clearpage
 \kicker{}{In der Plattform}\phantomsection\label{s:plattform}
 \Hone{Wo Sie die Werte finden}
-\begin{minipage}{130mm}\lead{Die mobile Ansicht und der Desktop zeigen dieselben Werte unter denselben
-Begriffen. Oben ist die mobile Kontoübersicht abgebildet, darunter die Leiste am Desktop. In beiden
-Abbildungen stehen anstelle der Beträge Wörter, die den jeweiligen Wert umschreiben.}\end{minipage}
+\begin{minipage}{130mm}\lead{Mobile Ansicht und Desktop zeigen dieselben Werte unter denselben Begriffen;
+anstelle der Beträge stehen in den Abbildungen Wörter.}\end{minipage}
 \par\vspace{7mm}
 % Mobile Ansicht (mobil.pdf: Kopfleiste + Reiter + panel.pdf, 440 x 516 CSS-px) im Maßstab
 % des bisherigen Panels (78 mm für 452 px). Koordinaten unten in CSS-px, y nach unten.
@@ -560,7 +583,7 @@ Abbildungen stehen anstelle der Beträge Wörter, die den jeweiligen Wert umschr
 \end{tikzpicture}\end{minipage}\hfill
 \begin{minipage}[t]{86mm}\vspace{1mm}\raggedright
 \vspace{20mm}
-\begin{enumerate}[label=\protect\pfn{\arabic*},leftmargin=6.6mm,labelsep=2.4mm,itemsep=3mm,topsep=0pt]
+\begin{enumerate}[label=\protect\pfn{\arabic*},leftmargin=6.6mm,labelsep=2.4mm,itemsep=2.5mm,topsep=0pt]
 \item {\bfseries Equity}\newline{\color{muted}\small Der aktuelle Kontowert: Balance zuzüglich Profit/Losses.}
 \item {\bfseries Profit/Losses}\newline{\color{muted}\small Das unrealisierte Ergebnis der offenen Positionen.}
 \item {\bfseries Margin}\newline{\color{muted}\small Der als Sicherheit gebundene Teil der Equity.}
@@ -568,90 +591,108 @@ Abbildungen stehen anstelle der Beträge Wörter, die den jeweiligen Wert umschr
 \item {\bfseries Level}\newline{\color{muted}\small Das Verhältnis von Equity zu Margin; Maßstab für den Abstand zum Stop out.}
 \end{enumerate}
 \par\vspace{3mm}
-{\color{soft}\small Ganz oben steht die \textbf{Balance}, am Ende folgen die Felder \textbf{Bonus} und
-\textbf{Credit}. Der Bonus ist ein Betrag, mit dem Sie handeln können; Gewinne, die Sie damit erzielen, sind
-gemäß den AGB des Brokers auszahlbar.}
+{\color{soft}\small Am Ende folgen \textbf{Bonus} und \textbf{Credit}. Der Reiter \textbf{Information}
+nennt \textbf{Leverage} und \textbf{Stop out} Ihres Kontos.}
 \end{minipage}
-\hr
-\Htwo{Am Desktop: dieselben Werte in einer Zeile}
+\par\vspace{6mm}{\color{rule}\rule{\linewidth}{0.4pt}}\par\vspace{5mm}% wie \hr, je 1 mm knapper
+\Htwo{Am Desktop: dieselben Werte in der untersten Leiste}
+% desktop-schema.pdf (170 x 82,4 mm): Lehrbuch-Schema des Bildschirms mit den Bereichen Kursliste,
+% Chart, Tabelle der Positionen und Unterste Leiste; darunter bar.pdf als Nachbau dieser Leiste.
+\noindent\includegraphics[width=170mm]{desktop-schema.pdf}
+\par\vspace{2.5mm}
 \noindent\includegraphics[width=170mm]{bar.pdf}
-\par\vspace{3mm}
-{\color{soft}\small Die Leiste befindet sich unten rechts und ist dauerhaft sichtbar; die \textbf{Balance} steht hier
-am Anfang der Reihe.}
-\par\vspace{7mm}
-\noindent\begin{minipage}[t]{82mm}\vspace{0pt}\begin{soft}[equal height group=plattform]
-{\htwo\ls\color{muted}DESKTOP}\par\vspace{2.5mm}
-{\color{body}Offene Positionen stehen direkt unter dem Chart (der grafischen Darstellung des Kursverlaufs).
-Die \textbf{Kursliste} gliedert die Instrumente in die Kategorien
-Forex, Stocks, Cryptos, Indices, Energies, Metals, Commodities und ETFs. Jede Zeile zeigt die aktuellen
-Kurse des Instruments; das \textbf{Info-Zeichen} am Ende der Zeile öffnet seine Angaben
-(\pfeil{s:instrumente}{Instrumente und Positionen}).}\end{soft}\end{minipage}\hfill
-\begin{minipage}[t]{82mm}\vspace{0pt}\begin{soft}[equal height group=plattform]
-{\htwo\ls\color{muted}MOBILE}\par\vspace{2.5mm}
-{\color{body}Das Info-Zeichen oben rechts öffnet zunächst den Reiter \textbf{Information} mit
-\textbf{Leverage} und \textbf{Stop out}. Unter \textbf{Orders}~→~\textbf{Active} stehen Ihre offenen
-Positionen, unter \textbf{Quotes} die Instrumente, nach denselben Kategorien in Reitern. Durch Antippen
-einer Position oder eines Instruments klappen deren Angaben auf
-(\pfeil{s:instrumente}{Instrumente und Positionen}).}\end{soft}\end{minipage}
-\clearpage
-\kicker{}{Instrumente und Positionen}\phantomsection\label{s:instrumente}
-\Hone{Die Angaben der Instrumente und Ihrer Positionen}
+\par\vspace{2.5mm}
+{\color{soft}\small\raggedright Den Weg über die \textbf{Kursliste} zeigt~\titel{s:instrumente}{Angaben eines
+Instruments}, die \textbf{Tabelle der Positionen} erläutert~\titel{s:positionen}{Offene Positionen}.\par}
+\querformat
+\kicker{}{Angaben eines Instruments}\phantomsection\label{s:instrumente}
+\Hone{Wo Sie die Angaben eines Instruments finden}
 \begin{minipage}{130mm}\lead{Jedes Instrument hat eigene Angaben, darunter die Sätze des Swaps und den Hebel.
-In den Abbildungen stehen wie unter~\titel{s:plattform}{In der Plattform} anstelle der Werte Wörter.}\end{minipage}
+Die Abbildungen zeigen den Weg dorthin am Beispiel Gold; anstelle der Werte stehen Wörter.}\end{minipage}
 \par\vspace{7mm}
-% Nachbauten info-desktop.pdf (Fenster 290 x 194,8 CSS-px, PDF mit 24 px Schattenrand je Seite)
-% und info-mobil.pdf (410 x 327,2 px) im selben Massstab: 1 px = 0,225 mm, Schrift (12 px) 7,7 pt.
-% Mobil 92,25 x 73,6 mm, Desktop-Fenster 65,25 x 43,8 mm; das Fenster beginnt am linken Satzrand,
-% sein Schatten liegt als overlay ausserhalb. Legende der Nummern 1-3 (Wegweiser wie auf
-% "In der Plattform") links unter dem Desktop-Fenster, gilt fuer beide Abbildungen.
-\newlength\ipx\setlength\ipx{0.225mm}
-\noindent\begin{minipage}[t]{70mm}\raggedright
+% Bildfolge links (Desktop): Ausschnitt der Kursliste (kursliste-desktop-ohne.pdf, Energies bis
+% Commodities), Pfeil vom Info-Zeichen der Zeile Gold zum Info-Fenster (info-desktop.pdf);
+% rechts (mobil) info-mobil.pdf. Alle Nachbauten im selben Massstab: 1 CSS-px = 0,21 mm
+% (Schrift 12 px = 7,1 pt). Koordinaten in px, y nach unten. Markierung des Info-Zeichens
+% und der Kopfzeile wie die Tippmarken unter "In der Plattform" (weisser Ring/Rahmen).
+\newlength\ipx\setlength\ipx{0.21mm}
+\noindent\begin{minipage}[t]{776\ipx}\raggedright
 {\htwo\ls\color{muted}DESKTOP}\par\vspace{1.5mm}
-{\color{muted}\small Klicken Sie in der \textbf{Kursliste} auf das \textbf{Info-Zeichen} am Ende der Zeile
-des Instruments.}\end{minipage}\hfill
+{\small\color{muted}\textbf{Kursliste}~→ \textbf{Metals}~→ Zeile \textbf{Gold}}\end{minipage}\hfill
 \begin{minipage}[t]{410\ipx}\raggedright
 {\htwo\ls\color{muted}MOBILE}\par\vspace{1.5mm}
-{\color{muted}\small Tippen Sie unter \textbf{Quotes} auf das Instrument; seine Angaben klappen darunter
-auf.}\end{minipage}
+{\small\color{muted}\textbf{Quotes}~→ \textbf{Metals}~→ \textbf{Gold} antippen}\end{minipage}
 \par\vspace{4mm}
-\noindent\begin{minipage}[t]{70mm}\vspace{0pt}\raggedright
+\noindent\begin{minipage}[t]{776\ipx}\vspace{0pt}
 \begin{tikzpicture}[x=\ipx,y={(0,-\ipx)}]
-\useasboundingbox (0,0) rectangle (290,194.8);
-\node[overlay,anchor=north west,inner sep=0,outer sep=0] at (-24,-24)
+\useasboundingbox (0,0) rectangle (776,254);
+% Kursliste (Koordinaten kx, ky der Quelle): Ausschnitt kx -10..314, ky 126..380, Rand in der
+% Farbe des Seitenhintergrunds; Bildpunkt = (kx+10, ky-126)
+\fill[pfseite] (0,0) rectangle (324,254);
+\begin{scope}
+\clip (1,1) rectangle (323,253);% innerhalb der Flaeche, sonst Saum beim Kantenglaetten
+\node[anchor=north west,inner sep=0,outer sep=0] at (10,-126)
+  {\includegraphics[width=304\ipx]{kursliste-desktop-ohne.pdf}};
+\end{scope}
+% Info-Zeichen der Zeile Gold: Mitte kx 285,6 / ky 239,5 -> (295.6,113.5)
+\draw[white,line width=1.5\ipx] (295.6,113.5) circle[radius=10.5] (306.1,113.5) -- (324,113.5);
+\draw[ink,line width=1.2pt,-{Stealth[length=3.2mm,width=2.8mm]}] (324,113.5) -- (456,113.5);
+\node[anchor=south,align=center,font=\fine,text=ink,inner sep=0] at (390,107)
+  {Klick auf das\\\textbf{Info-Zeichen (i)}};
+% Info-Fenster: PDF 338 x 242,8 px mit 24 px Schattenrand je Seite; Fenster (462,24)-(752,218.8)
+\node[anchor=north west,inner sep=0,outer sep=0] at (438,0)
   {\includegraphics[width=338\ipx]{info-desktop.pdf}};
-\end{tikzpicture}\par\vspace{5mm}
-{\renewcommand{\arraystretch}{1.55}%
-\begin{tabular}{@{}c@{\hspace{2.4mm}}l@{\hspace{2.4mm}}l@{}}
-\pfn{1} & \textbf{Swap long} & {\color{muted}\small Satz des Swaps für Buy} \\
-\pfn{2} & \textbf{Swap short} & {\color{muted}\small Satz des Swaps für Sell} \\
-\pfn{3} & \textbf{Leverage} & {\color{muted}\small Hebel des Instruments} \\
-\end{tabular}}
+\end{tikzpicture}
 \end{minipage}\hfill
 \begin{minipage}[t]{410\ipx}\vspace{0pt}
-\includegraphics[width=410\ipx]{info-mobil.pdf}
+\begin{tikzpicture}[x=\ipx,y={(0,-\ipx)}]
+\node[anchor=north west,inner sep=0,outer sep=0] at (0,0) {\includegraphics[width=410\ipx]{info-mobil.pdf}};
+% Kopfzeile des Instruments (410 x 40 px) = Stelle zum Antippen
+\draw[white,line width=1.5\ipx,rounded corners=3\ipx] (0.75,0.75) rectangle (409.25,39.25);
+\end{tikzpicture}
 \end{minipage}
-\hr
-% Liste der offenen Positionen (docs/plattform/dom-positionsliste.md): nur Text, ein Nachbau kann
-% spaeter unten auf der Seite folgen. Kein S/L, keine Commission (HANDOFF 2.2/2.3).
-\Htwo{Die Liste der offenen Positionen}
-{\color{body}\raggedright Am Desktop stehen Ihre offenen Positionen in der Tabelle unter dem Chart, im Reiter
-\textbf{Active} (daneben \textbf{Pending} und \textbf{History}), je Position eine Zeile. In der mobilen Ansicht
-finden Sie dieselben Reiter unter \textbf{Orders}; durch Antippen einer Position klappen ihre Angaben auf.
-Beide Ansichten nennen unter anderem:\par}
-\par\vspace{5mm}
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{30mm}%
-  >{\raggedright\arraybackslash}p{102mm}>{\raggedright\arraybackslash}p{29.5mm}@{}}
-\hd{Angabe} & \hd{Bedeutung} & \hd{Mehr dazu} \\
-\addlinespace[1.6mm]\midrule\addlinespace[2.4mm]
-\textbf{Amount} & Die gehandelte Menge des Instruments. & \\ \addlinespace[2mm]
-\textbf{Trade volume} & Der Wert der Position, in dieser Einheit Volumen genannt. & \verw{s:hebel}{Hebel} \\ \addlinespace[2mm]
-\textbf{Swap} & Der bei der Position verbuchte Swap. Er ist in Total Profit enthalten. & \verw{s:swap}{Swaps} \\ \addlinespace[2mm]
-\textbf{Total Profit} & Das aktuelle Ergebnis der Position einschließlich ihres Swaps; es ändert sich mit jeder
-  Kursbewegung. Das Ergebnis aller offenen Positionen zusammen steht unter Profit/Losses.
-  & \verw{s:kontostand}{Kontostand} \\ \addlinespace[2mm]
-\textbf{Margin} & Der Teil Ihres Kontos, den diese Position als Sicherheit bindet. & \verw{s:margin}{Margin} \\
-\end{tabular}
+\par\vspace{8mm}
+% Legende der Nummern 1-3 (Wegweiser), gilt fuer beide Abbildungen
+\noindent{\renewcommand{\arraystretch}{1.2}%
+\begin{tabular}{@{}c@{\hspace{2.4mm}}l@{\hspace{2mm}}l@{\hspace{12mm}}c@{\hspace{2.4mm}}l@{\hspace{2mm}}l%
+  @{\hspace{12mm}}c@{\hspace{2.4mm}}l@{\hspace{2mm}}l@{}}
+\pfn{1} & \textbf{Swap long} & {\color{muted}\small Satz des Swaps für Buy} &
+\pfn{2} & \textbf{Swap short} & {\color{muted}\small Satz des Swaps für Sell} &
+\pfn{3} & \textbf{Leverage} & {\color{muted}\small Hebel des Instruments} \\
+\end{tabular}}
 \clearpage
+\kicker{}{Offene Positionen}\phantomsection\label{s:positionen}
+\Hone{Die Angaben Ihrer offenen Positionen}
+\begin{minipage}{130mm}\lead{Jede offene Position steht mit ihren eigenen Angaben in einer Liste, darunter ihr
+Swap, ihr Total Profit und ihre Margin. Anstelle der Werte stehen in der Abbildung Wörter.}\end{minipage}
+\par\vspace{7mm}
+% Liste der offenen Positionen (docs/plattform/dom-positionsliste.md); kein S/L (HANDOFF 2.2/2.3).
+\noindent\begin{minipage}[t]{150mm}\raggedright
+{\htwo\ls\color{muted}DESKTOP}\par\vspace{1.5mm}
+{\small\color{muted}\textbf{Tabelle der Positionen} unter dem \textbf{Chart} (der grafischen Darstellung des
+Kursverlaufs)~→ Reiter \textbf{Active} (daneben
+\textbf{Pending} und \textbf{History}), je Position eine Zeile}\end{minipage}\hfill
+\begin{minipage}[t]{410\ipx}\raggedright
+{\htwo\ls\color{muted}MOBILE}\par\vspace{1.5mm}
+{\small\color{muted}\textbf{Orders}~→ \textbf{Active}~→ Position antippen; ihre Angaben klappen darunter
+auf}\end{minipage}
+\par\vspace{4mm}
+\noindent\positionstabelle
+\par\vspace{8mm}
+\begin{tabularx}{\linewidth}{@{}c@{\hspace{2.4mm}}>{\raggedright\arraybackslash}p{30mm}%
+  >{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{36mm}@{}}
+ & \hd{Angabe} & \hd{Bedeutung} & \hd{Mehr dazu} \\
+\addlinespace[1.6mm]\midrule\addlinespace[2.4mm]
+ & \textbf{Amount} & Die gehandelte Menge des Instruments. & \\ \addlinespace[2mm]
+ & \textbf{Trade Volume} & Der Wert der Position, in dieser Einheit Volumen genannt. & \verw{s:hebel}{Hebel} \\ \addlinespace[2mm]
+\pfn{1} & \textbf{Swap} & Der bei der Position verbuchte Swap. Er ist in Total Profit enthalten.
+  & \verw{s:swap}{Swaps} \\ \addlinespace[2mm]
+\pfn{2} & \textbf{Total Profit} & Das aktuelle Ergebnis der Position einschließlich ihres Swaps; es ändert sich mit
+  jeder Kursbewegung. Das Ergebnis aller offenen Positionen zusammen steht unter Profit/Losses.
+  & \verw{s:kontostand}{Kontostand} \\ \addlinespace[2mm]
+\pfn{3} & \textbf{Margin} & Der Teil Ihres Kontos, den diese Position als Sicherheit bindet. & \verw{s:margin}{Margin} \\
+\end{tabularx}
+\hochformat
 \kicker{}{Auf einen Blick}\phantomsection\label{s:ueberblick}
 \Hone{Die Begriffe im Überblick}
 \begin{minipage}{130mm}\lead{Die folgende Übersicht nennt für jeden Begriff seine Bedeutung und die Anlässe, zu denen sich sein Wert ändert.}\end{minipage}
