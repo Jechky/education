@@ -1191,6 +1191,7 @@ Die alte Sitzung hatte den Einbau fertig, aber nicht committet (Limit). Er ist n
 - Querformat per `\quer` / `\hoch` (Präambel): Seitengröße je Seite, Ränder und Kickerhöhe wie hochkant, Fußzeile über `\headwidth`.
 - `kursliste-desktop-ohne.pdf`: Variante ohne Marke, gebaut mit `xelatex -jobname=kursliste-desktop-ohne '\def\ohnemarken{}\input{kursliste-desktop}'` (nicht in `scripts/build.sh`).
 - `positionen-desktop.pdf` (Ausschnitt mit Bruchkante) ist nicht mehr eingebunden.
+- Swap-Doppelungen gestrichen (Nutzer, 02.10.2026): Merk-Kasten „Zusammenfassung“ am Ende von „Swaps“ und der Satz „Der Swap einer Position geht beim Schließen … in die Balance ein“ im Kasten BALANCE auf „Kontostand“. Die Buchung (bei der Position, in Total Profit enthalten, beim Schließen in die Balance) steht weiter in „Grundbegriffe“, „Offene Positionen“ und „Auf einen Blick“. Die Swap-Zeilen der Hebel-Tabelle bleiben.
 - Verweise „Instrumente und Positionen“ → „Angaben eines Instruments“ (S. 2, 5, 6); Text „Trade Volume“ wie auf der Plattform.
 - **Achtung Build:** `scripts/build.sh` ersetzt die eingecheckten Nachbau-PDFs, wenn TeX Live eine andere Version hat (nur binär verschieden). Vor dem Commit mit `git checkout dokumente/kontogrundlagen-kosten/*.pdf` zurücksetzen, außer ein Nachbau wurde absichtlich geändert.
 
