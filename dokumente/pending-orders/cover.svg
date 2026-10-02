@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm" viewBox="0 0 210 297">
+    <!-- NAVY BAND -->
+    <rect id="navy-band" x="0" y="0" width="210" height="98" fill="#04273C"></rect>
+
+    <!-- PRICE LINES -->
+    <!-- KORREKTUR: x1 140 -> 148. ph-subtitle reicht bis x=144, die erste Untertitelzeile
+         endet bei ca. x=142 und wurde von den Linien y=56/62 geschnitten; jetzt >=4 mm Abstand. -->
+    <g id="price-levels" fill="none" stroke="#0E5072" stroke-width="0.2">
+        <line x1="148" y1="20" x2="210" y2="20"></line>
+        <line x1="148" y1="26" x2="210" y2="26"></line>
+        <line x1="148" y1="32" x2="210" y2="32"></line>
+        <line x1="148" y1="38" x2="210" y2="38"></line>
+        <line x1="148" y1="44" x2="210" y2="44"></line>
+        <line x1="148" y1="50" x2="210" y2="50" stroke-width="0.35"></line>
+        <line x1="148" y1="56" x2="210" y2="56"></line>
+        <line x1="148" y1="62" x2="210" y2="62"></line>
+        <line x1="148" y1="68" x2="210" y2="68"></line>
+        <line x1="148" y1="74" x2="210" y2="74"></line>
+    </g>
+
+    <!-- TITLE ACCENT -->
+    <rect id="accent-line" x="20" y="50" width="28" height="0.7" fill="#FFFFFF"></rect>
+
+    <!-- GRID CONNECTION -->
+    <g id="grid-connection" fill="none" stroke="#E2E5E9" stroke-width="0.25">
+        <!-- KORREKTUR: center-rule-top lief bis y=121 mitten durch ph-axis-top-label (y 113-117);
+             gekuerzt auf y2=111 (2 mm Abstand zum Label). -->
+        <line id="center-rule-top" x1="105" y1="98" x2="105" y2="111"></line>
+        <!-- KORREKTUR: center-rule-middle-top (y 163-165) entfernt: 2-mm-Stummel ohne Funktion. -->
+        <!-- KORREKTUR: center-rule-middle-bottom (y 180-194.5) entfernt: lief durch ph-axis-label
+             "KURS JETZT" (y 186-190); gekuerzt blieben nur Stummel von 4 bzw. 2,5 mm. -->
+        <!-- KORREKTUR: center-rule-bottom (y 254-258) entfernt: stiess ohne Abstand an
+             ph-axis-bottom-label (ab y=258); mit 2 mm Abstand bliebe ein 2-mm-Stummel. -->
+    </g>
+
+    <!-- PRICE AXIS -->
+    <g id="current-price-axis" fill="none" stroke="#3C4249" stroke-width="0.25">
+        <line id="axis-left" x1="20" y1="188" x2="87" y2="188"></line>
+        <line id="axis-right" x1="123" y1="188" x2="190" y2="188"></line>
+    </g>
+
+    <!-- AXIS ACCENTS -->
+    <g id="axis-accents" fill="none" stroke-width="0.7">
+        <line x1="20" y1="188" x2="26" y2="188" stroke="#0E7A4E"></line>
+        <line x1="184" y1="188" x2="190" y2="188" stroke="#B23A2E"></line>
+    </g>
+
+    <!-- FOOTER -->
+    <line id="footer-rule" x1="20" y1="272.5" x2="190" y2="272.5" stroke="#E2E5E9" stroke-width="0.2"></line>
+
+    <!-- PLACEHOLDERS -->
+    <g id="platzhalter">
+        <rect id="ph-kicker" x="20" y="20.5" width="60" height="3" fill="none" stroke="#FF00FF" stroke-width="0.3"></rect>
+        <rect id="ph-title" x="20" y="31.5" width="120" height="12" fill="none" stroke="#FF00FF" stroke-width="0.3"></rect>
+        <rect id="ph-subtitle" x="20" y="56" width="124" height="12.5" fill="none" stroke="#FF00FF" stroke-width="0.3"></rect>
+        <rect id="ph-pill" x="20" y="75" width="78" height="6.5" fill="none" stroke="#FF00FF" stroke-width="0.3"></rect>
+
+        <rect id="ph-axis-top-label" x="20" y="113" width="170" height="4" fill="none" stroke="#FF00FF" stroke-width="0.3"></rect>
+
+        <rect id="ph-chart-bs" x="20" y="123" width="72.5" height="40" fill="none" stroke="#FF00FF" stroke-width="0.3"></rect>
+        <rect id="ph-chart-sl" x="117.5" y="123" width="72.5" height="40" fill="none" stroke="#FF00FF" stroke-width="0.3"></rect>
+
+        <rect id="ph-name-bs" x="20" y="167" width="72.5" height="6" fill="none" stroke="#FF00FF" stroke-width="0.3"></rect>
+        <rect id="ph-name-sl" x="117.5" y="167" width="72.5" height="6" fill="none" stroke="#FF00FF" stroke-width="0.3"></rect>
+        <rect id="ph-use-bs" x="20" y="174" width="72.5" height="4.5" fill="none" stroke="#FF00FF" stroke-width="0.3"></rect>
+        <rect id="ph-use-sl" x="117.5" y="174" width="72.5" height="4.5" fill="none" stroke="#FF00FF" stroke-width="0.3"></rect>
+
+        <rect id="ph-axis-label" x="89" y="186" width="32" height="4" fill="none" stroke="#FF00FF" stroke-width="0.3"></rect>
+
+        <rect id="ph-name-bl" x="20" y="196.5" width="72.5" height="6" fill="none" stroke="#FF00FF" stroke-width="0.3"></rect>
+        <rect id="ph-name-ss" x="117.5" y="196.5" width="72.5" height="6" fill="none" stroke="#FF00FF" stroke-width="0.3"></rect>
+        <rect id="ph-use-bl" x="20" y="203.5" width="72.5" height="4.5" fill="none" stroke="#FF00FF" stroke-width="0.3"></rect>
+        <rect id="ph-use-ss" x="117.5" y="203.5" width="72.5" height="4.5" fill="none" stroke="#FF00FF" stroke-width="0.3"></rect>
+
+        <rect id="ph-chart-bl" x="20" y="212" width="72.5" height="40" fill="none" stroke="#FF00FF" stroke-width="0.3"></rect>
+        <rect id="ph-chart-ss" x="117.5" y="212" width="72.5" height="40" fill="none" stroke="#FF00FF" stroke-width="0.3"></rect>
+
+        <rect id="ph-axis-bottom-label" x="20" y="258" width="170" height="4" fill="none" stroke="#FF00FF" stroke-width="0.3"></rect>
+
+        <rect id="ph-footer-left" x="20" y="275" width="50" height="3" fill="none" stroke="#FF00FF" stroke-width="0.3"></rect>
+        <rect id="ph-footer-right" x="140" y="275" width="50" height="3" fill="none" stroke="#FF00FF" stroke-width="0.3"></rect>
+    </g>
+</svg>

@@ -3,6 +3,7 @@
 #   - XeLaTeX + TikZ/pgf, tcolorbox, fontspec, xcolor, geometry, ragged2e,
 #     microtype, hyperref, babel (ngerman)
 #   - qpdf, ghostscript, poppler-utils (pdftotext, pdffonts, pdfimages, pdftoppm)
+#   - librsvg2-bin (rsvg-convert: SVG-Deckblatt-Hintergrund -> Vektor-PDF)
 #   - Python: pikepdf, pypdf, fonttools
 #   - Schriften: IBM Plex Sans + IBM Plex Mono, Inter
 #     (apt: fonts-ibm-plex, fonts-inter; Fallback: offizielle GitHub-Releases
@@ -24,6 +25,7 @@ APT_PKGS=(
   texlive-fonts-recommended
   texlive-lang-german          # babel-german (ngerman), Trennmuster
   qpdf ghostscript poppler-utils
+  librsvg2-bin                 # rsvg-convert (cover-bg.svg -> cover-bg.pdf)
   fontconfig curl unzip ca-certificates
   python3-pip
 )
@@ -99,7 +101,7 @@ fi
 # --- 4. Pruefung ---------------------------------------------------------------
 log "Pruefung"
 fail=0
-for t in xelatex qpdf gs pdftotext pdffonts pdfimages pdftoppm fc-list; do
+for t in xelatex qpdf gs pdftotext pdffonts pdfimages pdftoppm rsvg-convert fc-list; do
   command -v "$t" >/dev/null || { echo "FEHLT: $t"; fail=1; }
 done
 for s in fontspec.sty tikz.sty tcolorbox.sty xcolor.sty geometry.sty ragged2e.sty microtype.sty hyperref.sty babel.sty ngerman.ldf; do
