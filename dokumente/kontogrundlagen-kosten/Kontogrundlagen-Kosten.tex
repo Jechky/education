@@ -110,7 +110,7 @@
 
 \pagestyle{fancy}\fancyhf{}\renewcommand{\headrulewidth}{0pt}
 
-\fancyfoot[L]{\micro\color{soft}\ls KONTOGRUNDLAGEN \& KOSTEN · SCHULUNGSEINHEIT}
+\fancyfoot[L]{\micro\color{soft}\ls KONTOGRUNDLAGEN \& KOSTEN · EDUCATION – STANDARD PACKAGE}
 \begin{document}
 \thispagestyle{empty}
 {\htwo\ls\color{muted}SCHULUNGSEINHEIT}\par\vspace{11mm}
@@ -146,7 +146,7 @@ Free, Level, Leverage und Swap sowie ihren Zusammenhang innerhalb Ihres Kontos.}
 \end{tikzpicture}
 \par\vspace{0pt plus 1.35fill}
 {\color{rule}\rule{\linewidth}{0.4pt}}\par\vspace{2.5mm}
-{\micro\ls\color{soft}KONTOGRUNDLAGEN \& KOSTEN\hfill SCHULUNGSEINHEIT}
+{\micro\ls\color{soft}KONTOGRUNDLAGEN \& KOSTEN\hfill EDUCATION – STANDARD PACKAGE}
 \clearpage
 \kicker{}{Kontostand}
 \Hone{Der Unterschied zwischen Balance und Equity}
@@ -350,41 +350,58 @@ maßgeblich ist stets der Wert des Instruments.\end{merk}
 \clearpage
 \kicker{}{Swaps}
 \Hone{Warum über Nacht ein Swap anfällt}
-\begin{minipage}{130mm}\lead{Mit Hebel hinterlegen Sie nur einen kleinen Teil Ihrer Position als Margin.
-Der übrige Betrag ist geliehen, und für geliehenes Geld fallen Zinsen an.}\end{minipage}
+\begin{minipage}{130mm}\lead{Bleibt eine Position über Nacht offen, verlangen die Bank und der Broker dafür je einen
+Betrag. Zusammen werden sie als Swap gebucht.}\end{minipage}
 \par\vspace{7mm}
-\noindent \begin{tikzpicture}[x=1mm,y=1mm]
-\useasboundingbox (0,2) rectangle (170.0,38);
-\fill[pfgrau] (0,24) rectangle (22.0,30);
-\draw[greya,line width=0.4pt] (0,24) rectangle (170.0,30);
-\draw[hilfslinie] (0,30.8) -- (0,35.4) (170,30.8) -- (170,35.4)
-  (0,23.2) -- (0,18.6) (22,23.2) -- (22,18.6) (170,23.2) -- (170,18.6);
-\mass{0}{170}{34.6}{\micro\bfseries\ls\color{muted}IHRE POSITION AM MARKT}
-\mass{0}{22.0}{19.4}{\micro\bfseries\color{ink}Margin}
-\mass{22.0}{170}{19.4}{\lbl\bfseries\color{ink}Der übrige Betrag ist geliehen}
-\node[inner sep=0,text=muted,font=\micro] at (11.0,15.6) {Ihr Kapital};
-\draw[greya,line width=0.5pt,-{Stealth[length=2mm]}] (96,16.6) -- (96,9);
-\node[inner sep=0,text=body,font=\lbl] at (96,5) {Die Zinsen für den geliehenen Betrag werden als Swap gebucht.};
-\end{tikzpicture}
-\par\vspace{5mm}
+% Rechenbeispiel nach der Skizze des Nutzers (originals/skizze-hebel-swap.png), Fortsetzung von S. 4.
+% Ausnahme vom Zahlenverbot (Nutzerwunsch 02.10.2026): nur 1.000, 1:10, 10.000, 3, 3, 6, 1, 7.
+% Modell des Nutzers: Betrag der Bank = Miete fuer die Aufbewahrung (Rohstoffe) bzw. Zinsen fuer
+% das geliehene Geld (Devisen) + Risikoanteil; dazu der Aufschlag des Brokers. Kein Gruen/Rot.
 \Htwo{Zusammensetzung des Swaps}
+{\color{body}\raggedright Angenommen, Instrument XY aus dem Vergleich auf der vorherigen Seite ist der Rohstoff
+Crude Oil.\par}
+\par\vspace{4mm}
+% Position massstaeblich: Margin 17 mm = ein Zehntel von 170 mm (Hebel 1:10)
+\noindent \begin{tikzpicture}[x=1mm,y=1mm]
+\useasboundingbox (0,5.6) rectangle (170.0,35.2);
+\fill[pfgrau] (0,22) rectangle (17.0,28);
+\draw[greya,line width=0.4pt] (0,22) rectangle (170.0,28);
+\draw[hilfslinie] (0,28.8) -- (0,33.4) (170,28.8) -- (170,33.4)
+  (0,21.2) -- (0,16.6) (17,21.2) -- (17,16.6);
+\mass{0}{170}{32.6}{\lbl\bfseries\color{ink}Ihre Position in Crude Oil: 10.000\,€}
+\masslinie{0}{17.0}{17.4}
+\node[anchor=west,inner sep=0,font=\lbl] at (20.5,17.4)
+  {\textbf{\color{ink}Margin: 1.000\,€}\hspace{2.2mm}{\color{muted}bei Hebel 1:10 ein Zehntel der Position}\strut};
+\draw[greya,line width=0.5pt,-{Stealth[length=2mm]}] (85,13.4) -- (85,6.6);
+\node[anchor=west,inner sep=0,text=muted,font=\micro] at (88,10.0) {pro Nacht};
+\end{tikzpicture}
+\par
 \noindent\makebox[\linewidth][c]{\begin{tikzpicture}[x=1mm,y=1mm,
   term/.style={anchor=base west,inner sep=0,font=\hthree,text=ink},
   op/.style={anchor=base west,inner sep=0,font=\fontsize{12}{15}\selectfont,text=muted},
   klammer/.style={greya,line width=0.5pt,decorate,decoration={brace,mirror,amplitude=1.4mm}},
-  notiz/.style={anchor=base,inner sep=0,font=\micro,text=muted}]
-\path (0,0) (0,30);
-\node[term] (a) at (0,17) {Zins am Geldmarkt};
-\node[op] (p) at ([xshift=5mm]a.base east) {+};
-\node[term] (b) at ([xshift=5mm]p.base east) {Aufschlag des Brokers};
-\node[op] (g) at ([xshift=5mm]b.base east) {=};
-\node[term] (c) at ([xshift=5mm]g.base east) {Ihr Swap};
-\foreach \n in {a,b,c} \draw[klammer] ([yshift=-2.8mm]\n.base west) -- ([yshift=-2.8mm]\n.base east);
-\node[notiz] at ([yshift=-8.6mm]a.base) {Zinssatz für Kredite zwischen Banken};
-\node[notiz] at ([yshift=-8.6mm]b.base) {Marge des Anbieters};
-\node[notiz] at ([yshift=-8.6mm]c.base) {pro Nacht gebuchter Betrag};
+  betrag/.style={anchor=base,inner sep=0,font=\small,text=ink}]
+\path (0,2.2) (0,25);
+\node[term] (a) at (0,21) {Miete für die Aufbewahrung};
+\node[op] (p1) at ([xshift=4.2mm]a.base east) {+};
+\node[term] (b) at ([xshift=4.2mm]p1.base east) {Risikoanteil};
+\node[op] (p2) at ([xshift=4.2mm]b.base east) {+};
+\node[term] (c) at ([xshift=4.2mm]p2.base east) {Aufschlag des Brokers};
+\node[op] (g) at ([xshift=4.2mm]c.base east) {=};
+\node[term] (d) at ([xshift=4.2mm]g.base east) {Swap};
+\foreach \n in {a,b,c,d} \draw[klammer] ([yshift=-2.8mm]\n.base west) -- ([yshift=-2.8mm]\n.base east);
+\node[betrag] at ([yshift=-8.6mm]a.base) {3\,€};
+\node[betrag] at ([yshift=-8.6mm]b.base) {3\,€};
+\node[betrag] at ([yshift=-8.6mm]c.base) {1\,€};
+\node[betrag,font=\small\bfseries] at ([yshift=-8.6mm]d.base) {7\,€ pro Nacht};
+% zweite Stufe: Miete und Risikoanteil zusammen = Betrag der Bank
+\draw[klammer] ([yshift=-11.4mm]a.base west) -- ([yshift=-11.4mm]b.base east);
+\node[betrag] at ($([yshift=-17.4mm]a.base west)!0.5!([yshift=-17.4mm]b.base east)$) {Betrag der Bank: 6\,€};
 \end{tikzpicture}}
-\par\vspace{5mm}
+\par\vspace{3.5mm}
+{\color{body}\raggedright Die Miete für die Aufbewahrung fällt bei Rohstoffen wie Crude Oil oder Natural Gas an; bei Devisen
+treten an ihre Stelle die Zinsen für das geliehene Geld. Der Risikoanteil soll die Bank vor Verlusten schützen.\par}
+\par\vspace{3mm}
 {\color{muted}\small\raggedright Für jedes Instrument gelten zwei Sätze: \textbf{Swap long} für Buy und \textbf{Swap short}
 für Sell. In der Regel sind beide negativ; ist ein Satz positiv, wird Ihnen der Betrag gutgeschrieben.
 Beide Werte finden Sie im Info-Fenster des Instruments.\par}
@@ -398,7 +415,9 @@ Beide Werte finden Sie im Info-Fenster des Instruments.\par}
 \draw[pfgrey,line width=1.2pt] (108.0,22) -- (166.0,22);
 \fill[sell] (108.0,10) circle (1.2);
 \node[anchor=east,inner sep=0,text=muted,font=\lbl] at (104.0,14) {im Tagesverlauf keine Buchung};
-\node[anchor=west,inner sep=0,text=sell,font=\lbl\bfseries] at (112.0,26) {Tageswechsel: Swap wird gebucht};
+% Uhrzeit vom Nutzer bestaetigt (02.10.2026): 23:00 Uhr Amsterdamer Zeit; nur hier ausgeschrieben
+\node[anchor=east,inner sep=0,text=sell,font=\lbl\bfseries] at (104.0,26) {Tageswechsel um 23:00 Uhr (Amsterdamer Zeit)};
+\node[anchor=west,inner sep=0,text=sell,font=\lbl\bfseries] at (112.0,26) {Swap wird gebucht};
 \node[anchor=west,inner sep=0,text=muted,font=\micro] at (112.0,19) {einmalig, nicht anteilig nach Stunden};
 \node[anchor=west,inner sep=0,text=soft,font=\micro] at (0,4) {Wird die Position vor dem Tageswechsel geschlossen, fällt kein Swap an; ist sie noch offen, wird der volle Swap gebucht.};
 \end{tikzpicture}
@@ -508,7 +527,7 @@ zu einem Instrument erhalten Sie über das \textbf{Info-Zeichen} in der Kurslist
 \textbf{Free} & Equity abzüglich Margin & Mit jeder Kursbewegung und jeder Position \\ \addlinespace[2mm]
 \textbf{Level} & Equity im Verhältnis zur Margin & Mit jeder Kursbewegung und jeder Position \\ \addlinespace[2mm]
 \textbf{Leverage} & Verhältnis von Volumen zu Margin & Fest je Konto und Instrument \\ \addlinespace[2mm]
-\textbf{Swap} & Zinsen für das Halten über Nacht & Jede Nacht, am Mittwoch dreifach \\
+\textbf{Swap} & Kosten für das Halten über Nacht & Jede Nacht, am Mittwoch dreifach \\
 \end{tabular}
 \par\vspace{6mm}
 \begin{merk}\textbf{Kernaussagen.} Die Equity gibt den aktuellen Wert Ihres Kontos wieder, die Balance hingegen nur
