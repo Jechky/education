@@ -1,11 +1,11 @@
 # Übergaben zwischen Agenten
 
-Erreicht ein Agent seine Kontextgrenze (ca. 1500 gelesene Zeilen), hält er hier an
+Erreicht ein Agent seine Kontextgrenze (ca. 100K Tokens), hält er hier an
 einer sauberen Stelle fest, was ein Nachfolger wissen muss. Ablauf:
 
 1. Datei `docs/uebergaben/<aufgabe>.md` nach der Vorlage unten anlegen
    (`<aufgabe>` kurz, klein, mit Bindestrichen, z. B. `kontogrundlagen-seite-4.md`).
-2. Nur die eigenen Dateien explizit stagen, committen, `git pull --rebase`, pushen.
+2. Nur die eigenen Dateien per Pfadangabe committen (`git commit -m "…" -- <pfade>`), pushen.
 3. Mit der Zeile `ÜBERGABE: docs/uebergaben/<aufgabe>.md` beenden.
 
 Der Nachfolger liest **zuerst** diese Datei (danach bei Bedarf `CLAUDE.md`/`HANDOFF.md`)

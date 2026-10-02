@@ -8,14 +8,21 @@
 
 ## Arbeitsweise (Vorgaben des Nutzers)
 - Der Hauptagent **koordiniert nur**; **jede** Aufgabe erledigt ein eigener Subagent.
-- **Kontextgrenze:** Ein Agent arbeitet bis ca. **1500 gelesene Zeilen**. Dann
+- Subagenten als Typ **`schulung`** starten (`.claude/agents/schulung.md`): nur
+  Read/Edit/Write/Bash/Grep/Glob, **Start-Kontext höchstens 20K Tokens**. Der Auftrag enthält
+  nur das für die Aufgabe Nötige (Dateien, Abschnitte, Bereiche) – keine Pflichtlektüre
+  ganzer Dateien. (Neue Agent-Typen lädt Claude Code erst beim Sitzungsstart.)
+- **Viele kleine Agenten statt weniger großer:** Aufgaben fein aufteilen (z. B. je
+  Seitenbereich) und, wo möglich, parallel laufen lassen.
+- **Kontextgrenze:** Ein Agent arbeitet bis ca. **100K Tokens**. Dann
   1. schreibt er an einer sauberen Stelle eine Übergabe-Datei
      `docs/uebergaben/<aufgabe>.md` (Vorlage: `docs/uebergaben/README.md`),
   2. committet seinen Zwischenstand,
   3. beendet sich mit `ÜBERGABE: <pfad>`.
-  Der Hauptagent startet einen Nachfolger, der **zuerst diese Datei** liest.
-- Parallel arbeitende Agenten stagen **nur ihre eigenen Dateien explizit**
-  (kein `git add -A` / `git add .`); vor dem Push `git pull --rebase`.
+  Der Hauptagent startet sofort einen Nachfolger, der **zuerst diese Datei** liest.
+- Parallel arbeitende Agenten teilen sich ein Arbeitsverzeichnis: Commits **nur per
+  Pfadangabe** (`git commit -m "…" -- <pfade>`), kein `git add -A` / `git add .`,
+  kein `git stash`; bei abgelehntem Push `git pull --rebase --autostash`.
 - Ist etwas nicht zu 100 % sicher (Maße, Farben, Abläufe der Plattform): dem Nutzer
   einen **Browser-Konsolenbefehl** geben, den er im WebTrader ausführt – **nicht schätzen**.
 - Dem Nutzer klar sagen, **was vor dem Ausführen** eines Befehls geöffnet bzw.
