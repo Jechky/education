@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 # Baut die Schulungs-PDFs mit XeLaTeX (zwei Durchläufe), Ausgabe nach build/.
-#   scripts/build.sh                 -> alle Dokumente unter dokumente/*/
-#   scripts/build.sh pending-orders  -> nur dieses Dokument
-# Schriften kommen aus fonts/ (Path=../../fonts/ in der .tex), Grafiken und
-# charts.tikz liegen neben der .tex. Das System braucht nur TeX Live (XeLaTeX).
+#   scripts/build.sh                          -> alle Dokumente unter dokumente/*/
+#   scripts/build.sh pending-orders           -> nur dieses Dokument
+#   scripts/build.sh kontogrundlagen-kosten   -> nur dieses Dokument
+# Schriften kommen aus fonts/ (Path=../../fonts/ in der .tex), Grafiken
+# (*.pdf, charts.tikz) liegen neben der .tex. Das System braucht nur TeX Live (XeLaTeX).
 set -euo pipefail
 
 ROOT=$(cd "$(dirname "$0")/.." && pwd)

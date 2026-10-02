@@ -10,6 +10,9 @@ abweicht. Mit --diff-dir werden Differenzbilder abweichender Seiten abgelegt.
 Aufruf (aus dem Repo-Wurzelverzeichnis):
   python3 tools/pdf_vergleich.py [NEU.pdf] [REFERENZ.pdf] [--dpi 150]
                                  [--schwelle 0.1] [--diff-dir DIR]
+  python3 tools/pdf_vergleich.py --dokument kontogrundlagen-kosten
+--dokument setzt NEU = build/<Name>.pdf und REFERENZ = originals/<Name>_ORIGINAL.pdf.
+Ohne Angaben wird der Pending-Orders-Guide verglichen.
 """
 import argparse
 import subprocess
@@ -22,6 +25,9 @@ import pikepdf
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
+# Ordner unter dokumente/ -> Dateiname (ohne .pdf) in build/ bzw. originals/…_ORIGINAL
+DOKUMENTE = {"pending-orders": "Pending-Orders-Guide",
+             "kontogrundlagen-kosten": "Kontogrundlagen-Kosten"}
 
 
 def rendern(pdf, dpi, ordner, praefix):
@@ -38,13 +44,17 @@ def inhalt(pdf):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument("neu", nargs="?", default=ROOT / "build" / "Pending-Orders-Guide.pdf")
-    ap.add_argument("referenz", nargs="?",
-                    default=ROOT / "originals" / "Pending-Orders-Guide_ORIGINAL.pdf")
+    ap.add_argument("neu", nargs="?")
+    ap.add_argument("referenz", nargs="?")
+    ap.add_argument("--dokument", choices=DOKUMENTE, default="pending-orders",
+                    help="Standardpfade für NEU und REFERENZ")
     ap.add_argument("--dpi", type=int, default=150)
     ap.add_argument("--schwelle", type=float, default=0.1, help="max. %% abweichender Pixel")
     ap.add_argument("--diff-dir", type=Path)
     a = ap.parse_args()
+    name = DOKUMENTE[a.dokument]
+    a.neu = a.neu or ROOT / "build" / f"{name}.pdf"
+    a.referenz = a.referenz or ROOT / "originals" / f"{name}_ORIGINAL.pdf"
 
     ok = True
     strom_neu, strom_ref = inhalt(a.neu), inhalt(a.referenz)

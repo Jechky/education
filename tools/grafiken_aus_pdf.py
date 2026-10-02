@@ -1,32 +1,38 @@
 #!/usr/bin/env python3
-"""Holt die eingebetteten Plattform-Grafiken aus dem ORIGINAL-PDF zurück.
+"""Holt die eingebetteten Plattform-Grafiken aus einem ORIGINAL-PDF zurück.
 
 XeTeX/xdvipdfmx legt jede per \\includegraphics eingebundene PDF-Seite als
-Form-XObject ab. Dieses Skript sucht auf Seite 6 die beiden Formen
-(Order-Fenster, 80 mm breit; Type-Menü, 46 mm breit) über ihre gesetzte Breite,
-und schreibt sie als eigenständige einseitige PDFs:
+Form-XObject ab. Dieses Skript sucht auf der angegebenen Seite die Formen über
+ihre gesetzte Breite und schreibt sie als eigenständige einseitige PDFs:
 
   MediaBox  = BBox der Form
   Contents  = Inhaltsstrom der Form (unverändert)
   Resources = Ressourcen der Form inkl. Schriften und verschachtelter Formen
 
-\\includegraphics[width=80mm]{fenster-bl.pdf} bzw. [width=46mm]{type-menu.pdf}
-ergibt damit wieder exakt dasselbe Bild.
+\\includegraphics[width=<Breite>]{<Datei>} ergibt damit wieder exakt dasselbe Bild.
+
+Bekannte Dokumente (Seite, Dateiname -> gesetzte Breite):
+  pending-orders          Seite 6: fenster-bl.pdf 80 mm, type-menu.pdf 46 mm
+  kontogrundlagen-kosten  Seite 6: panel.pdf 78 mm, bar.pdf 170 mm
 
 Aufruf (aus dem Repo-Wurzelverzeichnis):
-  python3 tools/grafiken_aus_pdf.py [ORIGINAL.pdf] [Zielordner]
+  python3 tools/grafiken_aus_pdf.py [DOKUMENT] [--quelle ORIGINAL.pdf] [--ziel ORDNER]
+DOKUMENT ist standardmäßig pending-orders; Quelle und Ziel ergeben sich daraus.
 """
-import sys
+import argparse
 from pathlib import Path
 
 import pikepdf
 
 ROOT = Path(__file__).resolve().parent.parent
-QUELLE = ROOT / "originals" / "Pending-Orders-Guide_ORIGINAL.pdf"
-ZIEL = ROOT / "dokumente" / "pending-orders"
 MM = 72 / 25.4
-# Dateiname -> gesetzte Breite in mm (siehe \includegraphics in der .tex)
-GRAFIKEN = {"fenster-bl.pdf": 80.0, "type-menu.pdf": 46.0}
+# Dokument -> (ORIGINAL-PDF in originals/, Seite (1-basiert), {Datei: Breite in mm})
+DOKUMENTE = {
+    "pending-orders": ("Pending-Orders-Guide_ORIGINAL.pdf", 6,
+                       {"fenster-bl.pdf": 80.0, "type-menu.pdf": 46.0}),
+    "kontogrundlagen-kosten": ("Kontogrundlagen-Kosten_ORIGINAL.pdf", 6,
+                               {"panel.pdf": 78.0, "bar.pdf": 170.0}),
+}
 
 
 def formen_mit_breite(seite):
@@ -77,12 +83,19 @@ def form_als_pdf(quelle_pdf, form, ziel):
 
 
 def main():
-    quelle = Path(sys.argv[1]) if len(sys.argv) > 1 else QUELLE
-    ziel = Path(sys.argv[2]) if len(sys.argv) > 2 else ZIEL
+    ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    ap.add_argument("dokument", nargs="?", default="pending-orders", choices=DOKUMENTE)
+    ap.add_argument("--quelle", type=Path, help="ORIGINAL-PDF (Standard: originals/…)")
+    ap.add_argument("--ziel", type=Path, help="Zielordner (Standard: dokumente/<DOKUMENT>)")
+    a = ap.parse_args()
+
+    pdf_name, seitennr, grafiken = DOKUMENTE[a.dokument]
+    quelle = a.quelle or ROOT / "originals" / pdf_name
+    ziel = a.ziel or ROOT / "dokumente" / a.dokument
     pdf = pikepdf.open(quelle)
-    seite = pdf.pages[5]
+    seite = pdf.pages[seitennr - 1]
     breiten = formen_mit_breite(seite)
-    for datei, mm in GRAFIKEN.items():
+    for datei, mm in grafiken.items():
         treffer = [n for n, b in breiten.items() if abs(b - mm * MM) < 0.5]
         if len(treffer) != 1:
             raise SystemExit(f"{datei}: keine eindeutige Form mit {mm} mm Breite ({breiten})")

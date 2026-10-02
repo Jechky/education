@@ -1,0 +1,464 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[a4paper,top=19mm,bottom=18mm,left=20mm,right=20mm,footskip=9mm]{geometry}
+\usepackage{fontspec,xcolor,tikz,tcolorbox,tabularx,booktabs,enumitem,fancyhdr,microtype}
+\usepackage{graphicx}
+\special{dvipdfmx:config z 0}   % ohne Kompression, maximale Druckkompatibilitaet
+\usetikzlibrary{arrows.meta,shadows.blur,fit}
+\tcbuselibrary{skins}
+\usepackage[ngerman,provide=*]{babel}
+% Trennmuster wie beim Original-Build (dort fehlten die deutschen Muster,
+% babel nahm die englischen). Ohne diese Zeile bricht Seite 5 anders um.
+\babelprovide[hyphenrules=english]{ngerman}
+\usepackage{hyperref}\hypersetup{hidelinks,pdftitle={Kontogrundlagen & Kosten – Schulungseinheit},pdfsubject={Balance, Equity, Margin, Free Margin, Leverage, Swap}}
+
+\setmainfont{IBMPlexSans-Regular.otf}[Path=../../fonts/,
+  BoldFont={IBMPlexSans-SemiBold.otf}, ItalicFont={IBMPlexSans-Italic.otf},
+  BoldItalicFont={IBMPlexSans-SemiBoldItalic.otf}]
+\newfontfamily\light{IBMPlexSans-Light.otf}[Path=../../fonts/,
+  BoldFont={IBMPlexSans-Regular.otf}, ItalicFont={IBMPlexSans-LightItalic.otf}]
+\newfontfamily\mono{IBMPlexMono-Regular.otf}[Path=../../fonts/,
+  BoldFont={IBMPlexMono-SemiBold.otf}]
+\newcommand{\num}[1]{{\mono #1}}
+
+% ---- Farben -------------------------------------------------------------
+\definecolor{ink}{HTML}{14161A}    \definecolor{body}{HTML}{3C4249}
+\definecolor{muted}{HTML}{6D757E}  \definecolor{soft}{HTML}{9AA1AA}
+\definecolor{rule}{HTML}{E2E5E9}   \definecolor{greya}{HTML}{A8AEB6}
+\definecolor{buy}{HTML}{0E7A4E}    \definecolor{sell}{HTML}{B23A2E}
+\definecolor{buytint}{HTML}{E9F4EE} \definecolor{selltint}{HTML}{FAEDEB}
+\definecolor{paper}{HTML}{F7F8F9}
+\definecolor{pfbg}{HTML}{001328}\definecolor{pfgruen}{HTML}{0E7A4E}
+\definecolor{pfgrau}{HTML}{97A5B4}\definecolor{pfrot}{HTML}{B23A2E}
+\definecolor{pfgrey}{HTML}{6A6A6A}
+\definecolor{wbg}{HTML}{0E2939} \definecolor{whead}{HTML}{0B2130} \definecolor{wfield}{HTML}{102B3C}
+\definecolor{wborder}{HTML}{1D4256} \definecolor{waccent}{HTML}{1B6CA8} \definecolor{wgreen}{HTML}{3CB44A}
+\definecolor{wtext}{HTML}{E7EEF2} \definecolor{wmuted}{HTML}{8FA6B3} \definecolor{wmark}{HTML}{3F88BD}
+\definecolor{wdim}{HTML}{5F7A89} \definecolor{wtog}{HTML}{33505F} \definecolor{wknob}{HTML}{C3D2DA}
+\definecolor{wred}{HTML}{E0524D} \definecolor{wchart}{HTML}{0B2030} \definecolor{wpill}{HTML}{5B6B76}
+\definecolor{wtabtext}{HTML}{CDDBE3} \definecolor{wbadge}{HTML}{0B3A17}
+
+% ---- Typografische Skala (1,25) -----------------------------------------
+\newcommand{\display}{\light\fontsize{30}{34}\selectfont}
+\newcommand{\hone}{\fontsize{19}{23}\selectfont\bfseries}
+\newcommand{\htwo}{\fontsize{8}{11}\selectfont\bfseries}
+\newcommand{\hthree}{\fontsize{12}{15}\selectfont\bfseries}
+\newcommand{\leadf}{\light\fontsize{11.5}{17}\selectfont}
+\renewcommand{\small}{\fontsize{8.6}{12.4}\selectfont}
+\newcommand{\lbl}{\fontsize{7.6}{10}\selectfont}
+\newcommand{\micro}{\fontsize{7}{9}\selectfont}
+\newcommand{\wfont}{\fontsize{6.8}{8}\selectfont}
+\newcommand{\wsmall}{\fontsize{5.8}{7}\selectfont}
+\newcommand{\fine}{\fontsize{7.4}{9.2}\selectfont}
+\newcommand{\foot}{\fontsize{6.2}{7.6}\selectfont}
+\newcommand{\ls}{\addfontfeatures{LetterSpace=14}}
+\newcommand{\lsx}{\addfontfeatures{LetterSpace=8}}
+\normalsize\fontsize{9.4}{14}\selectfont
+\color{body}\setlength{\parindent}{0pt}\setlength{\parskip}{0pt}
+\setlength{\emergencystretch}{2em}
+\hyphenpenalty=400\relax
+
+% ---- Bausteine ----------------------------------------------------------
+\newcommand{\kicker}[2]{{\htwo\ls\color{muted}\MakeUppercase{#2}\par}%
+  \vspace{2mm}{\color{rule}\rule{\linewidth}{0.4pt}}\par\vspace{5.5mm}}
+\newcommand{\Hone}[1]{{\hone\color{ink}#1\par}\vspace{3.5mm}}
+\newcommand{\Htwo}[1]{{\htwo\ls\color{muted}\MakeUppercase{#1}\par}\vspace{4mm}}
+\newcommand{\lead}[1]{{\leadf\color{body}\raggedright #1\par}}
+\newcommand{\hr}{\par\vspace{7mm}{\color{rule}\rule{\linewidth}{0.4pt}}\par\vspace{6mm}}
+\newcommand{\hd}[1]{{\micro\bfseries\ls\color{soft}\MakeUppercase{#1}}}
+\tikzset{cnum/.style={circle,fill=ink,text=white,inner sep=0,minimum size=3.2mm,
+  font=\bfseries\fontsize{5.6}{6}\selectfont}}
+\newcommand{\cn}[1]{\tikz[baseline=-0.65ex]\node[cnum]{#1};}
+\tikzset{pfnum/.style={circle,fill=ink,text=white,inner sep=0,minimum size=13,
+  font=\bfseries\fontsize{7}{8}\selectfont}}
+\newcommand{\pflab}{\fontsize{7}{8.5}\selectfont}
+\newcommand{\pfn}[1]{\tikz[baseline=-0.7ex]\node[circle,fill=ink,text=white,inner sep=0,
+  minimum size=4.4mm,font=\bfseries\fontsize{7}{8}\selectfont]{#1};}
+\usetikzlibrary{calc}
+
+% weicher Schatten fuer eingebundene Grafiken
+\tikzset{softshadow/.style={blur shadow={shadow blur steps=16,shadow xshift=0pt,
+  shadow yshift=-0.9pt,shadow opacity=30,shadow blur radius=1.5mm}}}
+\newcommand{\shadowfig}[2][80mm]{%
+  \tikz[baseline=(current bounding box.north)]\node[inner sep=0,softshadow]
+    {\includegraphics[width=#1]{#2}};}
+
+\newtcolorbox{merk}{enhanced,colback=paper,colframe=paper,boxrule=0pt,arc=0pt,
+  borderline west={2pt}{0pt}{ink},left=5mm,right=5mm,top=3.5mm,bottom=3.5mm,boxsep=0pt,
+  before skip=6mm,after skip=0pt,fontupper=\small\color{body}}
+\newtcolorbox{prule}[1]{enhanced,colback=white,colframe=rule,boxrule=0.4pt,arc=1mm,
+  borderline west={2pt}{0pt}{#1},left=4mm,right=4mm,top=2.6mm,bottom=2.6mm,boxsep=0pt,
+  before skip=2.2mm,after skip=0pt,fontupper=\small\color{body}}
+\newtcolorbox{soft}{enhanced,colback=paper,colframe=paper,boxrule=0pt,arc=1.5mm,
+  left=5mm,right=5mm,top=4mm,bottom=4mm,boxsep=0pt,before skip=0pt,after skip=0pt,
+  before upper={\raggedright\hyphenpenalty=10000\relax\exhyphenpenalty=10000\relax}}
+
+\pagestyle{fancy}\fancyhf{}\renewcommand{\headrulewidth}{0pt}
+
+\fancyfoot[L]{\micro\color{soft}\ls KONTOGRUNDLAGEN \& KOSTEN · SCHULUNGSEINHEIT}
+\begin{document}
+\thispagestyle{empty}
+{\htwo\ls\color{muted}SCHULUNGSEINHEIT}\par\vspace{11mm}
+{\display\color{ink}Kontogrundlagen \& Kosten}\par\vspace{7mm}
+{\color{ink}\rule{28mm}{2pt}}\par\vspace{6mm}
+\begin{minipage}{126mm}\lead{Balance, Equity, Margin, Free, Level, Leverage und Swap – damit du dein
+Konto lesen kannst, bevor du handelst.}\end{minipage}
+\par\vspace{6mm}
+\tikz\node[draw=rule,line width=0.4pt,rounded corners=1.6mm,inner xsep=3mm,inner ysep=1.5mm,
+  text=muted,font=\micro\bfseries\ls]{SECHS BEGRIFFE. EIN KONTO.};
+\par\vspace{0pt plus 1fill}
+\noindent \begin{tikzpicture}[x=1mm,y=1mm]
+\useasboundingbox (0,0) rectangle (170.0,78);
+\fill[paper,rounded corners=1.4mm] (0,58) rectangle (50,74);
+\draw[rule,line width=0.35pt,rounded corners=1.4mm] (0,58) rectangle (50,74);
+\node[inner sep=0,text=ink,font=\lbl\bfseries\ls] at (25.0,67.7) {BALANCE};
+\node[inner sep=0,text=muted,font=\micro] at (25.0,63.8) {eingezahlt und abgeschlossen};
+\node[inner sep=0,text=muted,font=\hthree] at (57,66) {+};
+\fill[paper,rounded corners=1.4mm] (64,58) rectangle (114,74);
+\draw[rule,line width=0.35pt,rounded corners=1.4mm] (64,58) rectangle (114,74);
+\node[inner sep=0,text=ink,font=\lbl\bfseries\ls] at (89.0,67.7) {PROFIT/LOSSES};
+\node[inner sep=0,text=muted,font=\micro] at (89.0,63.8) {offene Positionen, schwebend};
+\node[inner sep=0,text=muted,font=\hthree] at (121,66) {=};
+\fill[white,rounded corners=1.4mm] (128,58) rectangle (170,74);
+\draw[rule,line width=0.35pt,rounded corners=1.4mm] (128,58) rectangle (170,74);
+\node[inner sep=0,text=ink,font=\lbl\bfseries\ls] at (149.0,67.7) {EQUITY};
+\node[inner sep=0,text=muted,font=\micro] at (149.0,63.8) {dein Konto jetzt};
+\draw[greya,line width=0.5pt] (149,58) -- (149,44);
+\draw[greya,line width=0.5pt] (0,44) -- (170,44);
+\draw[greya,line width=0.5pt] (0,44) -- (0,40);\draw[greya,line width=0.5pt] (170,44) -- (170,40);
+\fill[ink,rounded corners=1.2mm] (0,22) rectangle (170,40);
+\fill[white] (52,22) rectangle (170,40);
+\draw[ink,line width=0.5pt,rounded corners=1.2mm] (0,22) rectangle (170,40);
+\draw[ink,line width=0.5pt] (52,22) -- (52,40);
+\node[inner sep=0,text=white,font=\lbl\bfseries\ls] at (26,33) {MARGIN};
+\node[inner sep=0,text=white,font=\micro] at (26,28) {gebunden};
+\node[inner sep=0,text=ink,font=\lbl\bfseries\ls] at (111,33) {FREE};
+\node[inner sep=0,text=muted,font=\micro] at (111,28) {frei für neue Positionen};
+\draw[greya,line width=0.5pt,dash pattern=on 1.2mm off 0.9mm] (0,14) -- (170,14);
+\node[inner sep=0,fill=white,inner xsep=2mm,text=muted,font=\micro\bfseries\ls] at (85,14) {LEVEL = EQUITY IM VERHÄLTNIS ZUR MARGIN};
+\node[inner sep=0,text=soft,font=\micro] at (85,5) {Je höher, desto mehr Puffer. Fällt er zu tief, greift der Stop out.};
+\end{tikzpicture}
+\par\vspace{0pt plus 1.35fill}
+{\color{rule}\rule{\linewidth}{0.4pt}}\par\vspace{2.5mm}
+{\micro\ls\color{soft}KONTOGRUNDLAGEN \& KOSTEN\hfill SCHULUNGSEINHEIT}
+\clearpage
+\kicker{}{Kontostand}
+\Hone{Balance ist nicht Equity}
+\begin{minipage}{128mm}\lead{Die Plattform zeigt zwei Zahlen für dein Konto. Sie unterscheiden sich
+genau um das, was deine offenen Positionen gerade wert sind.}\end{minipage}
+\par\vspace{8mm}
+\noindent\begin{minipage}[t]{82mm}\vspace{0pt}\begin{soft}
+{\htwo\ls\color{muted}BALANCE}\par\vspace{2mm}
+{\hthree\color{ink}Was fest ist.}\par\vspace{1.5mm}
+{\color{body}Eingezahltes Geld plus alles, was mit geschlossenen Positionen schon verdient oder verloren
+wurde. Ändert sich nur, wenn du schließt, einzahlst oder auszahlst – oder wenn Swap gebucht wird.}\end{soft}\end{minipage}\hfill
+\begin{minipage}[t]{82mm}\vspace{0pt}\begin{soft}
+{\htwo\ls\color{muted}EQUITY}\par\vspace{2mm}
+{\hthree\color{ink}Was jetzt gilt.}\par\vspace{1.5mm}
+{\color{body}Balance plus das, was deine offenen Positionen im Moment wert sind. Bewegt sich mit jedem
+Kurs. Das ist der Wert, auf den die Plattform bei Margin und Level schaut.}\end{soft}\end{minipage}
+\par\vspace{7mm}
+\noindent \begin{tikzpicture}[x=1mm,y=1mm]
+\useasboundingbox (0,0) rectangle (170.0,44);
+\node[anchor=west,inner sep=0,text=ink,font=\lbl\bfseries] at (0,41) {Offene Position im Plus};
+\node[anchor=east,inner sep=0,text=muted,font=\micro] at (16,31) {Balance};
+\fill[paper] (19,27) rectangle (63,35);\draw[rule,line width=0.35pt] (19,27) rectangle (63,35);
+\node[anchor=east,inner sep=0,text=muted,font=\micro] at (16,17) {Equity};
+\fill[paper] (19,13) rectangle (63,21);
+\fill[buytint] (63,13) rectangle (74,21);
+\draw[rule,line width=0.35pt] (19,13) rectangle (74,21);
+\draw[buy,line width=0.6pt] (63,12) -- (63,22);
+\node[anchor=west,inner sep=0,text=buy,font=\micro\bfseries] at (64.5,8) {+ Profit};
+\node[anchor=west,inner sep=0,text=ink,font=\lbl\bfseries] at (92,41) {Offene Position im Minus};
+\node[anchor=east,inner sep=0,text=muted,font=\micro] at (108,31) {Balance};
+\fill[paper] (111,27) rectangle (155,35);\draw[rule,line width=0.35pt] (111,27) rectangle (155,35);
+\node[anchor=east,inner sep=0,text=muted,font=\micro] at (108,17) {Equity};
+\fill[paper] (111,13) rectangle (144,21);
+\fill[selltint] (144,13) rectangle (155,21);
+\draw[rule,line width=0.35pt,dash pattern=on 0.8mm off 0.6mm] (144,13) rectangle (155,21);
+\draw[rule,line width=0.35pt] (111,13) rectangle (144,21);
+\draw[sell,line width=0.6pt] (144,12) -- (144,22);
+\node[anchor=west,inner sep=0,text=sell,font=\micro\bfseries] at (145.5,8) {– Losses};
+\end{tikzpicture}
+\hr
+\Htwo{Gewinn und Verlust: schwebend oder fest}
+{\color{body}\raggedright Solange eine Position offen ist, ist ihr Gewinn oder Verlust nur eine Momentaufnahme. Die Plattform
+zeigt ihn als \textbf{Profit/Losses} und rechnet ihn in die Equity ein – aber nicht in die Balance.
+Erst wenn du schließt, wird der Betrag fest.\par}
+\par\vspace{5mm}
+\noindent \begin{tikzpicture}[x=1mm,y=1mm]
+\useasboundingbox (0,0) rectangle (170.0,30);
+\draw[greya,line width=0.5pt,-{Stealth[length=2mm]}] (0,12) -- (170.0,12);
+\fill[ink] (14,12) circle (1.1);
+\node[inner sep=0,text=ink,font=\lbl\bfseries] at (14,19.5) {Position öffnen};
+\node[inner sep=0,text=muted,font=\micro,text width=44mm,align=center] at (14,4) {ab hier schwebt der Wert};
+\fill[ink] (85,12) circle (1.1);
+\node[inner sep=0,text=ink,font=\lbl\bfseries] at (85,19.5) {Kurs bewegt sich};
+\node[inner sep=0,text=muted,font=\micro,text width=44mm,align=center] at (85,4) {Profit/Losses ändert sich mit jedem Tick};
+\fill[ink] (156,12) circle (1.1);
+\node[inner sep=0,text=ink,font=\lbl\bfseries] at (156,19.5) {Position schließen};
+\node[inner sep=0,text=muted,font=\micro,text width=44mm,align=center] at (156,4) {Betrag wird fest und wandert in die Balance};
+\node[inner sep=0,text=soft,font=\micro\bfseries\ls] at (49,26) {UNREALISIERT};
+\node[inner sep=0,text=soft,font=\micro\bfseries\ls] at (121,26) {UNREALISIERT};
+\draw[greya,line width=0.4pt,dash pattern=on 1mm off 0.8mm] (14,16) -- (156,16);
+\end{tikzpicture}
+\par\vspace{4mm}
+\begin{merk}\textbf{Warum das wichtig ist.} Eine grüne Balance sagt nichts über offene Positionen.
+Wer wissen will, wie es dem Konto gerade geht, schaut auf Equity und Profit/Losses.\end{merk}
+\clearpage
+\kicker{}{Margin}
+\Hone{Margin ist eine Sicherheit, kein Preis}
+\begin{minipage}{128mm}\lead{Wenn du eine Position öffnest, legt die Plattform einen Teil deiner Equity
+als Sicherheit beiseite. Du gibst ihn nicht aus – er ist nur gebunden, bis die Position geschlossen ist.}\end{minipage}
+\par\vspace{8mm}
+\noindent\begin{minipage}[t]{54mm}\vspace{0pt}\raggedright
+{\bfseries Margin}\par\vspace{1mm}
+{\color{muted}\small Der gebundene Teil. Steht in der Kontoübersicht und bei jeder Position einzeln.}
+\end{minipage}\hfill
+\begin{minipage}[t]{54mm}\vspace{0pt}\raggedright
+{\bfseries Free}\par\vspace{1mm}
+{\color{muted}\small Der Rest der Equity. Nur damit kannst du weitere Positionen öffnen.}
+\end{minipage}\hfill
+\begin{minipage}[t]{54mm}\vspace{0pt}\raggedright
+{\bfseries Level}\par\vspace{1mm}
+{\color{muted}\small Equity im Verhältnis zur Margin. Die Gesundheitsanzeige deines Kontos.}
+\end{minipage}
+\par\vspace{8mm}
+\noindent \begin{tikzpicture}[x=1mm,y=1mm]
+\useasboundingbox (0,0) rectangle (170.0,50);
+\node[anchor=west,inner sep=0,text=ink,font=\lbl\bfseries] at (0,42) {Eine kleine Position};
+\fill[ink] (56,38) rectangle (72.5,46);
+\fill[paper] (72.5,38) rectangle (166.0,46);
+\draw[rule,line width=0.35pt] (56,38) rectangle (166.0,46);
+\node[inner sep=0,text=white,font=\micro\bfseries] at (64.25,42) {Margin};
+\node[inner sep=0,text=muted,font=\micro] at (119.25,42) {Free};
+\node[anchor=west,inner sep=0,text=ink,font=\lbl\bfseries] at (0,28) {Mehrere Positionen};
+\fill[ink] (56,24) rectangle (116.5,32);
+\fill[paper] (116.5,24) rectangle (166.0,32);
+\draw[rule,line width=0.35pt] (56,24) rectangle (166.0,32);
+\node[inner sep=0,text=white,font=\micro\bfseries] at (86.25,28) {Margin};
+\node[inner sep=0,text=muted,font=\micro] at (141.25,28) {Free};
+\node[anchor=west,inner sep=0,text=ink,font=\lbl\bfseries] at (0,14) {Positionen im Minus};
+\fill[ink] (56,10) rectangle (116.5,18);
+\fill[paper] (116.5,10) rectangle (130.8,18);
+\fill[selltint] (130.8,10) rectangle (166.0,18);
+\draw[sell,line width=0.35pt,dash pattern=on 0.8mm off 0.6mm] (130.8,10) rectangle (166.0,18);
+\draw[rule,line width=0.35pt] (56,10) rectangle (166.0,18);
+\node[inner sep=0,text=white,font=\micro\bfseries] at (86.25,14) {Margin};
+\node[inner sep=0,text=muted,font=\micro] at (123.64999999999999,14) {Free};
+\node[anchor=west,inner sep=0,text=sell,font=\micro] at (56,3) {Der Verlust verkleinert die Equity – und damit zuerst den freien Teil.};
+\end{tikzpicture}
+\par\vspace{5mm}
+{\color{body}\raggedright Größere Positionen binden mehr Margin. Mehr Positionen binden mehr Margin. Und Verluste
+verkleinern die Equity – der freie Teil schrumpft also von zwei Seiten.\par}
+\hr
+\Htwo{Level, Margin Call und Stop out}
+{\color{body}\raggedright Solange Equity deutlich über der gebundenen Margin liegt, ist alles ruhig. Sinkt die Equity durch Verluste,
+sinkt das Level. Ab einer Schwelle warnt die Plattform. Fällt es weiter bis zum \textbf{Stop out},
+schließt die Plattform Positionen von sich aus – beginnend mit der schlechtesten. Den Stop-out-Wert deines Kontos
+findest du unter \textbf{Information}.\par}
+\par\vspace{5mm}
+\noindent \begin{tikzpicture}[x=1mm,y=1mm]
+\useasboundingbox (0,0) rectangle (170.0,30);
+\fill[selltint] (0,12) rectangle (34,20);\fill[paper] (34,12) rectangle (78,20);\fill[buytint] (78,12) rectangle (170.0,20);
+\draw[rule,line width=0.35pt] (0,12) rectangle (170.0,20);
+\draw[sell,line width=0.7pt] (34,10) -- (34,22);
+\node[inner sep=0,text=sell,font=\micro\bfseries\ls] at (17,16) {STOP OUT};
+\node[inner sep=0,text=muted,font=\micro\bfseries\ls] at (56,16) {WARNBEREICH};
+\node[inner sep=0,text=buy,font=\micro\bfseries\ls] at (124,16) {GENUG PUFFER};
+\node[anchor=west,inner sep=0,text=muted,font=\micro] at (0,5) {Level niedrig: Verluste fressen die Sicherheit auf};
+\node[anchor=east,inner sep=0,text=muted,font=\micro] at (170.0,5) {Level hoch: viel Equity im Verhältnis zur Margin};
+\draw[greya,line width=0.5pt,-{Stealth[length=1.8mm]}] (90,26) -- (60,26);
+\node[anchor=west,inner sep=0,text=soft,font=\micro] at (92,26) {sinkt bei Verlusten und bei jeder neuen Position};
+\end{tikzpicture}
+\clearpage
+\kicker{}{Hebel}
+\Hone{Der Hebel vergrößert beides}
+\begin{minipage}{128mm}\lead{Mit Hebel bewegst du am Markt deutlich mehr, als du an Margin hinterlegst.
+Das gilt in beide Richtungen: Gewinne und Verluste werden am ganzen Volumen gerechnet, nicht am Einsatz.}\end{minipage}
+\par\vspace{9mm}
+\noindent \begin{tikzpicture}[x=1mm,y=1mm]
+\useasboundingbox (0,0) rectangle (170.0,64);
+\node[anchor=west,inner sep=0,text=ink,font=\lbl\bfseries] at (0,61) {Ohne Hebel};
+\fill[ink,rounded corners=0.8mm] (0,44) rectangle (10,54);
+\node[anchor=west,inner sep=0,text=muted,font=\micro] at (12,49) {Margin – dein Einsatz};
+\fill[paper,rounded corners=0.8mm] (0,28) rectangle (10,38);
+\draw[rule,line width=0.35pt,rounded corners=0.8mm] (0,28) rectangle (10,38);
+\node[anchor=west,inner sep=0,text=muted,font=\micro] at (0,24) {Trade volume – das, was am Markt bewegt wird};
+\draw[greya,line width=0.4pt] (0,12) -- (10,12);
+\fill[buytint] (0,12) rectangle (5.0,15.5);
+\fill[selltint] (0,8.5) rectangle (5.0,12);
+\node[anchor=west,inner sep=0,text=buy,font=\micro] at (7.0,13.75) {Gewinn bei gleicher Bewegung};
+\node[anchor=west,inner sep=0,text=sell,font=\micro] at (7.0,10.25) {Verlust bei gleicher Bewegung};
+\node[anchor=west,inner sep=0,text=ink,font=\lbl\bfseries] at (88,61) {Mit Hebel};
+\fill[ink,rounded corners=0.8mm] (88,44) rectangle (98,54);
+\node[anchor=west,inner sep=0,text=muted,font=\micro] at (100,49) {Margin – dein Einsatz};
+\fill[paper,rounded corners=0.8mm] (88,28) rectangle (164,38);
+\draw[rule,line width=0.35pt,rounded corners=0.8mm] (88,28) rectangle (164,38);
+\node[anchor=west,inner sep=0,text=muted,font=\micro] at (88,24) {Trade volume – das, was am Markt bewegt wird};
+\draw[greya,line width=0.4pt] (88,12) -- (164,12);
+\fill[buytint] (88,12) rectangle (126.0,21);
+\fill[selltint] (88,3) rectangle (126.0,12);
+\node[anchor=west,inner sep=0,text=buy,font=\micro] at (128.0,16.5) {Gewinn bei gleicher Bewegung};
+\node[anchor=west,inner sep=0,text=sell,font=\micro] at (128.0,7.5) {Verlust bei gleicher Bewegung};
+\end{tikzpicture}
+\par\vspace{7mm}
+\noindent\begin{minipage}[t]{82mm}\vspace{0pt}\begin{soft}
+{\htwo\ls\color{buy}WAS DAFÜR SPRICHT}\par\vspace{2mm}
+{\color{body}Du brauchst wenig Kapital, um eine Position zu halten, die am Markt viel bewegt. Die gebundene
+Margin bleibt klein, der freie Teil groß.}\end{soft}\end{minipage}\hfill
+\begin{minipage}[t]{82mm}\vspace{0pt}\begin{soft}
+{\htwo\ls\color{sell}WAS DAGEGEN SPRICHT}\par\vspace{2mm}
+{\color{body}Schon eine kleine Kursbewegung gegen dich ist – gemessen an deinem Einsatz – ein großer Verlust.
+Je höher der Hebel, desto schneller nähert sich das Level dem Stop out.}\end{soft}\end{minipage}
+\par\vspace{7mm}
+\begin{merk}\textbf{Wo der Hebel steht.} Für dein Konto unter \textbf{Information} als \textbf{Leverage}.
+Für ein einzelnes Instrument in dessen Info-Fenster – dort kann er niedriger sein als der Kontohebel.
+Es gilt immer der Wert des Instruments.\end{merk}
+\par\vspace{5mm}
+{\color{muted}\small\raggedright Der Hebel ist kein Gewinnverstärker. Er ist ein Bewegungsverstärker – nach oben wie nach unten.\par}
+\clearpage
+\kicker{}{Swaps}
+\Hone{Warum Halten über Nacht Geld kostet}
+\begin{minipage}{130mm}\lead{Mit Hebel gehört dir nur ein kleiner Teil deiner Position. Den Rest leihst du
+dir – und geliehenes Geld kostet Zinsen. Genau das ist der Swap.}\end{minipage}
+\par\vspace{7mm}
+\noindent \begin{tikzpicture}[x=1mm,y=1mm]
+\useasboundingbox (0,2) rectangle (170.0,38);
+\node[anchor=west,inner sep=0,text=muted,font=\micro\bfseries\ls] at (0,36) {DEINE POSITION AM MARKT};
+\fill[ink,rounded corners=1.2mm] (0,18) rectangle (22.0,30);
+\fill[paper,rounded corners=1.2mm] (23.5,18) rectangle (170.0,30);
+\draw[rule,line width=0.35pt,rounded corners=1.2mm] (23.5,18) rectangle (170.0,30);
+\node[inner sep=0,text=white,font=\micro\bfseries] at (11.0,24) {Margin};
+\node[inner sep=0,text=ink,font=\lbl\bfseries] at (96.75,24) {Der Rest ist geliehen};
+\node[inner sep=0,text=muted,font=\micro] at (11.0,13) {dein Geld};
+\draw[greya,line width=0.5pt,-{Stealth[length=2mm]}] (96.75,16) -- (96.75,9);
+\node[inner sep=0,text=body,font=\lbl] at (96.75,5) {Für geliehenes Geld zahlt man Zinsen – hier heißt das Swap.};
+\end{tikzpicture}
+\par\vspace{5mm}
+\Htwo{Woher der Betrag kommt}
+\noindent \begin{tikzpicture}[x=1mm,y=1mm]
+\useasboundingbox (0,0) rectangle (170.0,30);
+\fill[paper,rounded corners=1.4mm] (0.0,4) rectangle (50.0,26);
+\draw[rule,line width=0.35pt,rounded corners=1.4mm] (0.0,4) rectangle (50.0,26);
+\node[inner sep=0,text=ink,font=\lbl\bfseries] at (25.0,18) {Zins am Geldmarkt};
+\node[inner sep=0,text=muted,font=\micro,text width=44mm,align=center] at (25.0,10.5) {was das Leihen zwischen Banken kostet};
+\node[inner sep=0,text=muted,font=\hthree] at (55.0,15) {+};
+\fill[paper,rounded corners=1.4mm] (60.0,4) rectangle (110.0,26);
+\draw[rule,line width=0.35pt,rounded corners=1.4mm] (60.0,4) rectangle (110.0,26);
+\node[inner sep=0,text=ink,font=\lbl\bfseries] at (85.0,18) {Aufschlag des Brokers};
+\node[inner sep=0,text=muted,font=\micro,text width=44mm,align=center] at (85.0,10.5) {die Marge deines Anbieters};
+\node[inner sep=0,text=muted,font=\hthree] at (115.0,15) {=};
+\fill[white,rounded corners=1.4mm] (120.0,4) rectangle (170.0,26);
+\draw[rule,line width=0.35pt,rounded corners=1.4mm] (120.0,4) rectangle (170.0,26);
+\node[inner sep=0,text=ink,font=\lbl\bfseries] at (145.0,18) {Dein Swap};
+\node[inner sep=0,text=muted,font=\micro,text width=44mm,align=center] at (145.0,10.5) {was dir pro Nacht abgezogen wird};
+\end{tikzpicture}
+\par\vspace{5mm}
+{\color{muted}\small\raggedright Jedes Instrument hat zwei Sätze: \textbf{Swap long} für Buy und \textbf{Swap short}
+für Sell. Meist sind beide negativ, gelegentlich ist einer positiv – dann bekommst du etwas gutgeschrieben.
+Beide stehen im Info-Fenster des Instruments.\par}
+\hr
+\Htwo{Wann gebucht wird}
+\noindent \begin{tikzpicture}[x=1mm,y=1mm]
+\useasboundingbox (0,1) rectangle (170.0,29);
+\draw[greya,line width=0.5pt] (0,10) -- (170.0,10);
+\draw[ink,line width=1.2pt] (0,10) -- (108.0,10);
+\draw[sell,line width=1.2pt] (108.0,10) -- (108.0,22);
+\draw[ink,line width=1.2pt] (108.0,22) -- (170.0,22);
+\fill[sell] (108.0,10) circle (1.2);
+\node[anchor=east,inner sep=0,text=muted,font=\lbl] at (104.0,14) {den ganzen Tag: nichts};
+\node[anchor=west,inner sep=0,text=sell,font=\lbl\bfseries] at (112.0,26) {Tageswechsel: Swap wird gebucht};
+\node[anchor=west,inner sep=0,text=muted,font=\micro] at (112.0,19) {auf einen Schlag, nicht stundenweise};
+\node[anchor=west,inner sep=0,text=soft,font=\micro] at (0,4) {Wer vorher schließt, zahlt keinen Swap. Wer eine Minute später schließt, zahlt die ganze Nacht.};
+\end{tikzpicture}
+\par\vspace{3mm}
+\noindent \begin{tikzpicture}[x=1mm,y=1mm]
+\useasboundingbox (0,1) rectangle (170.0,31);
+\draw[greya,line width=0.5pt] (4,18) -- (166.0,18);
+\node[inner sep=0,text=ink,font=\lbl\bfseries] at (10.0,26) {Montag};
+\fill[ink] (10.0,18) circle (1.1);
+\node[inner sep=0,text=muted,font=\micro] at (10.0,10) {ein Swap};
+\draw[greya,line width=0.4pt,dash pattern=on 0.7mm off 0.7mm] (28.75,15) -- (28.75,21);
+\node[inner sep=0,text=ink,font=\lbl\bfseries] at (47.5,26) {Dienstag};
+\fill[ink] (47.5,18) circle (1.1);
+\node[inner sep=0,text=muted,font=\micro] at (47.5,10) {ein Swap};
+\draw[greya,line width=0.4pt,dash pattern=on 0.7mm off 0.7mm] (66.25,15) -- (66.25,21);
+\node[inner sep=0,text=ink,font=\lbl\bfseries] at (85.0,26) {Mittwoch};
+\fill[sell] (82.0,18) circle (1.1);
+\fill[sell] (85.0,18) circle (1.1);
+\fill[sell] (88.0,18) circle (1.1);
+\node[inner sep=0,text=sell,font=\micro] at (85.0,10) {dreifacher Swap};
+\draw[greya,line width=0.4pt,dash pattern=on 0.7mm off 0.7mm] (103.75,15) -- (103.75,21);
+\node[inner sep=0,text=ink,font=\lbl\bfseries] at (122.5,26) {Donnerstag};
+\fill[ink] (122.5,18) circle (1.1);
+\node[inner sep=0,text=muted,font=\micro] at (122.5,10) {ein Swap};
+\draw[greya,line width=0.4pt,dash pattern=on 0.7mm off 0.7mm] (141.25,15) -- (141.25,21);
+\node[inner sep=0,text=ink,font=\lbl\bfseries] at (160.0,26) {Freitag};
+\fill[ink] (160.0,18) circle (1.1);
+\node[inner sep=0,text=muted,font=\micro] at (160.0,10) {ein Swap};
+\node[inner sep=0,text=soft,font=\micro] at (85.0,3) {Jede Nacht, in der eine Position offen bleibt, wird ein Swap gebucht – am Mittwoch für das ganze Wochenende mit.};
+\end{tikzpicture}
+\par\vspace{3mm}
+\begin{merk}\textbf{Kurz gesagt.} Ein Trade, den du am selben Tag schließt, kostet keinen Swap. Ein Trade, den du
+über Wochen hältst, sammelt jede Nacht einen – und über Mittwoch gleich drei. Bei kleinen Kurszielen kann der
+Swap den Gewinn aufzehren. Er steht bei jeder Position in der Spalte \textbf{Swap} und ist im angezeigten
+Profit bereits enthalten.\end{merk}
+\clearpage
+\kicker{}{In der Plattform}
+\Hone{Wo du alles findest}
+\begin{minipage}{130mm}\lead{Dieselben Werte auf beiden Oberflächen, gleiche Begriffe. So sieht die
+Kontoübersicht aus – oben mobil, darunter am Desktop.}\end{minipage}
+\par\vspace{7mm}
+\noindent\begin{minipage}[t]{78mm}\vspace{0pt}\includegraphics[width=78mm]{panel.pdf}\end{minipage}\hfill
+\begin{minipage}[t]{86mm}\vspace{1mm}\raggedright
+\begin{enumerate}[label=\protect\pfn{\arabic*},leftmargin=6.6mm,labelsep=2.4mm,itemsep=3mm,topsep=0pt]
+\item {\bfseries Equity}\newline{\color{muted}\small Dein Konto in diesem Moment – Balance plus offene Positionen.}
+\item {\bfseries Profit/Losses}\newline{\color{muted}\small Was die offenen Positionen gerade wert sind. Schwebend, nicht fest.}
+\item {\bfseries Margin}\newline{\color{muted}\small Der als Sicherheit gebundene Teil.}
+\item {\bfseries Free}\newline{\color{muted}\small Was übrig bleibt – nur damit öffnest du Neues.}
+\item {\bfseries Level}\newline{\color{muted}\small Equity im Verhältnis zur Margin. Deine Gesundheitsanzeige.}
+\end{enumerate}
+\par\vspace{3mm}
+{\color{soft}\small Ganz oben steht die \textbf{Balance}. \textbf{Bonus} und \textbf{Credit} sind für
+den normalen Handel ohne Bedeutung.}
+\end{minipage}
+\hr
+\Htwo{Am Desktop steht dasselbe in einer Zeile}
+\noindent\includegraphics[width=170mm]{bar.pdf}
+\par\vspace{3mm}
+{\color{soft}\small Unterste Leiste, rechts – dauerhaft sichtbar. \textbf{Level} fehlt dort;
+es steht nur in der mobilen Ansicht.}
+\par\vspace{7mm}
+\noindent\begin{minipage}[t]{82mm}\vspace{0pt}\begin{soft}
+{\htwo\ls\color{muted}DESKTOP}\par\vspace{2.5mm}
+{\color{body}Kontoübersicht in der \textbf{untersten Leiste}. Offene Positionen direkt unter dem Chart –
+mit den Spalten \textbf{Swap} und \textbf{Commission}. Daten zu einem Instrument über das
+\textbf{Info-Zeichen} in der Kursliste.}\end{soft}\end{minipage}\hfill
+\begin{minipage}[t]{82mm}\vspace{0pt}\begin{soft}
+{\htwo\ls\color{muted}MOBILE}\par\vspace{2.5mm}
+{\color{body}\textbf{Info-Zeichen} oben rechts, dann Reiter \textbf{Balance} – die Ansicht oben.
+Reiter \textbf{Information} zeigt \textbf{Leverage} und \textbf{Stop out}. Positionen unter
+\textbf{Orders} → \textbf{Active}, aufgeklappt mit Swap und Margin.}\end{soft}\end{minipage}
+\clearpage
+\kicker{}{Spickzettel}
+\Hone{Alle Begriffe auf einen Blick}
+\begin{minipage}{130mm}\lead{Eine Zeile pro Begriff: was er bedeutet und wann er sich bewegt.}\end{minipage}
+\par\vspace{9mm}
+\begin{tabular}{@{}p{28mm}p{72mm}p{62mm}@{}}
+\hd{Begriff} & \hd{Was es ist} & \hd{Wann es sich ändert} \\
+\addlinespace[1.6mm]\midrule\addlinespace[2.4mm]
+\textbf{Balance} & Eingezahlt plus alles Abgeschlossene & Beim Schließen, Ein-/Auszahlung, Swap \\ \addlinespace[2mm]
+\textbf{Equity} & Balance plus offene Positionen & Mit jedem Kurs \\ \addlinespace[2mm]
+\textbf{Profit/Losses} & Wert der offenen Positionen, schwebend & Mit jedem Kurs \\ \addlinespace[2mm]
+\textbf{Margin} & Als Sicherheit gebundener Teil der Equity & Beim Öffnen und Schließen \\ \addlinespace[2mm]
+\textbf{Free} & Equity minus Margin – dein Spielraum & Mit jedem Kurs und jeder Position \\ \addlinespace[2mm]
+\textbf{Level} & Equity im Verhältnis zur Margin & Mit jedem Kurs und jeder Position \\ \addlinespace[2mm]
+\textbf{Leverage} & Wie viel Volumen pro Einheit Margin & Fest je Konto und Instrument \\ \addlinespace[2mm]
+\textbf{Swap} & Kosten fürs Halten über Nacht & Jede Nacht, dreifach am Mittwoch \\
+\end{tabular}
+\par\vspace{6mm}
+\begin{merk}\textbf{Drei Faustregeln.} Erstens: Equity ist die ehrliche Zahl, Balance die ruhige. Zweitens: Free ist
+dein Puffer – wird er klein, wird es eng. Drittens: Der Hebel entscheidet nicht, ob du gewinnst, sondern wie stark
+jede Bewegung wirkt.\end{merk}
+
+\end{document}
