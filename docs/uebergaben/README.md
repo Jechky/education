@@ -1,15 +1,17 @@
 # Übergaben zwischen Agenten
 
-Erreicht ein Agent seine Kontextgrenze (ca. 1500 gelesene Zeilen), hält er hier an
-einer sauberen Stelle fest, was ein Nachfolger wissen muss. Ablauf:
+Ein Agent übergibt bei ca. 60–80K Tokens Arbeitskontext oder wenn seine Teilaufgabe erledigt ist
+(Regeln: `CLAUDE.md`, Regel 2 und 3). Ablauf:
 
-1. Datei `docs/uebergaben/<aufgabe>.md` nach der Vorlage unten anlegen
-   (`<aufgabe>` kurz, klein, mit Bindestrichen, z. B. `kontogrundlagen-seite-4.md`).
-2. Nur die eigenen Dateien explizit stagen, committen, `git pull --rebase`, pushen.
+1. Datei `docs/uebergaben/<aufgabe>.md` nach der Vorlage anlegen
+   (`<aufgabe>` kurz, klein, mit Bindestrichen, z. B. `kontogrundlagen-seite-4`).
+2. Nur eigene Dateien explizit stagen, committen, `git pull --rebase`, pushen.
 3. Mit der Zeile `ÜBERGABE: docs/uebergaben/<aufgabe>.md` beenden.
 
-Der Nachfolger liest **zuerst** diese Datei (danach bei Bedarf `CLAUDE.md`/`HANDOFF.md`)
-und ergänzt sie, statt eine neue anzulegen, falls er selbst wieder übergeben muss.
+Der Nachfolger liest zuerst `CLAUDE.md`, dann die Übergabe, dann `git log -5`.
+Muss er selbst übergeben, ergänzt er die Datei, statt eine neue anzulegen.
+Die Datei hat **höchstens ca. 40 Zeilen** – nur das, was nicht schon in `CLAUDE.md`
+oder `HANDOFF.md` steht.
 
 ---
 
@@ -17,32 +19,26 @@ und ergänzt sie, statt eine neue anzulegen, falls er selbst wieder übergeben m
 
 ```markdown
 # Übergabe: <Aufgabe>
-
 Stand: <Datum> · Branch: <branch> · letzter Commit: <hash>
 
-## Auftrag (in eigenen Worten)
-<Was soll am Ende erreicht sein? 2–4 Sätze.>
+## Ziel
+<Was soll am Ende erreicht sein? 1–3 Sätze, prüfbar.>
 
-## Vorgaben / Rahmen
-- <Relevante Nutzervorgaben, Verweise auf HANDOFF.md-Abschnitte>
-- <Dateien, die nicht angefasst werden dürfen; parallel arbeitende Agenten>
+## Vorgaben
+<Nur Abweichendes/Aufgabenspezifisches; sonst nichts wiederholen.
+Z. B. HANDOFF.md-Abschnitte, Dateien, die nicht angefasst werden dürfen.>
 
 ## Erledigt
-- <Was> – `<datei>:<zeile>` – Commit `<hash>`
-- …
+- <Was> – `<datei>` – Commit `<hash>`
 
 ## Offen
-1. <Nächste offene Teilaufgabe>
+1. <Offene Teilaufgabe, ggf. mit bekanntem Problem>
 2. …
 
-## Bekannte Probleme / Risiken
-- <Build-Warnungen, unsichere Maße/Farben, offene Rückfragen an den Nutzer>
-
-## Nächster konkreter Schritt
-<Genau ein Schritt, mit Datei und Stelle, den der Nachfolger sofort ausführen kann.>
+## Nächster Schritt
+<Genau ein Schritt mit Datei und Stelle, sofort ausführbar.>
 
 ## Prüfkommandos
     scripts/build.sh <dokument>
     git log --oneline -5
-    <weitere Kommandos zur Kontrolle des Ergebnisses>
 ```
