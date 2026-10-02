@@ -134,9 +134,10 @@ Verworfen: Liberation Sans (Nutzer-Vorgabe #18, ersetzt durch #30/#33), Carlito/
 |---|---|---|
 | `#04273C` | Fensterhintergrund (Order-Fenster); auch Hintergrund der mobilen Kontoübersicht (blaues Design) | #39, #41, #155 |
 | `#001328` | Eingabefelder im Order-Fenster | #39, #41 |
-| `#0E5072` | aktiver Reiter; Hintergrund des aufgeklappten Type-Menüs; geschätzt auch als Kasten hinter „Equity“ in der Desktop-Leiste | #41, #47, #157 |
+| `#0E5072` | aktiver Reiter; Hintergrund des aufgeklappten Type-Menüs; Kasten hinter „Equity“ in der Desktop-Leiste (`.item-bg`, gemessen 02.10.2026) | #41, #47, #157, `originals/messungen/kontoleiste-desktop.json` |
+| `#051B3A` | Desktop-Kontoleiste (`<footer>`, blaues Design) – **nicht** `#04273C` | `originals/messungen/kontoleiste-desktop.json` |
 | `#53BC51` | Plattform-Grün (Button, „Estimated Profit“-Zahl, Balance-Wert mobil) | #39, #41, #155 |
-| `#A8BBBE` | Labels/Bezeichnungen (Order-Fenster und mobile Kontoübersicht) | #41, #155 |
+| `#A8BBBE` | Labels/Bezeichnungen (Order-Fenster, mobile Kontoübersicht, Desktop-Leiste) | #41, #155 |
 | `#64747F` | Preis-Badges im Order-Fenster | #41 |
 | `rgba(255,255,255,.1)` | Trennlinien im Type-Menü; Trennlinien (0,8 px, 10 % Weiß) in der Kontoübersicht | #47, #155 |
 | `#181818` | Desktop-Leiste im **grauen** Design (Screenshot des Nutzers) – wurde **nicht** verwendet | #157 |
@@ -196,7 +197,7 @@ Herkunft: Die Plattform zeigt im Order-Fenster pro Type ein festes Bild `assets/
 - Labels und Werte **14 px**; Überschrift **18 px**, Wert in **700** und Plattform-Grün; Spaltenbreite exakt hälftig.
 - Hintergrund `#04273C`, Labels `#A8BBBE`.
 - Fünf Nummern **links neben den Bezeichnungen**: Equity, Profit/Losses, Margin, Free, Level (#151).
-- Desktop-Leiste: im **blauen** Design nachgebaut, breiter gemacht, weil „Balance“ links abgeschnitten war (#157). **Geschätzt, nicht gemessen:** Kastenfarbe hinter „Equity“ (= `#0E5072`), Abstände zwischen den Gruppen (aus dem grauen Screenshot) (#157).
+- Desktop-Leiste: im **blauen** Design nachgebaut, breiter gemacht, weil „Balance“ links abgeschnitten war (#157). ~~Geschätzt: Kastenfarbe hinter „Equity“, Gruppenabstände~~ – seit 02.10.2026 **gemessen** und neu gebaut (Abschnitt 12).
 
 ---
 
@@ -324,7 +325,7 @@ Plattform-Fakten aus dem Referenzdokument: Balance, Equity, Free Margin, Margin 
    - Der Moment der Buchung: den ganzen Tag nichts, zum **Tageswechsel** alles auf einmal; wer eine Minute vorher schließt, zahlt nichts.
    - Aus der ersten Fassung (#147): Woche mit einem Punkt pro Nacht, **am Mittwoch drei**; Swap long, Swap short und wo der Swap bei der Position auftaucht. ⚠ Ob das nach dem Straffen (#149) noch alles drin ist, ist unklar.
    - Abweichung von der Skizze: **Beträge weggelassen**, stattdessen Wörter (Zahlenverbot). Rechenbeispiel als eigener Kasten auf Wunsch (#151). ⚠ Die Skizze selbst ist nicht im Export.
-6. **In der Plattform** – oben die **mobile Kontoübersicht** als Vektor-Nachbau (blaues Design, Maße 3.6) mit fünf Nummern (Equity, Profit/Losses, Margin, Free, Level) und „Konto jetzt“ statt einer Summe; darunter dieselben Werte als **Desktop-Leiste** (blaues Design, teils geschätzt). Unter der Leiste der Hinweis, dass **Level am Desktop fehlt** (#151, #157).
+6. **In der Plattform** – oben die **mobile Kontoübersicht** als Vektor-Nachbau (blaues Design, Maße 3.6) mit fünf Nummern (Equity, Profit/Losses, Margin, Free, Level) und „Konto jetzt“ statt einer Summe; darunter dieselben Werte als **Desktop-Leiste** (blaues Design, teils geschätzt). Unter der Leiste der Hinweis, dass **Level am Desktop fehlt** (#151, #157). ⚠ **Falsch** laut DOM-Messung vom 02.10.2026: Level steht auch am Desktop; Leiste und Hinweis sind korrigiert (Abschnitt 12).
 7. **Spickzettel** mit allen Begriffen. Er bekam eine eigene Seite, weil die Plattform-Seite sonst überladen war (#151).
 
 Geprüft (#147): null Rasterbilder, alle Schriften eingebettet; die geschützte Fassung liefert null echte Wörter, neun Rechte gesperrt. ⚠ Ob nach den Änderungen in #151–#157 die geschützte Fassung neu erzeugt wurde, steht nicht im Text.
@@ -332,8 +333,8 @@ Geprüft (#147): null Rasterbilder, alle Schriften eingebettet; die geschützte 
 ### 5.4 Offene Fragen in Dokument 2
 
 - **Blaues vs. graues Design:** Der Handy-Screenshot zeigte zuerst dunkelgrau, der Konsolenbericht Dunkelblau `#04273C` (#155). Ein weiterer Screenshot des Nutzers bestätigte Blau für Mobile (#156, #157). Die Desktop-Leiste im Screenshot ist **grau `#181818`** (#157) → die Plattform hat offenbar zwei Designs. Claude hat **beides im blauen Design** gebaut, damit es zum Order-Fenster passt. Falls Kunden hauptsächlich Grau sehen: „eine Zeile Änderung“ (#155). Der Nutzer fragte „wollen wir lieber die von Desktop nehmen??? die Leiste“ (#156); Claude nahm beide. ⚠ Keine abschließende Entscheidung des Nutzers.
-- **Geschätzte Werte in der Desktop-Leiste:** Kastenfarbe hinter „Equity“ und Gruppenabstände → mit dem Befehl aus #153 im blauen Desktop-Design messen (#157).
-- **Level fehlt am Desktop:** nur in der mobilen Ansicht vorhanden; als Hinweis unter der Leiste vermerkt (#157).
+- ~~**Geschätzte Werte in der Desktop-Leiste**~~ → erledigt: gemessen (02.10.2026, `originals/messungen/kontoleiste-desktop.json`), Leiste neu gebaut (Abschnitt 12).
+- ~~**Level fehlt am Desktop**~~ → **falsch**: Die Desktop-Leiste zeigt alle acht Felder (Balance, Equity, Profit/Losses, Margin, Free, Level, Bonus, Credit). Der Hinweis unter der Leiste ist korrigiert.
 - **Instrument-Info-Feld** (Swap long, Swap short, Contract size, Leverage) noch nicht gemessen → für echte Fenster auf der Swap- und der Hebel-Seite (#153, #155).
 - **Mobile, Reiter Information** (Leverage, Stop out): optional, ein Screenshot existiert schon (#153).
 - **Rechenbeispiel-Kasten** zur Swap-Skizze: optional, nur auf Wunsch (#151).
@@ -625,7 +626,7 @@ Erste, gröbere Fassung (Suche über den Text „NEW ORDER“ + „Place pending
 ### 8.1 Unmittelbar (dort hat der Chat aufgehört)
 
 1. **Dateien zurückholen** (Abschnitt 9). Ohne `.tex`/Skripte kann nichts gebaut werden. Fehlen sie, mit dem Nutzer klären, ob neu aufgebaut werden soll (dann diese Datei als Spezifikation nutzen).
-2. **Doku 2: Desktop-Leiste im blauen Design messen** (Befehl 7.1, Lauf 1) → Kastenfarbe hinter „Equity“ und Gruppenabstände auf gemessene Werte umstellen (#157).
+2. ~~**Doku 2: Desktop-Leiste im blauen Design messen**~~ → erledigt 02.10.2026 (Abschnitt 12).
 3. **Doku 2: Instrument-Info-Feld messen** (Befehl 7.1, Lauf 2) → echtes Fenster auf der Swap- und der Hebel-Seite (#153, #155). Zahlenverbot beachten: Beispielwerte durch Wörter bzw. neutrale Platzhalter ersetzen.
 4. Optional: **Mobile, Reiter Information** (Lauf 3).
 5. Nach jeder Textänderung: Druck-Prüfungen (6.1) und **Schutz neu aufspielen** (6.3), Pixelvergleich = 0, Extrakt ohne echte Wörter.
@@ -700,7 +701,7 @@ Im Repo liegt dafür bereits **`scripts/setup.sh`** (Commit `ecc5820`). Laut Com
 - **Badge mit Ziffern** widerspricht der Regel „keine Zahlen“, kommt aber vom Nutzer (#102/#103).
 - **Grün:** `#53BC51` ist das gemessene Plattform-Grün; im Dokument soll aber das „gedämpfte“ Grün aus dem zweiten Bild stehen (#89). Hex-Werte für Dokument-Grün und -Rot fehlen im Export.
 - **„Kurs jetzt“-Pille:** in #83 eingeführt, in #85 entfernt.
-- **Desktop-Design:** grau (`#181818`) im Screenshot, gebaut in Blau; Desktop-Werte teils geschätzt (#157).
+- **Desktop-Design:** grau (`#181818`) im Screenshot, gebaut in Blau; Desktop-Werte teils geschätzt (#157). Seit 02.10.2026 im blauen Design gemessen (`body.blue-theme`, Leiste `#051B3A`) und danach gebaut.
 - **Swaps:** Thema 6 verlangt die „Berechnung“, das Dokument ist aber zahlenfrei → Erklärung in Worten, Rechenbeispiel nur optional.
 - **Nutzer-Nachricht #118** ist abgeschnitten („die konkrete Ausführung kann bei …“).
 - **CSV-Tabelle mit Spalte „Auslöser“** (#119): Herkunft und genaue Position im Dokument sind im Export nicht sichtbar.
@@ -747,18 +748,30 @@ Stand 02.10.2026: Dokument 2 („Kontogrundlagen & Kosten“) ist aus `Kontogrun
 |---|---|
 | `dokumente/kontogrundlagen-kosten/Kontogrundlagen-Kosten.tex` | Quelle; gegenüber dem Original nur `Path=../../fonts/` und `\babelprovide[hyphenrules=english]{ngerman}` (ohne die Zeile trennt Seite 5 „zwi-schen“ statt „zwis-chen“) |
 | `…/panel.pdf` | mobile Kontoübersicht, Form-XObject `/Fm16` von Seite 6, 339,12 × 300 pt, gesetzt 78 mm |
-| `…/bar.pdf` | Desktop-Kontoleiste, Form-XObject `/Fm17` von Seite 6, 594 × 35,04 pt, gesetzt 170 mm |
+| `…/bar.pdf` | Desktop-Kontoleiste, gesetzt 170 mm. Ursprünglich Form-XObject `/Fm17` von Seite 6 (594 × 35,04 pt); seit 02.10.2026 aus `bar.tex` gebaut (siehe unten) |
 | `originals/Kontogrundlagen-Kosten_ORIGINAL.tex/.pdf` | unveränderte Uploads |
 
 **Befehle:** `scripts/build.sh kontogrundlagen-kosten` · `python3 tools/grafiken_aus_pdf.py kontogrundlagen-kosten` (ohne Argument: Pending Orders) · `python3 tools/pdf_vergleich.py --dokument kontogrundlagen-kosten`.
 
 **Vergleichsergebnis:** 7 Seiten; alle Seiten 0,0000 % abweichende Pixel (max. 0) bei 150 und 600 dpi; Inhaltsströme der Seiten und der beiden Formen bytegleich. 10 Schriften, alle eingebettet (IBM Plex Sans Light/Regular/SemiBold, Inter in Panel und Leiste); keine Rasterbilder.
 
-**Aufbau `bar.pdf`** (Grundlage für den geplanten Neubau nach Messdaten): Koordinaten in CSS-px, 1 px = 0,75 pt; im Dokument 1 px = 0,2146 mm.
+**Aufbau des alten `bar.pdf`** (bis 02.10.2026, überholt): Koordinaten in CSS-px, 1 px = 0,75 pt; im Dokument 1 px = 0,2146 mm.
 
 - Seite 792 × 46,72 px; Leiste 792 × 46 px (594 × 34,5 pt, im Dokument 170 × 9,87 mm), Radius 5 px, Fläche `#04273C`.
 - Schrift Inter Regular (4.001), 12,5 px (im Dokument 7,6 pt), Grundlinie 28 px unter der Oberkante, Glyphen auf ganze px gesetzt. Labels `#A8BBBE`, Werte Weiß.
 - Kasten hinter Equity: `#0E5072`, x 215–343, y 11–36 px (128 × 25 px), Radius 3 px – **geschätzt** (Abschnitt 3.6).
-- Felder (x Label / x Wert in px): Balance: 51 / 106 „dein Guthaben“ · Equity: 224 / 270 „Konto jetzt“ · Profit/Losses: 367 / 457 „schwebend“ · Margin: 549 / 599 „gebunden“ · Free: 682 / 717 „verfügbar“. Gruppenabstand ca. 24 px (**geschätzt**), rechter Rand ca. 16 px. Level fehlt (wie auf der Plattform).
+- Felder (x Label / x Wert in px): Balance: 51 / 106 „dein Guthaben“ · Equity: 224 / 270 „Konto jetzt“ · Profit/Losses: 367 / 457 „schwebend“ · Margin: 549 / 599 „gebunden“ · Free: 682 / 717 „verfügbar“. Gruppenabstand ca. 24 px (**geschätzt**), rechter Rand ca. 16 px. Level fehlte (⚠ falsch, auf der Plattform steht es).
 
-**Offen:** Desktop-Leiste nach echten Messdaten neu bauen (Befehl 7.1, Lauf 1); danach weicht Seite 6 erwartungsgemäß vom ORIGINAL-PDF ab. Geschützte Fassung nicht neu erzeugt.
+**Neubau der Desktop-Leiste nach DOM-Messung (02.10.2026)**
+
+- Messung: `originals/messungen/kontoleiste-desktop.json` (vom Nutzer, gekürzt um Default-Styles; Fenster 2040 × 986 px, dpr 1,25, `body.blue-theme`).
+- Gemessen: `<footer>` 34 px hoch, padding 8px 16px, Fläche `#051B3A` (nicht `#04273C`), eckig; Feldgruppe rechts (16 px vor dem Rand), gap 18 px; acht Felder **Balance, Equity, Profit/Losses, Margin, Free, Level, Bonus, Credit** – **Level ist am Desktop vorhanden**. Feld 18 px hoch, padding 2px 5px, Radius 3 px; nur Equity mit Fläche `#0E5072`. Inter 400, 12 px, line-height 14 px; Label `#A8BBBE`, Wert weiß; keine Trenner, Schatten oder Pseudo-Elemente.
+- Kein Leerzeichen zwischen Label und Wert: „Balance:“ ist ohne Leerzeichen 48,63 px breit (gemessen 48,6), mit Leerzeichen wären es 52,0 px. Der Betrag folgt direkt („Balance:€163,831.85“), Luft gibt nur das €. Nur beim Level-Text steckt ein Leerzeichen im Wert (93,4 + 3,4 = 96,8 px).
+- `dokumente/kontogrundlagen-kosten/bar.tex` (standalone, TikZ, Inter 4.0 aus `fonts-inter`) rechnet wie der Browser: Feldbreite = Label + Wert (XeTeX-Boxbreite, HarfBuzz wie Chrome) + 2 × 5 px, gap 18 px, Grundlinie 21,2 px unter der Oberkante (8 + 1,2 + 12). Probe mit den gemessenen Beträgen: Feldbreiten auf ≤ 0,2 px, Gruppe 993,7 statt 993,1 px.
+- Werte als Wörter wie in `panel.pdf`: dein Guthaben · Konto jetzt · schwebend · gebunden · verfügbar · Puffer · — · —, jeweils mit einem Wortleerzeichen nach dem Doppelpunkt (ohne € würde das Wort sonst am Doppelpunkt kleben).
+- Ausschnitt: 16 px Leiste links vor der Gruppe (Original: 1030,9 px), rechts 16 px; Bild 992,9 × 34 px. Im Dokument 170 × 5,82 mm, 1 px = 0,1712 mm, Schrift **5,8 pt** (ohne linken Rand wären es höchstens 5,9 pt).
+- `scripts/build.sh` baut Standalone-Quellen zuerst und legt `bar.pdf` neben die `.tex` (reproduzierbar, `SOURCE_DATE_EPOCH=0`; die Datei wird nur bei geändertem Inhalt ersetzt). `tools/grafiken_aus_pdf.py kontogrundlagen-kosten` extrahiert nur noch `panel.pdf`.
+- Text Seite 6: „Unterste Leiste, rechts – dauerhaft sichtbar. Dieselben Werte wie mobil, die **Balance** steht hier vorn mit in der Reihe.“ (vorher: „**Level** fehlt dort; es steht nur in der mobilen Ansicht.“).
+- Vergleich mit dem ORIGINAL-PDF: Seiten 1–5 und 7 pixelgleich (0,0000 %, Inhaltsströme identisch); Seite 6 weicht erwartungsgemäß ab. Seite 6 bricht ohne Trennungen um; die Zeile `hyphenrules=english` bleibt vorerst.
+
+**Offen:** Geschützte Fassung nicht neu erzeugt.

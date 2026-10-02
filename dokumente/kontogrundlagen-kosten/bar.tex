@@ -1,0 +1,85 @@
+% Desktop-Kontoleiste (unterste Leiste der Plattform, blaues Design) – Vektor-Nachbau.
+% Grundlage: DOM-Messung originals/messungen/kontoleiste-desktop.json (alle Maße in CSS-px).
+% scripts/build.sh baut diese Datei vor dem Dokument und legt bar.pdf daneben;
+% Seite 6 bindet sie mit \includegraphics[width=170mm]{bar.pdf} ein.
+%
+% Gemessen:
+%   <footer>  34 px hoch, padding 8px 16px, Fläche rgb(5,27,58), eckig, flex,
+%             justify space-between -> Feldgruppe rechts, 16 px vor dem Rand
+%   Gruppe    18 px hoch, flex, gap 18 px; Felder Balance … Credit
+%   .item     18 px hoch, padding 2px 5px, Radius 3 px; nur Equity (.item-bg)
+%             mit Fläche rgb(14,80,114)
+%   Schrift   Inter 400, 12 px, line-height 14 px; Label rgb(168,187,190), Wert weiß
+%   Grundlinie: Textbox 1,2 px unter der Feldoberkante + Ascent 12 px
+%             -> 8 + 1,2 + 12 = 21,2 px unter der Oberkante der Leiste
+% Feldbreite wie im Browser: Labelbreite + Wertbreite + 2 x 5 px. XeTeX formt Inter 4.0
+% mit HarfBuzz wie Chrome; die Labelbreiten treffen die Messung auf 0,1 px.
+%
+% Abweichung vom Original: Das Dokument ist zahlenfrei, die Werte sind daher Wörter
+% (dieselben wie in der mobilen Übersicht panel.pdf). Auf der Plattform steht der Betrag
+% ohne Leerzeichen direkt hinter dem Doppelpunkt („Balance:€163,831.85“, Luft gibt nur
+% das €). Ohne € steht vor dem Wort ein normales Wortleerzeichen.
+\documentclass[border=0pt]{standalone}
+\usepackage{fontspec}
+\usepackage{tikz}
+\setmainfont{Inter}% Inter 4.0 Regular (Paket fonts-inter), wie auf der Plattform
+
+\newlength\px \setlength\px{0.75bp}% 1 CSS-px
+\newcommand\schrift{\fontsize{9bp}{10.5bp}\selectfont}% 12 px / line-height 14 px
+\definecolor{leiste}{RGB}{5,27,58}%     footer
+\definecolor{feldbg}{RGB}{14,80,114}%   .item-bg (Equity)
+\definecolor{label}{RGB}{168,187,190}%  .color-grey-1
+
+\newcommand\links{16}% sichtbare Leiste links vor der Gruppe (px); auf der Plattform 1030,9 px
+\newcommand\rechts{16}% padding-right der Leiste (px)
+
+% \feld{<1 = mit Fläche>}{<Label>}{<Wert>}
+\newcommand\felder{%
+  \feld0{Balance:}{dein Guthaben}%
+  \feld1{Equity:}{Konto jetzt}%
+  \feld0{Profit/Losses:}{schwebend}%
+  \feld0{Margin:}{gebunden}%
+  \feld0{Free:}{verfügbar}%
+  \feld0{Level:}{Puffer}%
+  \feld0{Bonus:}{—}%
+  \feld0{Credit:}{—}%
+}
+
+% Erster Durchlauf (zeichnenfalse) misst und merkt sich die Breiten; im Bild selbst
+% misst \settowidth nichts (TikZ schaltet dort auf \nullfont).
+\newif\ifzeichnen
+\newlength\fx \newlength\lw \newlength\vw \newlength\fw \newlength\leer \newlength\gw
+\newcount\feldnr
+\newcommand\feld[3]{%
+  \advance\feldnr by 1
+  \ifzeichnen
+    \lw=\csname lw\the\feldnr\endcsname\relax
+    \vw=\csname vw\the\feldnr\endcsname\relax
+  \else
+    \settowidth\lw{\schrift #2}%
+    \settowidth\vw{\schrift #3}%
+    \expandafter\xdef\csname lw\the\feldnr\endcsname{\the\lw}%
+    \expandafter\xdef\csname vw\the\feldnr\endcsname{\the\vw}%
+  \fi
+  \setlength\fw{\dimexpr 10\px+\lw+\leer+\vw\relax}%
+  \ifzeichnen
+    \ifnum#1=1 \fill[feldbg,rounded corners=3\px] (\fx,-8\px) rectangle ++(\fw,-18\px);\fi
+    \node[anchor=base west,inner sep=0,text=label] at (\fx+5\px,-21.2\px) {#2};
+    \node[anchor=base west,inner sep=0,text=white] at (\fx+5\px+\lw+\leer,-21.2\px) {#3};
+  \fi
+  \advance\fx by \dimexpr\fw+18\px\relax
+}
+
+% Erster Durchlauf: nur messen -> Gruppenbreite
+\settowidth\leer{\schrift\ }%
+\setlength\fx{0pt}\feldnr=0 \zeichnenfalse\felder
+\setlength\gw{\dimexpr\fx-18\px\relax}%
+\typeout{KONTOLEISTE: Gruppe \the\gw, Bild \the\dimexpr(\links\px+\gw+\rechts\px)\relax}
+
+\begin{document}%
+\begin{tikzpicture}[font=\schrift]
+  \path[use as bounding box] (0,0) rectangle (\links\px+\gw+\rechts\px,-34\px);
+  \fill[leiste] (0,0) rectangle (\links\px+\gw+\rechts\px,-34\px);
+  \setlength\fx{\links\px}\feldnr=0 \zeichnentrue\felder
+\end{tikzpicture}%
+\end{document}

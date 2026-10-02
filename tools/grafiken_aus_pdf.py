@@ -13,7 +13,8 @@ ihre gesetzte Breite und schreibt sie als eigenständige einseitige PDFs:
 
 Bekannte Dokumente (Seite, Dateiname -> gesetzte Breite):
   pending-orders          Seite 6: fenster-bl.pdf 80 mm, type-menu.pdf 46 mm
-  kontogrundlagen-kosten  Seite 6: panel.pdf 78 mm, bar.pdf 170 mm
+  kontogrundlagen-kosten  Seite 6: panel.pdf 78 mm
+  (bar.pdf wird nicht mehr extrahiert, sondern aus bar.tex gebaut – nach DOM-Messung)
 
 Aufruf (aus dem Repo-Wurzelverzeichnis):
   python3 tools/grafiken_aus_pdf.py [DOKUMENT] [--quelle ORIGINAL.pdf] [--ziel ORDNER]
@@ -31,7 +32,7 @@ DOKUMENTE = {
     "pending-orders": ("Pending-Orders-Guide_ORIGINAL.pdf", 6,
                        {"fenster-bl.pdf": 80.0, "type-menu.pdf": 46.0}),
     "kontogrundlagen-kosten": ("Kontogrundlagen-Kosten_ORIGINAL.pdf", 6,
-                               {"panel.pdf": 78.0, "bar.pdf": 170.0}),
+                               {"panel.pdf": 78.0}),
 }
 
 
