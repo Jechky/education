@@ -11,8 +11,8 @@
 %                      Metals 160 (aufgeklappt, margin-bottom 4 px), Commodities 350,
 %                      ETFs 382
 %     Pfeil auf/ab     NICHT gemessen (kein Knoten, kein ::after) – WEGGELASSEN
-%   li > a (Zeile)     x0, 304 x 30, y 192 / 224 / 256, padding 6px 8px, Radius 3 px,
-%                      Fläche rgba(14,80,114,0.1), Inter 400, 12 px / line-height 18 px
+%   li > a (Zeile)     x0, 304 x 30, y 192 / 224 / 256 (Abstand 32), padding 6px 8px,
+%                      Radius 3 px, Fläche rgba(14,80,114,0.1), Inter 400, 12 px / line-height 18 px
 %     i.icon-star      x8 y+8 14 x 14, icomoon 14 px, U+E916, rgb(91,106,130)
 %                      – nur, wenn icons.tikz \iconstar enthält (derzeit nicht; die Font
 %                      liegt nicht im Repo), sonst leer
@@ -25,9 +25,11 @@
 %                      (color-green-main)
 %     i.icon-information x278,6 y+8,5, 14 x 14, icomoon 14 px, U+E93A, rgb(34,100,134)
 %                      -> \iconinfo aus icons.tikz
-%   Zwischen Palladium (Unterkante 286) und Commodities (350) liegen 64 px, für die die
-%   Messung keine Knoten enthält (vermutlich Platinum und Silver, nicht belegt): die
-%   Fläche bleibt leer.
+%   Platinum (y 288) und Silver (y 320): NICHT gemessen – der Messbefehl hat je Kategorie
+%   nur die ersten drei li erfasst. Belegt durch das HTML des Nutzers
+%   (docs/plattform/dom-kursliste-instrument-info.md: Copper, Gold, Palladium, Platinum,
+%   Silver) und die 64 px bis Commodities (350) = 2 x 32 px; nach dem gemessenen
+%   Zeilenmuster ergänzt, Kurse weiß (color00, neutraler Zustand; die Farbe wechselt live).
 %
 % Grundlinien (wie bar.tex): Oberkante der Textbox + Ascent 12 px (Chrome rundet Ascent/
 % Descent in Gerätepixeln: 12 + 3,2 = 15,2 px). Zeilen: Textbox y+6,8 gemessen -> y+18,8.
@@ -101,6 +103,8 @@
   \instrument{192}{Copper}{white}
   \instrument{224}{Gold}{gruen}
   \instrument{256}{Palladium}{gruen}
+  \instrument{288}{Platinum}{white}% nach Zeilenmuster ergänzt (s. o.)
+  \instrument{320}{Silver}{white}%   nach Zeilenmuster ergänzt (s. o.)
   \kategorie{350}{Commodities}
   \kategorie{382}{ETFs}
   \ifmarken
