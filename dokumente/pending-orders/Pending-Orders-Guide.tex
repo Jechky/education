@@ -1,171 +1,81 @@
 \documentclass[10pt,a4paper]{article}
-\usepackage[a4paper,top=19mm,bottom=18mm,left=20mm,right=20mm,footskip=9mm]{geometry}
-\usepackage{fontspec,xcolor,tikz,tcolorbox,tabularx,booktabs,enumitem,fancyhdr,microtype}
-\usepackage{graphicx}
+% Gestaltung: gemeinsamer Akademie-Stil (Schriften, Farben, Kopf-/Fusszeile, Kaesten, Tabellen)
+\usepackage{../stil/akademie}
 \special{dvipdfmx:config z 0}   % ohne Kompression, maximale Druckkompatibilitaet
-\usetikzlibrary{arrows.meta,shadows.blur,fit}
-\tcbuselibrary{skins}
-\usepackage[ngerman,provide=*]{babel}
 \usepackage{hyperref}\hypersetup{hidelinks,pdftitle={Pending Orders – Standard Tier},pdfsubject={Buy Limit, Sell Limit, Buy Stop, Sell Stop}}
-
-\setmainfont{IBMPlexSans-Regular.otf}[Path=../../fonts/,
-  BoldFont={IBMPlexSans-SemiBold.otf}, ItalicFont={IBMPlexSans-Italic.otf},
-  BoldItalicFont={IBMPlexSans-SemiBoldItalic.otf}]
-\newfontfamily\light{IBMPlexSans-Light.otf}[Path=../../fonts/,
-  BoldFont={IBMPlexSans-Regular.otf}, ItalicFont={IBMPlexSans-LightItalic.otf}]
-\newfontfamily\mono{IBMPlexMono-Regular.otf}[Path=../../fonts/,
-  BoldFont={IBMPlexMono-SemiBold.otf}]
-\newcommand{\num}[1]{{\mono #1}}
-
-% ---- Farben -------------------------------------------------------------
-\definecolor{ink}{HTML}{14161A}    \definecolor{body}{HTML}{3C4249}
-\definecolor{muted}{HTML}{6D757E}  \definecolor{soft}{HTML}{9AA1AA}
-\definecolor{rule}{HTML}{E2E5E9}   \definecolor{greya}{HTML}{A8AEB6}
-\definecolor{buy}{HTML}{0E7A4E}    \definecolor{sell}{HTML}{B23A2E}
-\definecolor{buytint}{HTML}{E9F4EE} \definecolor{selltint}{HTML}{FAEDEB}
-\definecolor{paper}{HTML}{F7F8F9}
-\definecolor{pfbg}{HTML}{001328}\definecolor{pfgruen}{HTML}{0E7A4E}
-\definecolor{pfgrau}{HTML}{97A5B4}\definecolor{pfrot}{HTML}{B23A2E}
-\definecolor{pfgrey}{HTML}{6A6A6A}
-% Deckblatt (Navy-Band aus cover-bg.pdf)
-\definecolor{cvkicker}{HTML}{9FB3C2}\definecolor{cvsub}{HTML}{D5DEE6}
-\definecolor{cvpill}{HTML}{5E7F95}\definecolor{cvpilltext}{HTML}{C9D6E0}
-
-% ---- Typografische Skala (1,25) -----------------------------------------
-\newcommand{\display}{\light\fontsize{30}{34}\selectfont}
-\newcommand{\hone}{\fontsize{19}{23}\selectfont\bfseries}
-\newcommand{\htwo}{\fontsize{8}{11}\selectfont\bfseries}
-\newcommand{\hthree}{\fontsize{12}{15}\selectfont\bfseries}
-\newcommand{\leadf}{\light\fontsize{11.5}{17}\selectfont}
-\renewcommand{\small}{\fontsize{8.6}{12.4}\selectfont}
-\newcommand{\lbl}{\fontsize{7.6}{10}\selectfont}
-\newcommand{\micro}{\fontsize{7}{9}\selectfont}
-\newcommand{\fine}{\fontsize{7.4}{9.2}\selectfont}
-\newcommand{\ls}{\addfontfeatures{LetterSpace=14}}
-\normalsize\fontsize{9.4}{14}\selectfont
-\color{body}\setlength{\parindent}{0pt}\setlength{\parskip}{0pt}
-\setlength{\emergencystretch}{2em}
-\hyphenpenalty=400\relax
-% schmale Spalten und Kaesten: Flattersatz ohne Worttrennung
-\newcommand{\flatter}{\raggedright\hyphenpenalty=10000\relax\exhyphenpenalty=10000\relax}
-
-% ---- Bausteine ----------------------------------------------------------
-\newcommand{\kicker}[2]{{\htwo\ls\color{muted}\MakeUppercase{#2}\par}%
-  \vspace{2mm}{\color{rule}\rule{\linewidth}{0.4pt}}\par\vspace{5.5mm}}
-\newcommand{\Hone}[1]{{\hone\color{ink}#1\par}\vspace{3.5mm}}
-\newcommand{\Htwo}[1]{{\htwo\ls\color{muted}\MakeUppercase{#1}\par}\vspace{4mm}}
-\newcommand{\lead}[1]{{\leadf\color{body}\flatter #1\par}}
-\newcommand{\hr}{\par\vspace{7mm}{\color{rule}\rule{\linewidth}{0.4pt}}\par\vspace{6mm}}
-\newcommand{\hd}[1]{{\micro\bfseries\ls\color{soft}\MakeUppercase{#1}}}
-\tikzset{cnum/.style={circle,fill=ink,text=white,inner sep=0,minimum size=3.2mm,
-  font=\bfseries\fontsize{5.6}{6}\selectfont}}
-\newcommand{\cn}[1]{\tikz[baseline=-0.65ex]\node[cnum]{#1};}
-\newcommand{\pflab}{\fontsize{7}{8.5}\selectfont}
-\usetikzlibrary{calc}
-\input{charts.tikz}
-
-\newtcolorbox{merk}{enhanced,colback=paper,colframe=paper,boxrule=0pt,arc=0pt,
-  borderline west={2pt}{0pt}{ink},left=5mm,right=5mm,top=3.5mm,bottom=3.5mm,boxsep=0pt,
-  before skip=6mm,after skip=0pt,fontupper=\small\color{body}}
-\newtcolorbox{prule}[1]{enhanced,colback=white,colframe=rule,boxrule=0.4pt,arc=1mm,
-  borderline west={2pt}{0pt}{#1},left=4mm,right=4mm,top=2.6mm,bottom=2.6mm,boxsep=0pt,
-  before skip=2.2mm,after skip=0pt,fontupper=\small\color{body}}
-\newtcolorbox{soft}{enhanced,colback=paper,colframe=paper,boxrule=0pt,arc=1.5mm,
-  left=5mm,right=5mm,top=4mm,bottom=4mm,boxsep=0pt,before skip=0pt,after skip=0pt,
-  before upper={\flatter}}
+\akdokument{Pending Orders}\akreihe{Trading-Grundlagen}
 
 % ---- Raster der Ordertyp-Seiten -----------------------------------------
-% Links eine Randspalte fuer die Zwischenueberschriften, rechts der Text.
-% Chart, Absaetze und Beispiel beginnen alle an derselben Kante.
-\newlength{\labw}\setlength{\labw}{37mm}
-\newlength{\gutw}\setlength{\gutw}{5mm}
-\newlength{\colw}\setlength{\colw}{\dimexpr170mm-\labw-\gutw\relax}
+% Links eine Randspalte fuer die Zwischenueberschriften (\labw, akademie.sty),
+% rechts der Text. Chart, Absaetze und Beispiel beginnen alle an derselben Kante.
 \def\cu{0.6mm}% Massstab der grossen Charts: 1 Einheit = 1 px des Plattformbilds
-\newcommand{\mlab}[1]{{\htwo\ls\color{muted}\MakeUppercase{#1}}}
+\input{charts.tikz}
 % Einleitung mit fester Hoehe (drei Zeilen), damit alle vier Ordertyp-Seiten
 % an derselben Stelle weiterlaufen
-\newcommand{\leadfix}[1]{\begin{minipage}[t][46pt][t]{140mm}\lead{#1}\end{minipage}\par\vspace{9mm}}
-\newcommand{\typkopf}[3]{{\hthree\color{#1}#2}\hfill{\fine\color{muted}#3}\par\vspace{1.4mm}
-  {\color{rule}\rule{\linewidth}{0.4pt}}\par\vspace{5mm}}
-\newcommand{\chartzeile}[2]{\noindent
-  \begin{minipage}[t]{\labw}\vspace{0pt}\flatter #1\end{minipage}\hspace{\gutw}%
-  \begin{minipage}[t]{\colw}\vspace{0pt}#2\end{minipage}\par\vspace{6mm}}
-% \leavevmode vor der Farbe: Die erste Zeile ist dann die Bezugslinie beider
-% Minipages, Randlabel und Text stehen auf derselben Grundlinie.
-\newcommand{\abschnitt}[2]{\noindent
-  \begin{minipage}[t]{\labw}\flatter\leavevmode\mlab{#1}\end{minipage}\hspace{\gutw}%
-  \begin{minipage}[t]{\colw}\flatter\leavevmode\color{body}#2\end{minipage}\par}
-% Beispiel-Kasten: Flaeche ragt in den Zwischenraum, der Text steht an der Textkante
-\newtcolorbox{bsp}{enhanced,colback=paper,colframe=paper,boxrule=0pt,arc=1.5mm,
-  left=4mm,right=4mm,top=3.6mm,bottom=3.8mm,boxsep=0pt,before skip=0pt,after skip=0pt,
-  fontupper=\color{body},before upper={\flatter}}
-\newcommand{\beispiel}[1]{\noindent
-  \begin{minipage}[t]{\labw}\vspace{0pt}\vspace{3.6mm}\vspace{1.6pt}\mlab{Beispiel}\end{minipage}%
-  \hspace{\dimexpr\gutw-4mm\relax}%
-  \begin{minipage}[t]{\dimexpr\colw+4mm\relax}\vspace{0pt}\begin{bsp}#1\end{bsp}\end{minipage}\par}
+\newcommand{\leadfix}[1]{\begin{minipage}[t][52pt][t]{140mm}\lead{#1}\end{minipage}\par\akv{2}}
+\newcommand{\typkopf}[3]{{\hthree\color{#1}#2}\hfill{\sffamily\fine\color{muted}#3}\par\vspace{1.4mm}
+  {\color{rule}\rule{\linewidth}{0.4pt}}\par\akv{1}}
+% Karte (Seite 2) mit Label, Titel, Text; beide Karten gleich hoch
+\newcommand{\orderbox}[3]{\begin{minipage}[t]{79mm}\vspace{0pt}
+  \begin{akkarte}[height=42mm]\kartenkopf{#1}{#2}{\color{body}#3\par}\end{akkarte}\end{minipage}}
+% Drei Punkte nebeneinander (Seite 2)
+\newcommand{\punkt}[2]{\begin{minipage}[t]{51mm}\vspace{0pt}\flatter
+  \ztitel{#1}\par\vspace{1.2mm}{\color{body}\small #2\par}\end{minipage}}
+% Chartreihe der Uebersicht (Seite 7): Kopf wie \typkopf, darunter der Chart
+\newcommand{\spick}[4]{\begin{minipage}[t]{38mm}\vspace{0pt}\flatter
+  {\sffamily\color{#2}\bfseries #3}\par\vspace{0.6mm}{\sffamily\fine\color{muted}#4}\par\vspace{1.6mm}
+  {\color{rule}\rule{\linewidth}{0.4pt}}\par\vspace{\SPICKCHART}\centering
+  \begin{tikzpicture}[x=0.2184mm,y=0.2184mm]\useasboundingbox (0,0) rectangle (174.0,96.0);#1\end{tikzpicture}
+  \end{minipage}}
 
 % Abstaende der Uebersicht (Seite 7) und der Loeschschritte (Seite 9)
-\newcommand{\SPICKCHART}{8mm}% Linie unter dem Kopf bis zum Chart
-\newcommand{\SPICKTAB}{24mm}% Chartreihe bis Tabelle
-\newcommand{\TROW}{4.2mm}% Luft ueber und unter jeder Tabellenlinie
-\newcommand{\TABMERK}{14mm}% Tabelle bis Kasten (zusaetzlich zu before skip)
-\newcommand{\MERKPAR}{3.4mm}% Absatzabstand im Kasten
-\newcommand{\LOESCHSEP}{7.5mm}% Abstand der Schritte auf Seite 9
+\newcommand{\SPICKCHART}{7mm}% Linie unter dem Kopf bis zum Chart
+\newcommand{\SPICKTAB}{14mm}% Bildunterschrift bis Tabelle
+\newcommand{\TABMERK}{6mm}% Tabelle bis Kasten (zusaetzlich zu before skip)
+\newcommand{\MERKPAR}{3.2mm}% Absatzabstand im Kasten
+\newcommand{\LOESCHSEP}{7mm}% Abstand der Schritte auf Seite 9
 
-\pagestyle{fancy}\fancyhf{}\renewcommand{\headrulewidth}{0pt}
-
-\fancyfoot[L]{\micro\color{soft}\ls PENDING ORDERS · STANDARD TIER}
 \begin{document}
-% ==== DECKBLATT: Hintergrund cover-bg.pdf (aus cover-bg.svg), Inhalte absolut in mm ====
-% Platzhalter-Koordinaten aus cover.svg (y von oben, hier negativ). Baselines:
-% Versalhoehe (0,698 em) mittig in der Platzhalter-Box; Kicker oben buendig
-% auf 20,5 mm (gleiche Starthoehe wie die Innenseiten).
-% Charts: linke Kante des Chart-Inhalts buendig mit der Textkante (x=20 bzw. 117,5).
+% ==== DECKBLATT: weisses Blatt, Inhalte absolut in mm (y von oben, negativ) ====
+% Charts: linke Kante des Chart-Inhalts buendig mit der Textkante (x=22 bzw. 119,5).
 % Abgezogen wird die linke Inhaltskante aus charts.tikz (bs/sl: 11.373, bl/ss: 14 px);
 % bei Aenderungen an charts.tikz diese Werte anpassen.
 % remember picture: zwei XeLaTeX-Laeufe noetig.
-\thispagestyle{empty}
+\thispagestyle{akdeckblatt}
 \noindent\begin{tikzpicture}[remember picture,overlay,x=1mm,y=1mm,every node/.style={outer sep=0pt}]
 \begin{scope}[shift={(current page.north west)}]
-\node[anchor=north west,inner sep=0] at (0,0) {\includegraphics[width=210mm,height=297mm]{cover-bg.pdf}};
-\node[anchor=base west,inner sep=0,text=cvkicker,font=\htwo\ls] at (20,-22.463) {TRADING-GRUNDLAGEN};
-\node[anchor=base west,inner sep=0,text=white,font=\display] at (20,-41.18) {Pending Orders};
-\node[anchor=base west,inner sep=0,text=cvsub] at (20,-60.673) {\parbox[t]{124mm}{\leadf\raggedright Die vier Ordertypen auf einen Blick – damit Sie Einstieg, Auslösepreis und Richtung richtig kombinieren.\par}};
-\draw[cvpill,line width=0.4pt,rounded corners=1.6mm] (20,-75) rectangle (98,-81.5);
-\node[anchor=base,inner sep=0,text=cvpilltext,font=\micro\bfseries\ls] at (59,-79.109) {4 ORDERTYPEN. 1 KLARE ENTSCHEIDUNGSLOGIK.};
-\node[anchor=base,inner sep=0,text=muted,font=\lbl\bfseries\ls] at (105,-115.932) {AT PRICE ÜBER DEM AKTUELLEN KURS};
-\node[anchor=base,inner sep=0,text=ink,font=\lbl\bfseries\ls] at (105,-188.932) {KURS JETZT};
-\node[anchor=base,inner sep=0,text=muted,font=\lbl\bfseries\ls] at (105,-260.932) {AT PRICE UNTER DEM AKTUELLEN KURS};
-\begin{scope}[shift={(20-11.373*72.5/174,-163)},scale=72.5/174] \chartbsmini \end{scope}
-\node[anchor=base west,inner sep=0,text=buy,font=\hthree] at (20,-171.472) {BUY STOP};
-\node[anchor=base west,inner sep=0,text=muted,font=\small] at (20,-177.305) {Ausbruch nach oben};
-\begin{scope}[shift={(117.5-11.373*72.5/174,-163)},scale=72.5/174] \chartslmini \end{scope}
-\node[anchor=base west,inner sep=0,text=sell,font=\hthree] at (117.5,-171.472) {SELL LIMIT};
-\node[anchor=base west,inner sep=0,text=muted,font=\small] at (117.5,-177.305) {teurer verkaufen};
-\begin{scope}[shift={(20-14*72.5/174,-252)},scale=72.5/174] \chartblmini \end{scope}
-\node[anchor=base west,inner sep=0,text=buy,font=\hthree] at (20,-200.972) {BUY LIMIT};
-\node[anchor=base west,inner sep=0,text=muted,font=\small] at (20,-206.805) {günstiger kaufen};
-\begin{scope}[shift={(117.5-14*72.5/174,-252)},scale=72.5/174] \chartssmini \end{scope}
-\node[anchor=base west,inner sep=0,text=sell,font=\hthree] at (117.5,-200.972) {SELL STOP};
-\node[anchor=base west,inner sep=0,text=muted,font=\small] at (117.5,-206.805) {Ausbruch nach unten};
-\node[anchor=base west,inner sep=0,text=soft,font=\micro\ls] at (20,-277.359) {PENDING ORDERS};
-\node[anchor=base east,inner sep=0,text=soft,font=\micro\ls] at (190,-277.359) {STANDARD TIER};
+% Titel, Untertitel, Leitsatz
+\node[anchor=base west,inner sep=0,text=ink,font=\display] at (22,-58) {Pending Orders};
+\node[anchor=north west,inner sep=0,text=body] at (22,-66) {\parbox[t]{118mm}{\fontsize{12.5}{18}\selectfont\raggedright Die vier Ordertypen auf einen Blick – damit Sie Einstieg, Auslösepreis und Richtung richtig kombinieren.\par}};
+\node[anchor=base west,inner sep=0,text=muted,font=\htwo\ls] at (22,-88) {4 ORDERTYPEN. 1 KLARE ENTSCHEIDUNGSLOGIK.};
+\draw[rule,line width=0.4pt] (22,-95) -- (188,-95);
+% Die vier Ordertypen um den Nullpunkt „Kurs jetzt“
+\node[anchor=base,inner sep=0,text=muted,font=\htwo\ls] at (105,-119) {AT PRICE ÜBER DEM AKTUELLEN KURS};
+\begin{scope}[shift={(22-11.373*72.5/174,-163)},scale=72.5/174] \chartbsmini \end{scope}
+\node[anchor=base west,inner sep=0,text=buy,font=\hthree] at (22,-171.5) {BUY STOP};
+\node[anchor=base west,inner sep=0,text=muted,font=\lbl] at (22,-176.8) {Ausbruch nach oben};
+\begin{scope}[shift={(119.5-11.373*72.5/174,-163)},scale=72.5/174] \chartslmini \end{scope}
+\node[anchor=base west,inner sep=0,text=sell,font=\hthree] at (119.5,-171.5) {SELL LIMIT};
+\node[anchor=base west,inner sep=0,text=muted,font=\lbl] at (119.5,-176.8) {teurer verkaufen};
+\draw[ink,line width=0.5pt] (22,-188) -- (188,-188);
+\node[anchor=base,inner sep=0,inner xsep=2.5mm,fill=white,text=ink,font=\htwo\ls] at (105,-188.9) {KURS JETZT};
+\begin{scope}[shift={(22-14*72.5/174,-252)},scale=72.5/174] \chartblmini \end{scope}
+\node[anchor=base west,inner sep=0,text=buy,font=\hthree] at (22,-201) {BUY LIMIT};
+\node[anchor=base west,inner sep=0,text=muted,font=\lbl] at (22,-206.3) {günstiger kaufen};
+\begin{scope}[shift={(119.5-14*72.5/174,-252)},scale=72.5/174] \chartssmini \end{scope}
+\node[anchor=base west,inner sep=0,text=sell,font=\hthree] at (119.5,-201) {SELL STOP};
+\node[anchor=base west,inner sep=0,text=muted,font=\lbl] at (119.5,-206.3) {Ausbruch nach unten};
+\node[anchor=base,inner sep=0,text=muted,font=\htwo\ls] at (105,-261) {AT PRICE UNTER DEM AKTUELLEN KURS};
 \end{scope}
 \end{tikzpicture}
 \clearpage
 % =========================================================================
-\kicker{}{Fundament}
+\kapitel{Fundament}
 \Hone{Was eine Pending Order ist}
 \begin{minipage}{140mm}\lead{Mit einer Pending Order kaufen oder verkaufen Sie nicht sofort.
 Sie legen vorab fest, bei welchem Kurs dies geschehen soll, und die Plattform wartet, bis der
 Markt diesen Kurs erreicht.}\end{minipage}
-\par\vspace{8mm}
-\newcommand{\orderbox}[3]{\begin{minipage}[t]{82mm}\vspace{0pt}\begin{tcolorbox}[enhanced,
-  colback=paper,colframe=paper,boxrule=0pt,arc=1.5mm,left=5mm,right=5mm,top=4mm,bottom=4mm,
-  boxsep=0pt,before skip=0pt,after skip=0pt,before upper={\flatter},height=44mm]
-{\htwo\ls\color{muted}#1}\par\vspace{2mm}
-{\hthree\color{ink}#2}\par\vspace{1.5mm}
-{\color{body}#3\par}\end{tcolorbox}\end{minipage}}
+\par\akv{2}
 \noindent\orderbox{NEW MARKET ORDER}{Sofortige Order}{Im Reiter New Market Order kaufen oder
 verkaufen Sie unmittelbar, und zwar zu dem Kurs, der in diesem Moment gilt. Einen bestimmten
 Kurs können Sie hier nicht festlegen.}\hfill
@@ -176,20 +86,20 @@ wird erst dann ausgelöst. Bis dahin wird weder gekauft noch verkauft.}
 \Htwo{Der aktuelle Kurs ist Ihr Nullpunkt}
 {\color{body}\flatter Jeder Wert, den Sie bei At price eintragen, liegt entweder über oder unter
 dem aktuellen Kurs. Der aktuelle Kurs dient folglich als Nullpunkt: Aus der Lage Ihres At price
-ergibt sich, welchen Ordertyp Sie benötigen.\par}\vspace{6mm}
+ergibt sich, welchen Ordertyp Sie benötigen.\par}\akv{1}
 \noindent\begin{tikzpicture}[x=1mm,y=1mm,font=\lbl]
-\fill[buytint,opacity=0.55] (0,0.9) rectangle (169.5,24.0);
-\fill[selltint,opacity=0.55] (0,-24.0) rectangle (169.5,-0.9);
-\draw[ink,line width=0.9pt] (0,0) -- (169.5,0);
-\node[anchor=west,inner sep=0,font=\hthree] at (9,0) {\colorbox{white}{\;Kurs jetzt\;}};
-\draw[greya,line width=0.8pt,dash pattern=on 1.4mm off 0.9mm,-{Stealth[length=2.2mm,width=1.9mm]}] (14,4) -- (14,20.5);
-\node[anchor=west,inner sep=0,font=\hthree] at (24,15.8) {At price ÜBER dem Kurs};
-\node[anchor=west,inner sep=0,text=muted] at (24,10.6) {Der Kurs muss STEIGEN, damit die Order ausgelöst wird.};
-\draw[greya,line width=0.8pt,dash pattern=on 1.4mm off 0.9mm,-{Stealth[length=2.2mm,width=1.9mm]}] (14,-4) -- (14,-20.5);
-\node[anchor=west,inner sep=0,font=\hthree] at (24,-10.6) {At price UNTER dem Kurs};
-\node[anchor=west,inner sep=0,text=muted] at (24,-15.8) {Der Kurs muss FALLEN, damit die Order ausgelöst wird.};
+\useasboundingbox (0,-22) rectangle (166,22);
+\draw[ink,line width=0.7pt] (0,0) -- (166,0);
+\node[anchor=west,inner sep=0,font=\hthree,text=ink] at (9,0) {\colorbox{white}{\;Kurs jetzt\;}};
+\draw[greya,line width=0.8pt,dash pattern=on 1.4mm off 0.9mm,-{Stealth[length=2.2mm,width=1.9mm]}] (14,4) -- (14,19);
+\node[anchor=west,inner sep=0,font=\hthree,text=ink] at (24,14.4) {At price ÜBER dem Kurs};
+\node[anchor=west,inner sep=0,text=body] at (24,9.6) {Der Kurs muss STEIGEN, damit die Order ausgelöst wird.};
+\draw[greya,line width=0.8pt,dash pattern=on 1.4mm off 0.9mm,-{Stealth[length=2.2mm,width=1.9mm]}] (14,-4) -- (14,-19);
+\node[anchor=west,inner sep=0,font=\hthree,text=ink] at (24,-9.6) {At price UNTER dem Kurs};
+\node[anchor=west,inner sep=0,text=body] at (24,-14.4) {Der Kurs muss FALLEN, damit die Order ausgelöst wird.};
 \end{tikzpicture}
-\par\vspace{5mm}
+\abb{Der aktuelle Kurs als Nullpunkt: Ihr At price liegt darüber oder darunter}
+\par\akv{2}
 {\color{body}\flatter Möchten Sie kaufen, handelt es sich bei einem At price unter dem Kurs um
 ein \textcolor{buy}{\bfseries Buy Limit}, bei einem At price über dem Kurs um ein
 \textcolor{buy}{\bfseries Buy Stop}. Möchten Sie verkaufen, handelt es sich bei einem At price
@@ -197,8 +107,6 @@ ein \textcolor{buy}{\bfseries Buy Limit}, bei einem At price über dem Kurs um e
 um ein \textcolor{sell}{\bfseries Sell Stop}.\par}
 \hr
 \Htwo{Was eine Pending Order im Ablauf verändert}
-\newcommand{\punkt}[2]{\begin{minipage}[t]{53mm}\vspace{0pt}\flatter
-{\bfseries\color{ink}#1}\par\vspace{1.2mm}{\color{muted}\small #2\par}\end{minipage}}
 \noindent\punkt{Die Order wartet ohne Ihr Zutun.}{Sie müssen die Plattform nicht beobachten.
 Die Order bleibt auch nachts bestehen und wird ausgelöst, sobald der Markt Ihren
 Aktivierungspunkt erreicht.}\hfill
@@ -210,7 +118,7 @@ Aktivierungspunkt ausgelöst. Erreicht der Markt ihn nicht, wird sie nicht ausge
 wartet weiter.}
 \clearpage
 % =========================================================================
-\kicker{}{Die Limit-Typen}
+\kapitel{Die Limit-Typen}
 \Hone{Limit wartet auf einen günstigeren Kurs}
 \leadfix{Bei Buy Limit und Sell Limit warten Sie auf einen Kurs, der für Sie günstiger ist als
 der aktuelle. Diesen Wert tragen Sie bei At price ein; er ist Ihr Aktivierungspunkt. Bis der
@@ -231,15 +139,16 @@ Type einen Ordertyp wählen.\par}}{%
 \node[anchor=west,inner sep=1.5,fill=white,text=pfgrey] at (176,84) {\pflab Kurs jetzt};
 \chartbl
 \node[anchor=south,inner sep=1.5,text=pfgruen] at (158.5,99) {\pflab Richtung danach};
-\end{tikzpicture}}
+\end{tikzpicture}
+\abb{Buy Limit: At price unter dem aktuellen Kurs, Take-Profit über dem At price}}
 \abschnitt{Was es ist}{Ein Buy Limit ist eine Pending Order zum Kaufen. Die Order wird
 ausgelöst, sobald der Kurs auf Ihren Aktivierungspunkt fällt. Ihr At price liegt folglich
-immer \textbf{unter} dem aktuellen Kurs.}\vspace{4.5mm}
+immer \textbf{unter} dem aktuellen Kurs.}\akv{1.5}
 \abschnitt{Typischer Einsatz}{Ein Buy Limit wird typischerweise eingesetzt, wenn Sie mit
 steigenden Kursen rechnen, zuvor jedoch einen Rückgang erwarten. In diesem Fall kaufen Sie zu
-einem niedrigeren Kurs als dem aktuellen.}\vspace{4.5mm}
+einem niedrigeren Kurs als dem aktuellen.}\akv{1.5}
 \abschnitt{Take-Profit}{Ihr Take-Profit liegt \textbf{über} dem At price, denn bei einem Buy
-entsteht ein Gewinn, wenn der Kurs steigt.}\vspace{6mm}
+entsteht ein Gewinn, wenn der Kurs steigt.}\akv{2}
 \beispiel{Angenommen, Instrument XY pendelt seit einigen Tagen in einem engen Bereich. Sie
 gehen davon aus, dass der Kurs bis an den unteren Rand dieses Bereichs fällt und anschließend
 wieder steigt. Entsprechend wählen Sie Buy Limit, hinterlegen bei At price einen Wert am
@@ -249,7 +158,7 @@ weiter, bis der Kurs Ihren Aktivierungspunkt doch noch erreicht oder bis Sie die
 löschen.}
 \clearpage
 % -------------------------------------------------------------------------
-\kicker{}{Die Limit-Typen}
+\kapitel{Die Limit-Typen}
 \Hone{Sell Limit ist das Gegenstück zu Buy Limit}
 \leadfix{Beim Verkaufen gilt ein höherer Kurs als günstig, da Sie zu einem höheren Preis
 verkaufen. Folglich verhält sich bei Sell Limit alles spiegelbildlich zu Buy Limit.}
@@ -266,15 +175,16 @@ verkaufen. Folglich verhält sich bei Sell Limit alles spiegelbildlich zu Buy Li
 \node[anchor=west,inner sep=1.5,fill=white,text=pfgrey] at (176,16) {\pflab Kurs jetzt};
 \chartsl
 \node[anchor=north,inner sep=1.5,text=pfrot] at (158.5,3) {\pflab Richtung danach};
-\end{tikzpicture}}
+\end{tikzpicture}
+\abb{Sell Limit: At price über dem aktuellen Kurs, Take-Profit unter dem At price}}
 \abschnitt{Was es ist}{Ein Sell Limit ist eine Pending Order zum Verkaufen. Die Order wird
 ausgelöst, sobald der Kurs auf Ihren Aktivierungspunkt steigt. Ihr At price liegt folglich
-immer \textbf{über} dem aktuellen Kurs.}\vspace{4.5mm}
+immer \textbf{über} dem aktuellen Kurs.}\akv{1.5}
 \abschnitt{Typischer Einsatz}{Ein Sell Limit wird typischerweise eingesetzt, wenn Sie mit
 fallenden Kursen rechnen, zuvor jedoch einen Anstieg erwarten. In diesem Fall verkaufen Sie zu
-einem höheren Kurs als dem aktuellen.}\vspace{4.5mm}
+einem höheren Kurs als dem aktuellen.}\akv{1.5}
 \abschnitt{Take-Profit}{Ihr Take-Profit liegt \textbf{unter} dem At price, denn bei einem
-Sell entsteht ein Gewinn, wenn der Kurs fällt.}\vspace{6mm}
+Sell entsteht ein Gewinn, wenn der Kurs fällt.}\akv{2}
 \beispiel{Angenommen, Instrument XY pendelt seit einigen Tagen in einem engen Bereich. Sie
 gehen davon aus, dass der Kurs noch einmal bis an den oberen Rand dieses Bereichs steigt und
 anschließend wieder fällt. Entsprechend wählen Sie Sell Limit, hinterlegen bei At price einen
@@ -284,7 +194,7 @@ und wartet weiter, bis der Kurs Ihren Aktivierungspunkt doch noch erreicht oder 
 Order löschen.}
 \clearpage
 % =========================================================================
-\kicker{}{Die Stop-Typen}
+\kapitel{Die Stop-Typen}
 \Hone{Stop wartet auf die Bewegung}
 \leadfix{Bei Buy Stop und Sell Stop warten Sie nicht auf einen günstigeren Kurs, sondern auf
 eine Bewegung. Die Order wird erst ausgelöst, wenn sich der Markt bereits in die erwartete
@@ -302,16 +212,17 @@ Richtung bewegt. Bis dahin geschieht nichts.}
 \node[anchor=west,inner sep=1.5,fill=white,text=pfgrey] at (176,16) {\pflab Kurs jetzt};
 \chartbs
 \node[anchor=north,inner sep=1.5,fill=white,text=pfgruen] at (158.5,3) {\pflab Richtung danach};
-\end{tikzpicture}}
+\end{tikzpicture}
+\abb{Buy Stop: At price über dem aktuellen Kurs, Take-Profit über dem At price}}
 \abschnitt{Was es ist}{Ein Buy Stop ist eine Pending Order zum Kaufen. Die Order wird
 ausgelöst, sobald der Kurs auf Ihren Aktivierungspunkt steigt. Ihr At price liegt folglich
-immer \textbf{über} dem aktuellen Kurs.}\vspace{4.5mm}
+immer \textbf{über} dem aktuellen Kurs.}\akv{1.5}
 \abschnitt{Typischer Einsatz}{Ein Buy Stop wird typischerweise eingesetzt, wenn Sie erst
 kaufen möchten, sobald der Kurs nach oben in Bewegung kommt. Sie kaufen in diesem Fall zu
 einem höheren Kurs als dem aktuellen, jedoch erst, nachdem der erwartete Anstieg eingesetzt
-hat.}\vspace{4.5mm}
+hat.}\akv{1.5}
 \abschnitt{Take-Profit}{Ihr Take-Profit liegt \textbf{über} dem At price, denn bei einem Buy
-entsteht ein Gewinn, wenn der Kurs steigt.}\vspace{6mm}
+entsteht ein Gewinn, wenn der Kurs steigt.}\akv{2}
 \beispiel{Angenommen, Instrument XY pendelt seit einigen Tagen in einem engen Bereich. Sie
 gehen davon aus, dass der Kurs demnächst nach oben aus diesem Bereich ausbricht und danach
 weiter steigt. Entsprechend wählen Sie Buy Stop, hinterlegen bei At price einen Wert knapp
@@ -321,7 +232,7 @@ sie nicht ausgelöst und wartet weiter, bis der Kurs Ihren Aktivierungspunkt doc
 erreicht oder bis Sie die Order löschen.}
 \clearpage
 % -------------------------------------------------------------------------
-\kicker{}{Die Stop-Typen}
+\kapitel{Die Stop-Typen}
 \Hone{Sell Stop ist das Gegenstück zu Buy Stop}
 \leadfix{Hier warten Sie auf eine Bewegung nach unten statt nach oben. Folglich verhält sich
 bei Sell Stop alles spiegelbildlich zu Buy Stop.}
@@ -338,16 +249,17 @@ bei Sell Stop alles spiegelbildlich zu Buy Stop.}
 \node[anchor=west,inner sep=1.5,fill=white,text=pfgrey] at (176,84) {\pflab Kurs jetzt};
 \chartss
 \node[anchor=south,inner sep=1.5,fill=white,text=pfrot] at (158.5,99) {\pflab Richtung danach};
-\end{tikzpicture}}
+\end{tikzpicture}
+\abb{Sell Stop: At price unter dem aktuellen Kurs, Take-Profit unter dem At price}}
 \abschnitt{Was es ist}{Ein Sell Stop ist eine Pending Order zum Verkaufen. Die Order wird
 ausgelöst, sobald der Kurs auf Ihren Aktivierungspunkt fällt. Ihr At price liegt folglich
-immer \textbf{unter} dem aktuellen Kurs.}\vspace{4.5mm}
+immer \textbf{unter} dem aktuellen Kurs.}\akv{1.5}
 \abschnitt{Typischer Einsatz}{Ein Sell Stop wird typischerweise eingesetzt, wenn Sie erst
 verkaufen möchten, sobald der Kurs nach unten in Bewegung kommt. Sie verkaufen in diesem Fall
 zu einem niedrigeren Kurs als dem aktuellen, jedoch erst, nachdem der erwartete Rückgang
-eingesetzt hat.}\vspace{4.5mm}
+eingesetzt hat.}\akv{1.5}
 \abschnitt{Take-Profit}{Ihr Take-Profit liegt \textbf{unter} dem At price, denn bei einem
-Sell entsteht ein Gewinn, wenn der Kurs fällt.}\vspace{6mm}
+Sell entsteht ein Gewinn, wenn der Kurs fällt.}\akv{2}
 \beispiel{Angenommen, Instrument XY pendelt seit einigen Tagen in einem engen Bereich. Sie
 gehen davon aus, dass der Kurs demnächst nach unten aus diesem Bereich ausbricht und danach
 weiter fällt. Entsprechend wählen Sie Sell Stop, hinterlegen bei At price einen Wert knapp
@@ -357,34 +269,30 @@ wird sie nicht ausgelöst und wartet weiter, bis der Kurs Ihren Aktivierungspunk
 erreicht oder bis Sie die Order löschen.}
 \clearpage
 % =========================================================================
-\kicker{}{Übersicht}
+\kapitel{Übersicht}
 \Hone{Alle vier Ordertypen im Vergleich}
 \leadfix{Diese Übersicht stellt die vier Ordertypen nebeneinander. So wird
 unmittelbar erkennbar, worin sie übereinstimmen und worin sie sich unterscheiden.}
-% Chartreihe: Kopf wie \typkopf (Name, Kurzbeschreibung, Linie), darunter der Chart
-\newcommand{\spick}[4]{\begin{minipage}[t]{38.75mm}\vspace{0pt}\flatter
-{\color{#2}\bfseries #3}\par\vspace{0.6mm}{\fine\color{muted}#4}\par\vspace{1.6mm}
-{\color{rule}\rule{\linewidth}{0.4pt}}\par\vspace{\SPICKCHART}\centering
-\begin{tikzpicture}[x=0.2227mm,y=0.2227mm]\useasboundingbox (0,0) rectangle (174.0,96.0);#1\end{tikzpicture}
-\end{minipage}}
 \noindent\spick{\chartblmini}{buy}{BUY LIMIT}{günstiger kaufen}\hfill
 \spick{\chartslmini}{sell}{SELL LIMIT}{teurer verkaufen}\hfill
 \spick{\chartbsmini}{buy}{BUY STOP}{Ausbruch nach oben}\hfill
 \spick{\chartssmini}{sell}{SELL STOP}{Ausbruch nach unten}
+\abb{Die vier Ordertypen, wie die Plattform sie bei Type zeigt}
 \par\vspace{\SPICKTAB}
-% Tabelle: Zeilen durch Haarlinien getrennt
-\newcommand{\trule}{\noalign{\vspace{\TROW}{\color{rule}\hrule height 0.4pt}\vspace{\TROW}}}
-\begin{tabular}{@{}p{37mm}p{30mm}p{29mm}p{16mm}p{40mm}@{}}
+% Tabelle im booktabs-Stil: Linien oben und unten, Kopf serifenlos halbfett
+\noindent{\aktabelle\renewcommand{\arraystretch}{1.7}\setlength{\tabcolsep}{4pt}%
+\begin{tabular}{@{}p{36mm}p{31mm}p{29mm}p{17mm}p{41mm}@{}}
+\aktoprule
 \hd{Type} & \hd{At price liegt} & \hd{Auslöser} & \hd{Dann} & \hd{Take-Profit liegt} \\
-\noalign{\vspace{1.6mm}{\color{ink}\hrule height 0.4pt}\vspace{\TROW}}
-\textcolor{buy}{\bfseries BUY LIMIT} & unter dem Kurs & Kurs fällt & BUY & \textbf{über} dem At price \\ \trule
-\textcolor{sell}{\bfseries SELL LIMIT} & über dem Kurs & Kurs steigt & SELL & \textbf{unter} dem At price \\ \trule
-\textcolor{buy}{\bfseries BUY STOP} & über dem Kurs & Kurs steigt & BUY & \textbf{über} dem At price \\ \trule
+\midrule
+\textcolor{buy}{\bfseries BUY LIMIT} & unter dem Kurs & Kurs fällt & BUY & \textbf{über} dem At price \\
+\textcolor{sell}{\bfseries SELL LIMIT} & über dem Kurs & Kurs steigt & SELL & \textbf{unter} dem At price \\
+\textcolor{buy}{\bfseries BUY STOP} & über dem Kurs & Kurs steigt & BUY & \textbf{über} dem At price \\
 \textcolor{sell}{\bfseries SELL STOP} & unter dem Kurs & Kurs fällt & SELL & \textbf{unter} dem At price \\
-\noalign{\vspace{\TROW}{\color{rule}\hrule height 0.4pt}}
-\end{tabular}
+\akbottomrule
+\end{tabular}}
 \par\vspace{\TABMERK}
-\begin{merk}{\bfseries\color{ink}Drei Grundregeln}\par\vspace{\MERKPAR}
+\begin{merk}\ztitel{Drei Grundregeln}\par\vspace{\MERKPAR}
 Legen Sie zuerst fest, ob Sie kaufen oder verkaufen möchten, und anschließend, ob Ihr At price
 über oder unter dem aktuellen Kurs liegen soll. Aus diesen beiden Entscheidungen ergibt sich
 der Ordertyp.\par\vspace{\MERKPAR}
@@ -394,64 +302,71 @@ Der Take-Profit liegt stets dort, wo ein Gewinn entsteht: bei einem Buy über de
 einem Sell darunter.\end{merk}
 \clearpage
 % =========================================================================
-\kicker{}{In der Plattform}
+\kapitel{In der Plattform}
 \Hone{Der Reiter „New Pending Order“}
 \begin{minipage}{140mm}\lead{Links sehen Sie das Order-Fenster, rechts die fünf Stellen, auf
 die es ankommt. Die übrigen Felder können Sie zunächst unverändert lassen.}\end{minipage}
-\par\vspace{9mm}
+\par\akv{2}
 \noindent\begin{minipage}[t]{80mm}\vspace{0pt}
-\includegraphics[width=80mm]{fenster-bl.pdf}\end{minipage}\hfill
-\begin{minipage}[t]{83mm}\vspace{-1mm}\flatter
-\begin{enumerate}[label=\protect\cn{\arabic*},leftmargin=7mm,labelsep=3mm,itemsep=3.4mm,topsep=0pt]
-\item {\bfseries New Pending Order}\newline{\color{muted}\small Wählen Sie den rechten Reiter,
+\includegraphics[width=80mm]{fenster-bl.pdf}
+\abb{Das Order-Fenster im Reiter New Pending Order}\end{minipage}\hfill
+\begin{minipage}[t]{80mm}\vspace{-1mm}\flatter
+\begin{enumerate}[label=\protect\cn{\arabic*},leftmargin=7mm,labelsep=3mm,itemsep=3.2mm,topsep=0pt]
+\item \ztitel{New Pending Order}\newline{\color{body}\small Wählen Sie den rechten Reiter,
 denn nur hier lässt sich ein Aktivierungspunkt hinterlegen, auf den die Plattform wartet. Über
 den linken Reiter kaufen oder verkaufen Sie hingegen sofort.}
-\item {\bfseries Type}\newline{\color{muted}\small Hier wählen Sie einen der vier Ordertypen:
+\item \ztitel{Type}\newline{\color{body}\small Hier wählen Sie einen der vier Ordertypen:
 Buy Limit, Sell Limit, Buy Stop oder Sell Stop. Das Bild im Fenster passt sich Ihrer Auswahl an.}
-\item {\bfseries At price}\newline{\color{muted}\small Tragen Sie hier Ihren Aktivierungspunkt
+\item \ztitel{At price}\newline{\color{body}\small Tragen Sie hier Ihren Aktivierungspunkt
 ein, also den Wert, bei dem die Pending Order ausgelöst wird. Bei Buy Limit liegt er unter dem
 aktuellen Kurs.}
-\item {\bfseries Set Take-Profit}\newline{\color{muted}\small Aktivieren Sie Set Take-Profit und
+\item \ztitel{Set Take-Profit}\newline{\color{body}\small Aktivieren Sie Set Take-Profit und
 tragen Sie Ihr Gewinnziel ein. Darunter zeigt die Plattform unter Estimated Profit an, welcher
 Gewinn sich daraus ergäbe.}
-\item {\bfseries Place pending order}\newline{\color{muted}\small Mit diesem Button erteilen Sie
+\item \ztitel{Place pending order}\newline{\color{body}\small Mit diesem Button erteilen Sie
 die Order. Von diesem Moment an wartet sie, bis der Markt Ihren Aktivierungspunkt erreicht.}
 \end{enumerate}\end{minipage}
 \hr
 \Htwo{Das Type-Menü und die Regel dahinter}
 \noindent\begin{minipage}[t]{46mm}\vspace{0pt}
-\includegraphics[width=46mm]{type-menu.pdf}\par\vspace{2.5mm}
-{\color{soft}\lbl\flatter Ein Klick auf \textbf{Type} öffnet genau diese vier Ordertypen.\par}
+\includegraphics[width=46mm]{type-menu.pdf}
+\abb{Ein Klick auf \textbf{Type} öffnet genau diese vier Ordertypen.}
 \end{minipage}\hfill
-\begin{minipage}[t]{118mm}\vspace{0pt}
-\begin{prule}{buy}\textbf{BUY LIMIT}\hfill At price {\bfseries unter} dem Kurs\qquad Take-Profit {\bfseries über} At price\end{prule}
-\begin{prule}{sell}\textbf{SELL LIMIT}\hfill At price {\bfseries über} dem Kurs\qquad Take-Profit {\bfseries unter} At price\end{prule}
-\begin{prule}{buy}\textbf{BUY STOP}\hfill At price {\bfseries über} dem Kurs\qquad Take-Profit {\bfseries über} At price\end{prule}
-\begin{prule}{sell}\textbf{SELL STOP}\hfill At price {\bfseries unter} dem Kurs\qquad Take-Profit {\bfseries unter} At price\end{prule}
+\begin{minipage}[t]{114mm}\vspace{0pt}
+% Regel je Ordertyp: Zeilen durch Haarlinien getrennt, Linien oben und unten
+{\aktabelle\renewcommand{\arraystretch}{1.75}\setlength{\tabcolsep}{4pt}%
+\begin{tabular}{@{}p{26mm}p{42mm}p{40mm}@{}}
+\aktoprule
+\textcolor{buy}{\bfseries BUY LIMIT} & At price {\bfseries unter} dem Kurs & Take-Profit {\bfseries über} At price \\ \akhaar
+\textcolor{sell}{\bfseries SELL LIMIT} & At price {\bfseries über} dem Kurs & Take-Profit {\bfseries unter} At price \\ \akhaar
+\textcolor{buy}{\bfseries BUY STOP} & At price {\bfseries über} dem Kurs & Take-Profit {\bfseries über} At price \\ \akhaar
+\textcolor{sell}{\bfseries SELL STOP} & At price {\bfseries unter} dem Kurs & Take-Profit {\bfseries unter} At price \\
+\akbottomrule
+\end{tabular}}
 \end{minipage}
-\par\vspace{3.5mm}{\color{muted}\small\flatter Entspricht der Wert nicht dieser Regel, bleibt
+\par\akv{1}{\color{body}\small\flatter Entspricht der Wert nicht dieser Regel, bleibt
 der grüne Button gesperrt. Beim Wechsel des Ordertyps füllt die Plattform den Wert automatisch
 auf der passenden Seite vor. Prüfen Sie ihn dennoch, bevor Sie die Order erteilen.\par}
 \clearpage
 % -------------------------------------------------------------------------
-\kicker{}{In der Plattform}
+\kapitel{In der Plattform}
 \Hone{Eine wartende Order löschen}
 \begin{minipage}{140mm}\lead{Solange eine Pending Order noch nicht ausgelöst wurde, können Sie
 sie jederzeit löschen. Die folgenden Schritte beziehen sich auf die mobile Ansicht der
 Plattform.}\end{minipage}
-\par\vspace{9mm}
+\par\akv{2}
 \noindent\begin{minipage}{140mm}\flatter
 \begin{enumerate}[label=\protect\cn{\arabic*},leftmargin=7mm,labelsep=3mm,itemsep=\LOESCHSEP,topsep=0pt]
-\item {\bfseries\color{ink}Orders}\newline{\color{body}Tippen Sie unten in der Navigation auf
+\item \ztitel{Orders}\newline{\color{body}Tippen Sie unten in der Navigation auf
 Orders; es ist das dritte Symbol.}
-\item {\bfseries\color{ink}Pending}\newline{\color{body}Wählen Sie oben den Reiter Pending. Dort
+\item \ztitel{Pending}\newline{\color{body}Wählen Sie oben den Reiter Pending. Dort
 sind die Orders aufgeführt, die noch auf ihren Aktivierungspunkt warten.}
-\item {\bfseries\color{ink}Ihre Order}\newline{\color{body}Tippen Sie die Order an, die Sie
+\item \ztitel{Ihre Order}\newline{\color{body}Tippen Sie die Order an, die Sie
 löschen möchten. Die Order klappt daraufhin auf und zeigt weitere Angaben, darunter T/P mit
 Ihrem Take-Profit. Unterhalb davon erscheinen die Buttons Delete und Modify Order.}
-\item {\bfseries\color{ink}Delete}\newline{\color{body}Tippen Sie auf Delete. Die Plattform löscht
+\item \ztitel{Delete}\newline{\color{body}Tippen Sie auf Delete. Die Plattform löscht
 die Order nicht sofort, sondern bittet zunächst um eine Bestätigung.}
-\item {\bfseries\color{ink}Rückfrage bestätigen}\newline{\color{body}Bestätigen Sie die Rückfrage
+\item \ztitel{Rückfrage bestätigen}\newline{\color{body}Bestätigen Sie die Rückfrage
 mit Delete. Mit Cancel brechen Sie den Vorgang ab, und die Order wartet weiter.}
 \end{enumerate}\end{minipage}
 \hr
@@ -460,7 +375,7 @@ mit Delete. Mit Cancel brechen Sie den Vorgang ab, und die Order wartet weiter.}
 Die Plattform spricht dort von close order; gemeint ist jedoch Ihre wartende Order. Beim
 Löschen wird weder gekauft noch verkauft. Anschließend wird die Order auch dann nicht mehr
 ausgelöst, wenn der Kurs Ihren Aktivierungspunkt später erreicht.\end{minipage}
-\par\vspace{4mm}
+\par\akv{1}
 \begin{merk}\textbf{Der gesamte Ablauf.} Sie wählen unter \textbf{Type} einen der vier
 Ordertypen, tragen bei \textbf{At price} Ihren Aktivierungspunkt ein und legen bei
 \textbf{Set Take-Profit} Ihr Gewinnziel fest. Mit \textbf{Place pending order} erteilen Sie die

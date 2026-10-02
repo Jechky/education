@@ -1,0 +1,151 @@
+% akademie.sty – gemeinsamer Stil der Schulungs-PDFs („Akademie-Blatt“)
+% Einbinden aus dokumente/<name>/: \usepackage{../stil/akademie}
+% Schriften: Source Serif 4 (Fliesstext, Lead) und Source Sans 3 (Titel, Kicker,
+% Tabellen, Beschriftungen, Kopf-/Fusszeile); beide OFL, Dateien unter fonts/.
+% Plattform-Nachbauten (Inter) bleiben davon unberuehrt.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{akademie}[2026/10/02 Akademie-Stil der Schulungs-PDFs]
+
+\RequirePackage[a4paper,top=29mm,bottom=22mm,left=22mm,right=22mm,
+  headheight=16pt,headsep=6mm,footskip=10mm]{geometry}
+\RequirePackage{fontspec,xcolor,colortbl,tikz,tcolorbox,tabularx,booktabs,enumitem,
+  fancyhdr,microtype,graphicx}
+\usetikzlibrary{arrows.meta,calc,fit}
+\tcbuselibrary{skins}
+\RequirePackage[ngerman,provide=*]{babel}
+% Textextraktion/Suche: tatsaechliche Zeichen statt Glyphnamen (Bindestrich der Source-Schriften)
+\XeTeXgenerateactualtext=1
+
+% ---- Schriften ----------------------------------------------------------
+\providecommand{\akfontpath}{../../fonts/}
+\setmainfont{SourceSerif4-Regular.otf}[Path=\akfontpath,
+  BoldFont={SourceSerif4-Semibold.otf}, ItalicFont={SourceSerif4-It.otf},
+  BoldItalicFont={SourceSerif4-SemiboldIt.otf}]
+\setsansfont{SourceSans3-Regular.otf}[Path=\akfontpath,
+  BoldFont={SourceSans3-Semibold.otf}, ItalicFont={SourceSans3-It.otf},
+  BoldItalicFont={SourceSans3-SemiboldIt.otf}]
+\newfontfamily\aklight{SourceSans3-Light.otf}[Path=\akfontpath,
+  BoldFont={SourceSans3-Regular.otf}]
+% Tabellenziffern (gleich breit) fuer Tabellen
+\newfontfamily\aktab{SourceSans3-Regular.otf}[Path=\akfontpath,
+  BoldFont={SourceSans3-Semibold.otf}, Numbers={Monospaced,Lining}]
+
+% ---- Farben (PO-Farben) -------------------------------------------------
+\definecolor{ink}{HTML}{14161A}    \definecolor{body}{HTML}{2E333A}
+\definecolor{muted}{HTML}{6D757E}  \definecolor{soft}{HTML}{9AA1AA}
+\definecolor{rule}{HTML}{D9DDE2}   \definecolor{greya}{HTML}{A8AEB6}
+\definecolor{buy}{HTML}{0E7A4E}    \definecolor{sell}{HTML}{B23A2E}
+\definecolor{buytint}{HTML}{E9F4EE} \definecolor{selltint}{HTML}{FAEDEB}
+\definecolor{paper}{HTML}{F7F8F9}
+% Chart-Farben der Plattformbilder
+\definecolor{pfbg}{HTML}{001328}\definecolor{pfgruen}{HTML}{0E7A4E}
+\definecolor{pfgrau}{HTML}{97A5B4}\definecolor{pfrot}{HTML}{B23A2E}
+\definecolor{pfgrey}{HTML}{6A6A6A}
+
+% ---- Grundlinie und Groessen --------------------------------------------
+% Grundlinienmass 14 pt; vertikale Abstaende als Vielfache davon (\akv{n} = n/2 Grundlinien).
+\newlength{\akbase}\setlength{\akbase}{14pt}
+\newcommand{\akv}[1]{\vspace{\dimexpr#1\akbase/2\relax}}
+\newcommand{\display}{\sffamily\bfseries\fontsize{38}{42}\selectfont}% Deckblatt-Titel
+\newcommand{\hone}{\sffamily\bfseries\fontsize{20}{24}\selectfont}% Abschnittstitel
+\newcommand{\hthree}{\sffamily\bfseries\fontsize{11.5}{14}\selectfont}% Zwischentitel
+\newcommand{\htwo}{\sffamily\bfseries\fontsize{7.5}{10}\selectfont}% Kicker/Labels (mit \ls, Versalien)
+\newcommand{\leadf}{\fontsize{11.5}{17}\selectfont}% Lead (Serif)
+\renewcommand{\small}{\fontsize{8.7}{12.4}\selectfont}
+\newcommand{\lbl}{\sffamily\fontsize{7.8}{10}\selectfont}% Beschriftungen in Grafiken
+\newcommand{\micro}{\sffamily\fontsize{7}{9}\selectfont}
+\newcommand{\fine}{\fontsize{7.8}{10}\selectfont}% Kleintext (Familie vom Kontext)
+\newcommand{\pflab}{\sffamily\fontsize{7}{8.5}\selectfont}% Linienbeschriftung im Chart
+\newcommand{\ls}{\addfontfeatures{LetterSpace=14}}
+\normalsize\fontsize{9.8}{14}\selectfont
+\color{body}\setlength{\parindent}{0pt}\setlength{\parskip}{0pt}
+\setlength{\emergencystretch}{2em}
+\hyphenpenalty=400\relax
+% schmale Spalten und Kaesten: Flattersatz ohne Worttrennung
+\newcommand{\flatter}{\raggedright\hyphenpenalty=10000\relax\exhyphenpenalty=10000\relax}
+
+% ---- Kopf- und Fusszeile ------------------------------------------------
+% \akdokument{Titel} setzt den Dokumenttitel links in der Kopfzeile;
+% \kapitel{Abschnitt} den Abschnittstitel rechts (Seitenmarke, je Seite neu setzen).
+\newcommand{\akdoktitel}{}
+\newcommand{\akdokument}[1]{\renewcommand{\akdoktitel}{#1}}
+\newcommand{\akfusstext}{EDUCATION · STANDARD TIER}
+\newcommand{\kapitel}[1]{\markright{#1}}
+\newcommand{\akkopf}{\htwo\ls\color{muted}}
+\newcommand{\akfuss}{\micro\ls\color{muted}}
+\pagestyle{fancy}\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headruleskip}{1.6mm}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{rule}\leaders\hrule height\headrulewidth\hfill}}
+\renewcommand{\footrulewidth}{0pt}
+\fancyhead[L]{\akkopf\MakeUppercase{\akdoktitel}}
+\fancyhead[R]{\akkopf\MakeUppercase{\rightmark}}
+\fancyfoot[L]{\akfuss\akfusstext}
+% Deckblatt: Kopfzeile links die Reihe (\akreihe{...}), rechts leer; Fusszeile wie innen
+\newcommand{\akreihetext}{}
+\newcommand{\akreihe}[1]{\renewcommand{\akreihetext}{#1}}
+\fancypagestyle{akdeckblatt}{\fancyhf{}\fancyhead[L]{\akkopf\MakeUppercase{\akreihetext}}\fancyfoot[L]{\akfuss\akfusstext}}
+
+% ---- Ueberschriften, Lead, Linien ---------------------------------------
+\newcommand{\Hone}[1]{{\hone\color{ink}#1\par}\akv{1.5}}
+\newcommand{\Htwo}[1]{{\hthree\color{ink}#1\par}\akv{1}}
+\newcommand{\lead}[1]{{\leadf\color{body}\flatter #1\par}}
+\newcommand{\hr}{\par\akv{2}{\color{rule}\rule{\linewidth}{0.4pt}}\par\akv{2}}
+% Kleine gesperrte Versalien: Randlabels, Tabellenkopf, Kastentitel
+\newcommand{\mlab}[1]{{\htwo\ls\color{muted}\MakeUppercase{#1}}}
+\let\hd\mlab
+% Zwischentitel im Lauftext (Schrittname, Kartentitel): serifenlos halbfett, Tinte
+\newcommand{\ztitel}[1]{{\sffamily\bfseries\color{ink}#1}}
+% Bildunterschrift (ohne Nummer): \abb{Buy Limit unter dem aktuellen Kurs}
+\newcommand{\abb}[1]{\par\vspace{2.2mm}{\lbl\color{muted}\flatter Abbildung: #1\par}}
+% Schrittmarke (Ziffer im Kreis) fuer nummerierte Schritte
+\tikzset{cnum/.style={circle,fill=ink,text=white,inner sep=0,minimum size=3.2mm,
+  font=\sffamily\bfseries\fontsize{5.8}{6}\selectfont}}
+\newcommand{\cn}[1]{\tikz[baseline=-0.65ex]\node[cnum]{#1};}
+
+% ---- Tabellen (booktabs) ------------------------------------------------
+% Kopfzeile: \hd{...}; Ziffern mit \aktab. Obere/untere Linie dunkel, Mittellinie hell.
+\setlength{\heavyrulewidth}{0.6pt}\setlength{\lightrulewidth}{0.4pt}
+\setlength{\abovetopsep}{0pt}\setlength{\belowrulesep}{0.9mm}\setlength{\aboverulesep}{0.9mm}
+\newcommand{\aktoprule}{\arrayrulecolor{ink}\toprule\arrayrulecolor{rule}}
+\newcommand{\akbottomrule}{\arrayrulecolor{ink}\bottomrule\arrayrulecolor{rule}}
+\newcommand{\akhaar}{\specialrule{0.4pt}{0pt}{0pt}}% Haarlinie zwischen Zeilen
+\arrayrulecolor{rule}
+\newcommand{\aktabelle}{\sffamily\fontsize{9}{13}\selectfont\color{body}\renewcommand{\arraystretch}{1.25}}
+
+% ---- Kaesten: schlicht, Haarlinien statt Farbflaechen -------------------
+% Notiz mit Titel in gesperrten Versalien: \begin{merk} ... \end{merk}, \begin{hinweis} ...
+\newtcolorbox{aknote}[1]{enhanced,frame hidden,colback=white,boxrule=0pt,arc=0pt,
+  borderline north={0.6pt}{0pt}{ink},borderline south={0.4pt}{0pt}{rule},
+  left=0pt,right=0pt,top=3mm,bottom=3.6mm,boxsep=0pt,before skip=\akbase,after skip=0pt,
+  fontupper=\color{body},before upper={\flatter\mlab{#1}\par\vspace{2.2mm}}}
+\newenvironment{merk}{\begin{aknote}{Merke}}{\end{aknote}}
+\newenvironment{hinweis}{\begin{aknote}{Hinweis}}{\end{aknote}}
+% Karte mit Label, Titel und Text (z. B. zwei Begriffe nebeneinander); feste Hoehe optional
+\newtcolorbox{akkarte}[1][]{enhanced,frame hidden,colback=white,boxrule=0pt,arc=0pt,
+  borderline north={0.6pt}{0pt}{ink},borderline south={0.4pt}{0pt}{rule},
+  left=0pt,right=0pt,top=3mm,bottom=3.6mm,boxsep=0pt,before skip=0pt,after skip=0pt,
+  fontupper=\color{body},before upper={\flatter},#1}
+\newcommand{\kartenkopf}[2]{\mlab{#1}\par\vspace{2mm}{\hthree\color{ink}#2}\par\vspace{1.6mm}}
+
+% ---- Randspalten-Raster (Label links, Text rechts) ----------------------
+\newlength{\labw}\setlength{\labw}{36mm}
+\newlength{\gutw}\setlength{\gutw}{5mm}
+\newlength{\colw}\setlength{\colw}{\dimexpr\textwidth-\labw-\gutw\relax}
+% \abschnitt{Label}{Text}: erste Zeile beider Spalten auf derselben Grundlinie
+\newcommand{\abschnitt}[2]{\noindent
+  \begin{minipage}[t]{\labw}\flatter\leavevmode\mlab{#1}\end{minipage}\hspace{\gutw}%
+  \begin{minipage}[t]{\colw}\flatter\leavevmode\color{body}#2\end{minipage}\par}
+% \chartzeile{Randtext}{Grafik}: Grafik in der Textspalte, Randtext links daneben
+\newcommand{\chartzeile}[2]{\noindent
+  \begin{minipage}[t]{\labw}\vspace{0pt}\flatter #1\end{minipage}\hspace{\gutw}%
+  \begin{minipage}[t]{\colw}\vspace{0pt}#2\end{minipage}\par\akv{1}}
+% Beispiel-Kasten in der Textspalte, Label „Beispiel“ am Rand
+\newtcolorbox{bsp}{enhanced,frame hidden,colback=white,boxrule=0pt,arc=0pt,
+  borderline north={0.4pt}{0pt}{rule},borderline south={0.4pt}{0pt}{rule},
+  left=0pt,right=0pt,top=3mm,bottom=3.4mm,boxsep=0pt,before skip=0pt,after skip=0pt,
+  fontupper=\color{body},before upper={\flatter}}
+\newcommand{\beispiel}[1]{\noindent
+  \begin{minipage}[t]{\labw}\vspace{0pt}\vspace{3mm}\vspace{1.6pt}\mlab{Beispiel}\end{minipage}%
+  \hspace{\gutw}%
+  \begin{minipage}[t]{\colw}\vspace{0pt}\begin{bsp}#1\end{bsp}\end{minipage}\par}
