@@ -23,6 +23,7 @@
 13. [Farbrollen Kontogrundlagen](#13-farbrollen-kontogrundlagen)
 14. [Hebel-Vergleich mit Zahlen (Kontogrundlagen S. 4)](#14-hebel-vergleich-mit-zahlen-kontogrundlagen-s-4)
 15. [Sprachdurchgang Kontogrundlagen: Sie-Form, C1, neutral](#15-sprachdurchgang-kontogrundlagen-sie-form-c1-neutral-02102026)
+16. [Pending-Orders-Guide: Neufassung (Sie-Form, C1, neutral)](#16-pending-orders-guide-neufassung-sie-form-c1-neutral)
 
 ---
 
@@ -915,3 +916,33 @@ Fazit: „Gemessen am Einsatz ergibt dieselbe Kursbewegung bei Ihrem Bekannten �
 
 Alle Texte von `Kontogrundlagen-Kosten.tex` (S. 1–7: Lead, Überschriften, Kästen, Grafik-Beschriftungen, Tabelle S. 7, Merk-Kästen, Texte neben den Plattform-Grafiken auf S. 6) auf **Sie-Form, gehobenes Deutsch (C1), rein informativ** umgestellt. Keine Umgangssprache, keine Slogans, keine Wertungen („Gesundheitsanzeige“, „genug Puffer“, „ehrliche Zahl“, „fressen“ … entfernt). „Spickzettel“ → „Auf einen Blick“, „Drei Faustregeln“ → „Kernaussagen“, „Margin Call“ → „Warnbereich“ (kein Plattform-Begriff), Skala S. 3 „GENUG PUFFER“ → „NORMALBEREICH“. Hebel-Tabelle und -Zahlen S. 4 unverändert; nur Lead und Merk-Kasten dort umformuliert (Länge gleich). Plattform-Elemente (`bar.*`, `mobil.*`, `panel.pdf`, Marken A/B/1–5) unverändert – sie enthalten weiterhin den Platzhalter **„dein Guthaben“** (einzige du-Form im PDF; bei Bedarf mit dem Nutzer klären).
 Nebenbei: Tabelle S. 7 im Flattersatz, letzte Spalte 62 → 61,5 mm (alter Overfull 1,24 pt weg); Kästen S. 2 gleich hoch (`equal height group=konto`). Prüfung: 7 Seiten, kein Overfull, keine Ziffern außer S. 4-Vergleich und Schrittmarken, kein Stop-Loss. Übersicht (nicht eingecheckt): `build/KG-Text-Uebersicht.png`.
+
+## 16. Pending-Orders-Guide: Neufassung (Sie-Form, C1, neutral)
+
+Ersetzt den Seitenplan in Abschnitt 4.3 (dort Stand des alten Chats, 6 Seiten). Datei: `dokumente/pending-orders/Pending-Orders-Guide.tex`.
+
+**Seiten (jetzt 9):**
+
+| Seite | Inhalt |
+|---|---|
+| S1 | Deckblatt; geändert nur der Untertitel (Sie-Form) |
+| S2 | „Was eine Pending Order ist“: Market vs. Pending, Nullpunkt, „Was eine Pending Order im Ablauf verändert“ |
+| S3–S6 | je ein Ordertyp: Chart + Randspalte „Was es ist“, „Typischer Einsatz“, „Take-Profit“, „Beispiel“ (Instrument XY); Lesehilfe nur einmal auf S3 |
+| S7 | „Übersicht“ (früher Spickzettel): Chartreihe, Tabelle, „Drei Grundregeln“ |
+| S8 | Order-Fenster: fünf Schritte + Type-Menü |
+| S9 | „Eine wartende Order löschen“ (mobile Ansicht): Orders → Pending → Order antippen → Delete → Rückfrage „close order“ mit Delete bestätigen; Cancel bricht ab |
+
+**Text:** Sie-Form, gehobenes C1-Deutsch, rein informativ (keine Wertungen; „Wann sinnvoll“ → „Typischer Einsatz“). Keine Zahlen außer Schrittnummern und Badge. Kein Stop-Loss im Text.
+
+**Technik:**
+- Zeile `hyphenrules=english` entfernt → deutsche Silbentrennung aktiv. Pixeltreue zum alten Original damit bewusst aufgegeben.
+- Neue Makros: `\abschnitt`, `\beispiel`, `\chartzeile`, `\leadfix`. Linke Spalte `\labw` = 37 mm; `\abschnitt` setzt Label und Text per `\leavevmode` auf dieselbe Grundlinie.
+- Abstandsparameter für S7/S9 in der Präambel: `\SPICKCHART`, `\SPICKTAB`, `\TROW`, `\TABMERK`, `\MERKPAR`, `\LOESCHSEP`.
+- S7 endet wie S3–S6 bei ca. 264 mm; S9 im Flattersatz, 140 mm breit, endet bei ca. 238 mm.
+
+**Offene Entscheidungen beim Nutzer:**
+- (a) Du-Platzhalter in Plattform-Nachbauten: „deine Menge / dein Wert / dein Ziel“ in `fenster-bl.pdf` sowie „dein Guthaben“ in den Kontogrundlagen-Nachbauten (`panel`/`mobil`/`bar`). Vorschlag: „Ihre …/Ihr …“. Das Fenster müsste dafür aus `originals/messungen/new-order-fenster.json` neu gebaut werden. „Set Stop-Loss“ im Fenster ist Plattform-Originaltext und bleibt.
+- (b) Swap ohne Hebel: Die Hebel-Tabelle (Kontogrundlagen S. 4) sagt „kein Swap“ ohne Hebel; auf CFD-Plattformen fällt Swap oft auch bei 1:1 an. Antwort des Nutzers ausstehend.
+- (c) Cover-Testvariante `Pending-Orders-Guide_CoverTest.tex` (SVG-Cover) noch nicht übernommen; ihre Innenseiten sind veraltet.
+
+**Übergaben:** `docs/uebergaben/pending-orders-text.md` und `docs/uebergaben/kontogrundlagen-hebel.md` sind erledigt.
