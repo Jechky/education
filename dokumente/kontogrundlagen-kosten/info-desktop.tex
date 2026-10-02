@@ -1,0 +1,114 @@
+% Info-Fenster eines Instruments am Desktop (Info-Zeichen in der Kursliste, blaues Design,
+% Beispiel Gold) – Vektor-Nachbau, NUR der obere Teil: Kopf und Raster der Angaben.
+% Grundlage: DOM-Messung originals/messungen/instrument-info-desktop.json (CSS-px,
+% Fenster 2040 x 986 wie bei bar.tex). Koordinaten unten in CSS-px, y nach unten,
+% Ursprung = linke obere Ecke des Fensters.
+%
+% Gemessen:
+%   .quote-info-popup  290 x 727,6, Fläche rgb(14,61,88), Radius 5 px, kein Rand,
+%                      box-shadow rgba(0,0,0,.25) 0 0 20px 4px; Inter 400, 12 px / 14 px
+%   .heading           x10 y10 270 x 52,8, flex (Spalte, zentriert), gap 10 px,
+%                      padding-bottom 12 px, Unterkante 0,8 px rgba(255,255,255,.1),
+%                      margin-bottom 12 px
+%     img              x132,4 y10 25,1375 x 16 (assets/images/instruments/XAUUSD.png)
+%                      – WEGGELASSEN (Rasterbild), die Fläche bleibt leer
+%     span „XAUUSD“    x119,8 y36 50,45 x 14, weiß
+%   a.close > i.icon-close  x270 y9,2 10 x 10,4, icomoon 10 px, U+E91B, rgb(168,187,190)
+%                      – nur, wenn icons.tikz \iconclose enthält (derzeit nicht; die Font
+%                      liegt nicht im Repo), sonst leer
+%   .quote-info        Raster 2 Spalten je 130 px (x10 / x150), Zeilen y 74,8 / 93,8 /
+%                      112,8 / 145,8 / 164,8 (Zeile 3 ist 28 px hoch: „Floating Points“
+%                      bricht in der 83,4 px breiten Zelle um), Zeilenabstand 5 px
+%     dt               Inter 300, rgb(168,187,190); Breite mit Leerzeichen am Ende
+%                      („Symbol: “ 48,6375 px) -> dd beginnt bei dt-x + dt-Breite
+%     dd               Inter 400, weiß
+%     Leverage         dt „Leverage“ ohne Doppelpunkt; der Doppelpunkt steht im dl
+%                      (Inter 400, weiß), dd bei x208,8. Doppelpunkt + Leerzeichen =
+%                      6,8 px; dass das Leerzeichen HINTER dem Doppelpunkt steht, ist
+%                      nicht gemessen (wie bei den dt angenommen).
+%   table (Handelszeiten) ab y194,8 – WEGGELASSEN: der Ausschnitt endet an ihrer
+%                      Oberkante (unten wieder Radius 5 px, wie panel.pdf ausgeschnitten)
+% Grundlinie: Zeilenoberkante + 11,2 px (Inter 12 px / line-height 14 px, wie bar.tex).
+%
+% Abweichung vom Original: Das Dokument ist zahlenfrei, Zahlen sind durch Wörter ersetzt
+% (Commission „—“ wie Bonus/Credit in bar.tex). Text bleibt: Gold, Metals, Floating Points.
+%
+% Marken (Schalter \ifmarken, Standard: an; ohne Marken bauen mit
+%   xelatex '\def\ohnemarken{}\input{info-desktop.tex}'):
+% Stil der Nummern 1–5 in panel.pdf (weißer Kreis 22 px, Ziffer Inter 600 12 px in
+% #04273C, Grundlinie 4 px unter der Mitte), maßstäblich auf 17 px verkleinert, damit
+% zwei Marken in 19 px Zeilenabstand nicht aneinanderstoßen; links vor dem Label in der
+% leeren rechten Hälfte von Spalte 1 (3 px Abstand): 1 Swap long, 2 Swap short, 3 Leverage.
+\documentclass[border=0pt]{standalone}
+\usepackage{fontspec}
+\usepackage{tikz}
+\setmainfont{Inter}% Inter 4.0 (Paket fonts-inter), wie bar.tex
+\newfontfamily\leicht{Inter Light}%    dt, font-weight 300
+\newfontfamily\halbfett{Inter SemiBold}% Ziffern der Marken (wie panel.pdf)
+
+\newlength\px \setlength\px{0.75bp}% 1 CSS-px
+\newcommand\schrift{\fontsize{9bp}{10.5bp}\selectfont}% 12 px / line-height 14 px
+\definecolor{fenster}{RGB}{14,61,88}%  .quote-info-popup
+\definecolor{label}{RGB}{168,187,190}% dt, Schließen-Zeichen
+\definecolor{markenziffer}{HTML}{04273C}% Ziffer der Marken (wie panel.pdf)
+\input{icons.tikz}
+
+\newif\ifmarken \markentrue
+\ifdefined\ohnemarken \markenfalse\fi
+
+\newcommand\hoehe{194.8}% Ausschnitt: Oberkante der Tabelle der Handelszeiten
+\newcommand\rand{24}%     Schatten: spread 4 + blur 20 px
+
+% \zeile{<Oberkante>}{<dt-x>}{<dt-Breite>}{<Label>}{<Wert>}
+\newcommand\zeile[5]{%
+  \node[anchor=base west,inner sep=0,outer sep=0,text=label,font=\schrift\leicht]
+    at (#2,#1+11.2) {#4};
+  \node[anchor=base west,inner sep=0,outer sep=0,text=white]
+    at (#2+#3,#1+11.2) {#5};}
+
+% \marke{<Zeilenoberkante>}{<Nummer>}: Kreis 17 px, Mitte 3 px + Radius vor x150
+\newcommand\marke[2]{%
+  \fill[white] (138.5,#1+7) circle[radius=8.5];
+  \node[anchor=base,inner sep=0,outer sep=0,text=markenziffer,
+    font=\fontsize{6.954bp}{8bp}\halbfett] at (138.5,#1+7+3.091) {#2};}% 12 px * 17/22
+
+\begin{document}%
+\begin{tikzpicture}[x=\px,y={(0,-\px)},font=\schrift]
+  \path[use as bounding box] (-\rand,-\rand) rectangle (290+\rand,\hoehe+\rand);
+  % Schatten: Gauß mit sigma 10 px (blur 20 px / 2) um die 4 px größere Fläche, 25 % Schwarz.
+  % 24 Ringe zu je 1 px; Deckung in Ringmitte t: A(t) = 0,25 * Phi((4 - t) / 10);
+  % Ring k (bis t = k) übereinander gelegt: 1 - a_k = (1 - A(k - 0,5)) / (1 - A(k + 0,5)).
+  \foreach \e/\a in {1/0.0112,2/0.0114,3/0.0114,4/0.0113,5/0.0111,6/0.0109,7/0.0105,
+      8/0.0100,9/0.0095,10/0.0089,11/0.0083,12/0.0076,13/0.0069,14/0.0063,15/0.0056,
+      16/0.0050,17/0.0044,18/0.0038,19/0.0033,20/0.0028,21/0.0024,22/0.0020,23/0.0017,
+      24/0.0064}
+    \fill[black,fill opacity=\a,rounded corners={(5+\e)*\px}]
+      (-\e,-\e) rectangle (290+\e,\hoehe+\e);
+  % Fenster
+  \fill[fenster,rounded corners=5\px] (0,0) rectangle (290,\hoehe);
+  % Kopf: Bild (x132,4 y10 25,1375 x 16) weggelassen; Symbol mittig (x 145)
+  \node[anchor=base,inner sep=0,outer sep=0,text=white] at (145,36+11.2) {XAUUSD};
+  \fill[white,fill opacity=0.1] (10,62) rectangle (280,62.8);
+  % Schließen-Zeichen: Box 10 x 10 px, Grundlinie 9,2 + 9,6 = 18,8, Boxunterkante 0,625 tiefer
+  \ifdefined\iconclose
+    \begin{scope}[shift={(270,19.425)},x=0.3125bp,y=0.3125bp,color=label]\iconclose\end{scope}
+  \fi
+  % Raster der Angaben (dt-Breiten gemessen)
+  \zeile{74.8}{10}{48.6375}{Symbol:}{Gold}
+  \zeile{74.8}{150}{65.525}{Swap long:}{Satz long}
+  \zeile{93.8}{10}{34.5}{Type:}{Metals}
+  \zeile{93.8}{150}{69.775}{Swap short:}{Satz short}
+  \zeile{112.8}{10}{46.575}{Spread:}{Floating}
+  \node[anchor=base west,inner sep=0,outer sep=0,text=white] at (56.575,112.8+14+11.2) {Points};
+  \zeile{112.8}{150}{37.8875}{Digits:}{Stellen}
+  \zeile{145.8}{10}{75.725}{Commission:}{—}
+  \zeile{145.8}{150}{51.9875}{Leverage}{:}
+  \node[anchor=base west,inner sep=0,outer sep=0,text=white] at (208.8,145.8+11.2) {Hebel};
+  \zeile{164.8}{10}{80.1125}{Contract size:}{Größe}
+  \ifmarken
+    \marke{74.8}{1}
+    \marke{93.8}{2}
+    \marke{145.8}{3}
+  \fi
+\end{tikzpicture}%
+\end{document}
