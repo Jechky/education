@@ -58,6 +58,7 @@ Diese Regeln gelten für **beide** Dokumente, sofern nicht anders vermerkt. Vor 
 - [ ] Feldnamen: **At price**, **Take-Profit**, **Type**, **Symbol**, **Volume**, **New Market Order**, **New Pending Order**, **Place pending order** (#29).
 - [ ] **Kein „Trigger“, keine „Marke“** (#20, #23). Auch „Auslösekurs“ wurde verworfen (#21 → #22).
 - [ ] **Kein Ask/Bid**; stattdessen „über / unter dem aktuellen Kurs“ (#14, #15).
+- [ ] **Stop-Loss bekommt später ein eigenes Dokument** (Nutzerwunsch, 02.10.2026) – in den bestehenden Guides **nicht erwähnen**.
 - [ ] „Market Buy / Market Sell“ gibt es auf der Plattform nicht (#21) → Reiter heißt „New Market Order“.
 - [ ] **„Aktivierungspunkt“** für den Wert bei At price (#118). Vorgegebene Ersetzungen:
   - „Du trägst bei At price einen Kurs ein.“ → „Du trägst bei At price deinen Aktivierungspunkt ein.“
@@ -833,10 +834,31 @@ Sichtbarkeit heller Flächen auf Weiß: Tönung in der Order-Farbe statt Grau, Z
 | Titellinie Deckblatt | `ink` (wie Doku 1) |
 | Badge „Sechs Begriffe“ | Rand `rule` (wie Doku 1) |
 | `merk` | `paper` + Kante `ink` (identisch mit Doku 1) |
-| `soft` | Weiß mit `greya`-Rand 0,4 pt (als `borderline`, Maße unverändert) – `muted`-Überschriften erreichen auf `paper` nur 4,39:1 |
+| `soft` | in Schritt 2 (Commit `c615842`) Weiß mit `greya`-Rand; seit Schritt 3 wieder **identisch mit Doku 1**: `paper` ohne Rand (13.3) |
 
 Unverändert: alle Textfarben (außer Text auf den Margin-Flächen: Weiß → `ink`), `greya`-Hilfslinien und Pfeile, `rule`-Trennlinien, Plattform-Nachbauten (`bar.*`, `mobil.*`, `panel.pdf`, `icons.tikz`) und alles daran auf Seite 6 (Ring, Rahmen, Linien, Marken A/B, `\pfn` 1–5).
 
 **Kontraste:** `ink` auf `pfgrau` 7,21:1 (Weiß wäre 2,51, `body` 4,04 – deshalb `ink`) · `muted` auf Weiß 4,67:1 (vorher auf `akzenttint` 4,02, auf `paper` 4,39) · `buy` auf `buytint` 4,76:1 · `sell` auf `selltint` 5,19:1 · `body` auf `paper` 9,55:1. Ränder gegen Weiß: `greya` 2,24:1, `pfgrau` 2,51:1 (`rule` nur 1,26:1, `paper` 1,06:1). ⚠ `soft` als Textfarbe (Kleinst-Hinweise) hat auf Weiß nur ~2,5:1 – in beiden Dokumenten so, nicht Teil dieses Auftrags.
 
 **Prüfung:** 7 Seiten; Textpositionen aller 1448 Wörter identisch mit `dc384c3` (`pdftotext -bbox`); einzige Warnung Overfull \hbox 1,24 pt in der Spickzettel-Tabelle (schon vorher); 10 Schriften eingebettet; keine Rasterbilder. Seite 6 bei 150 und 300 dpi gegen `dc384c3`: Handy-Ausschnitt mit Marken und Liste (y 58–160 mm) und Desktop-Leiste (y 186–200 mm) **0 abweichende Pixel**; die Seite weicht nur in y 214,5–253,2 mm ab (`soft`-Kästen). Bilder (nicht eingecheckt, `build/` ist ignoriert): `build/Farben-Vergleich.png` (7 Seiten, oben `dc384c3`, unten neu, 70 dpi), `build/Farben-Hebel.png` (S. 4 vorher|nachher, 110 dpi), `build/Farben-Reihe.png` (Doku 1 S. 3 neben Doku 2 S. 3, 80 dpi).
+
+### 13.3 Grafiken im Lehrbuch-Stil (Schritt 3)
+
+Nutzer: „Im Pending-Orders-Dokument ist das Gute, dass alle Grafiken wie LaTeX-Grafiken und wie Schulungsdokumente aussehen. Im Kontogrundlagen-Dokument sieht vieles wie AI-generierte GUI aus – das nervt mich.“
+
+**Was die Grafiken in Doku 1 ausmacht:** Achsen und Linien statt Karten (Nullpunkt-Achse `ink`, Kurslinie `pfgrey`); Beschriftung direkt an der Linie, auf weißem Grund, die Linie unterbrechend („Kurs jetzt“ in `\hthree`); Zonen als zarte Tönung zwischen Linien, begrenzt von gestrichelten Linien in Order-Farbe (1,5 pt, Muster 7/4 pt); Hilfspfeile `greya` mit Stealth-Spitze; keine abgerundeten Kästen mit Unterzeile, keine dunklen Vollflächen mit weißer Schrift; Labels klein (`\pflab`/`\lbl`), Versalien nur für Achsen-Überschriften.
+
+**Neue Bausteine** in `Kontogrundlagen-Kosten.tex`: `\mass[farbe]{x1}{x2}{y}{Label}` (Maßlinie, Haarlinie 0,4 pt mit Stealth-Spitzen, Label mit `\strut` auf Weiß unterbricht die Linie), `\masslinie` (ohne Label), Stile `hilfslinie` (Maßhilfslinie `greya` 0,3 pt) und `zone` (wie At-price-/Take-Profit-Linie: 1,5 pt, 7/4 pt). TikZ-Bibliothek `decorations.pathreplacing` für die Klammern.
+
+| Seite | vorher (AI-GUI-Muster) | jetzt |
+|---|---|---|
+| 1 Deckblatt | drei abgerundete Karten „Balance + Profit/Losses = Equity“, darunter Segmentbalken Margin/Free | **ein** eckiger Mengenbalken (Margin `pfgrau`, Free weiß, Haarlinien-Rahmen) mit Maßketten: oben Gesamtmaß „Equity“ (`body`) und Kette „Balance | Profit/Losses“, unten „Margin | Free“; Labels in `\hthree` gemischt geschrieben (vorher Versalien), Unterzeilen `\lbl` muted; Level-Linie und Hinweis unverändert |
+| 2 Kontostand | Balken mit farbiger Markierungslinie | eckige Balken (Haarlinie), Ende der Balance als gestrichelte Bezugslinie, Differenz als Maßlinie in `buy`/`sell` mit „+ Profit“ / „– Losses“; Zeitleiste: Achse `body` 0,7 pt mit Pfeil, Ereignispunkte `ink`, „UNREALISIERT“ als Maßlinie von „öffnen“ bis „schließen“ |
+| 3 Margin | Segmentbalken mit Text im Balken (Speicheranzeige-Optik) | drei Mengenbalken (6 mm) mit Maßketten „Margin | Free“ darüber; Verlust als getönte Zone mit gestricheltem `sell`-Rand außerhalb der Equity; Level als Achse (`body`, Pfeil) mit getönten Zonen ohne Rahmen, Stop-out-Schwelle im `zone`-Stil `sell`, Grenze zum Puffer gestrichelt `greya` |
+| 4 Hebel | Quadrate und Kästen, Text in zwei Spalten | maßstäblicher Vergleich: Margin 7,5 mm in beiden Spalten, Trade volume 7,5 mm bzw. 75 mm (= 1 : 10, passend zur geplanten Tabelle „Ohne Hebel / Mit Hebel 1:10“); Gewinn/Verlust: gleiche Bewegung = gleiche Höhe (± 6 mm), Breite = Volumen, Zonen `buytint`/`selltint` zwischen gestrichelten `buy`/`sell`-Linien, Beschriftung über bzw. unter der Linie wie „Take-Profit“. Grafik 51 statt 64 mm hoch → unter dem Text ca. 80 mm frei |
+| 5 Swaps | abgerundete Blöcke „Margin“/„Der Rest ist geliehen“; Kette aus drei Karten mit + und = | Position als **ein** Balken mit Gesamtmaß „DEINE POSITION AM MARKT“ und Kette „Margin | Der Rest ist geliehen“; Herleitung als **Formelzeile** „Zins am Geldmarkt + Aufschlag des Brokers = Dein Swap“ (`\hthree`, zentriert) mit geschweiften Klammern `greya` und Erläuterung darunter (jetzt einzeilig, die falsche Trennung „zwis-chen“ entfällt); Tageslinie und Woche: Zeitachse mit Pfeil (Tag `greya`, Woche `body`) |
+| 6, 7 | – | nur `soft`-Kästen (wie Doku 1); Plattform-Elemente unverändert |
+
+`soft`-Kästen wieder genau wie in Doku 1 (`paper`, ohne Rand). ⚠ Ihre `muted`-Kicker (8 pt fett, Versalien) haben darauf 4,39:1 – wie in Doku 1. Merk-Kasten und Badge unverändert wie Doku 1.
+
+**Prüfung:** 7 Seiten; einzige Warnung Overfull \hbox 1,24 pt in der Spickzettel-Tabelle (alt); 10 Schriften eingebettet; keine Rasterbilder. Fließtext an derselben Stelle wie in `c615842` (Seiten 1–3, 5–7; nur Grafik-Beschriftungen bewegt), Seite 4 rückt unter der kleineren Hebel-Grafik nach oben. Seite 6 bei 300 dpi gegen `dc384c3` und `c615842`: Handy-Ausschnitt mit Marken und Liste (y 58–160 mm), Desktop-Leiste (y 186–200 mm) und alles oberhalb der Kästen (y 0–214 mm) **0 abweichende Pixel**. Bilder (nicht eingecheckt): `build/Grafik-Vergleich.png` (7 Seiten, oben `c615842`, unten neu, 70 dpi), `build/Grafik-Reihe.png` (Doku 1 S. 2 und 3 neben Doku 2 S. 3 und 4, 80 dpi).
