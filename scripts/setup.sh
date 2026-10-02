@@ -4,7 +4,7 @@
 #     microtype, hyperref, babel (ngerman)
 #   - qpdf, ghostscript, poppler-utils (pdftotext, pdffonts, pdfimages, pdftoppm)
 #   - librsvg2-bin (rsvg-convert: SVG-Deckblatt-Hintergrund -> Vektor-PDF)
-#   - Python: pikepdf, pypdf, fonttools
+#   - Python: pikepdf, pypdf, fonttools, brotli (WOFF2 fuer tools/icons_aus_font.py)
 #   - Schriften: IBM Plex Sans + IBM Plex Mono, Inter
 #     (apt: fonts-ibm-plex, fonts-inter; Fallback: offizielle GitHub-Releases
 #      nach /usr/local/share/fonts)
@@ -90,12 +90,12 @@ log "fc-cache"
 $SUDO fc-cache -f >/dev/null
 
 # --- 3. Python-Pakete ----------------------------------------------------------
-if python3 -c "import pikepdf, pypdf, fontTools" 2>/dev/null; then
-  log "pip: pikepdf/pypdf/fonttools vorhanden"
+if python3 -c "import pikepdf, pypdf, fontTools, brotli" 2>/dev/null; then
+  log "pip: pikepdf/pypdf/fonttools/brotli vorhanden"
 else
-  log "pip: installiere pikepdf pypdf fonttools"
-  python3 -m pip install -q pikepdf pypdf fonttools 2>/dev/null \
-    || python3 -m pip install -q --break-system-packages pikepdf pypdf fonttools
+  log "pip: installiere pikepdf pypdf fonttools brotli"
+  python3 -m pip install -q pikepdf pypdf fonttools brotli 2>/dev/null \
+    || python3 -m pip install -q --break-system-packages pikepdf pypdf fonttools brotli
 fi
 
 # --- 4. Pruefung ---------------------------------------------------------------
