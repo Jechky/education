@@ -27,6 +27,9 @@
 \definecolor{pfbg}{HTML}{001328}\definecolor{pfgruen}{HTML}{0E7A4E}
 \definecolor{pfgrau}{HTML}{97A5B4}\definecolor{pfrot}{HTML}{B23A2E}
 \definecolor{pfgrey}{HTML}{6A6A6A}
+% Deckblatt (Navy-Band aus cover-bg.pdf)
+\definecolor{cvkicker}{HTML}{9FB3C2}\definecolor{cvsub}{HTML}{D5DEE6}
+\definecolor{cvpill}{HTML}{5E7F95}\definecolor{cvpilltext}{HTML}{C9D6E0}
 
 % ---- Typografische Skala (1,25) -----------------------------------------
 \newcommand{\display}{\light\fontsize{30}{34}\selectfont}
@@ -113,46 +116,42 @@
 
 \fancyfoot[L]{\micro\color{soft}\ls PENDING ORDERS · STANDARD TIER}
 \begin{document}
+% ==== DECKBLATT: Hintergrund cover-bg.pdf (aus cover-bg.svg), Inhalte absolut in mm ====
+% Platzhalter-Koordinaten aus cover.svg (y von oben, hier negativ). Baselines:
+% Versalhoehe (0,698 em) mittig in der Platzhalter-Box; Kicker oben buendig
+% auf 20,5 mm (gleiche Starthoehe wie die Innenseiten).
+% Charts: linke Kante des Chart-Inhalts buendig mit der Textkante (x=20 bzw. 117,5).
+% Abgezogen wird die linke Inhaltskante aus charts.tikz (bs/sl: 11.373, bl/ss: 14 px);
+% bei Aenderungen an charts.tikz diese Werte anpassen.
+% remember picture: zwei XeLaTeX-Laeufe noetig.
 \thispagestyle{empty}
-{\htwo\ls\color{muted}TRADING-GRUNDLAGEN}\par\vspace{11mm}
-{\display\color{ink}Pending Orders}\par\vspace{7mm}
-{\color{ink}\rule{28mm}{2pt}}\par\vspace{6mm}
-\begin{minipage}{124mm}{\leadf\color{body}\raggedright Die vier Ordertypen auf einen Blick – damit Sie Einstieg,
-Auslösepreis und Richtung richtig kombinieren.\par}\end{minipage}
-\par\vspace{6mm}
-\tikz\node[draw=rule,line width=0.4pt,rounded corners=1.6mm,inner xsep=3mm,inner ysep=1.5mm,
-  text=muted,font=\micro\bfseries\ls]{4 ORDERTYPEN. 1 KLARE ENTSCHEIDUNGSLOGIK.};
-\par\vspace{0pt plus 1fill}
-\noindent\begin{tikzpicture}[x=1mm,y=1mm]
-\useasboundingbox (0,0) rectangle (170.0,130.8);
-\node[inner sep=0,text=muted,font=\lbl\bfseries\ls] at (85.0,126.8) {AT PRICE ÜBER DEM AKTUELLEN KURS};
-\node[inner sep=0,text=muted,font=\lbl\bfseries\ls] at (85.0,4) {AT PRICE UNTER DEM AKTUELLEN KURS};
-\draw[body,line width=0.7pt] (0,65.37931034482759) -- (170.0,65.37931034482759);
-\node[inner sep=0,fill=white,inner xsep=3.2mm,text=ink,font=\lbl\bfseries\ls] at (85.0,65.37931034482759) {KURS JETZT};
-\begin{scope}[shift={(19.50,95.38)},scale=0.26437]
-\chartbsmini
+\noindent\begin{tikzpicture}[remember picture,overlay,x=1mm,y=1mm,every node/.style={outer sep=0pt}]
+\begin{scope}[shift={(current page.north west)}]
+\node[anchor=north west,inner sep=0] at (0,0) {\includegraphics[width=210mm,height=297mm]{cover-bg.pdf}};
+\node[anchor=base west,inner sep=0,text=cvkicker,font=\htwo\ls] at (20,-22.463) {TRADING-GRUNDLAGEN};
+\node[anchor=base west,inner sep=0,text=white,font=\display] at (20,-41.18) {Pending Orders};
+\node[anchor=base west,inner sep=0,text=cvsub] at (20,-60.673) {\parbox[t]{124mm}{\leadf\raggedright Die vier Ordertypen auf einen Blick – damit Sie Einstieg, Auslösepreis und Richtung richtig kombinieren.\par}};
+\draw[cvpill,line width=0.4pt,rounded corners=1.6mm] (20,-75) rectangle (98,-81.5);
+\node[anchor=base,inner sep=0,text=cvpilltext,font=\micro\bfseries\ls] at (59,-79.109) {4 ORDERTYPEN. 1 KLARE ENTSCHEIDUNGSLOGIK.};
+\node[anchor=base,inner sep=0,text=muted,font=\lbl\bfseries\ls] at (105,-115.932) {AT PRICE ÜBER DEM AKTUELLEN KURS};
+\node[anchor=base,inner sep=0,text=ink,font=\lbl\bfseries\ls] at (105,-188.932) {KURS JETZT};
+\node[anchor=base,inner sep=0,text=muted,font=\lbl\bfseries\ls] at (105,-260.932) {AT PRICE UNTER DEM AKTUELLEN KURS};
+\begin{scope}[shift={(20-11.373*72.5/174,-163)},scale=72.5/174] \chartbsmini \end{scope}
+\node[anchor=base west,inner sep=0,text=buy,font=\hthree] at (20,-171.472) {BUY STOP};
+\node[anchor=base west,inner sep=0,text=muted,font=\small] at (20,-177.305) {Ausbruch nach oben};
+\begin{scope}[shift={(117.5-11.373*72.5/174,-163)},scale=72.5/174] \chartslmini \end{scope}
+\node[anchor=base west,inner sep=0,text=sell,font=\hthree] at (117.5,-171.472) {SELL LIMIT};
+\node[anchor=base west,inner sep=0,text=muted,font=\small] at (117.5,-177.305) {teurer verkaufen};
+\begin{scope}[shift={(20-14*72.5/174,-252)},scale=72.5/174] \chartblmini \end{scope}
+\node[anchor=base west,inner sep=0,text=buy,font=\hthree] at (20,-200.972) {BUY LIMIT};
+\node[anchor=base west,inner sep=0,text=muted,font=\small] at (20,-206.805) {günstiger kaufen};
+\begin{scope}[shift={(117.5-14*72.5/174,-252)},scale=72.5/174] \chartssmini \end{scope}
+\node[anchor=base west,inner sep=0,text=sell,font=\hthree] at (117.5,-200.972) {SELL STOP};
+\node[anchor=base west,inner sep=0,text=muted,font=\small] at (117.5,-206.805) {Ausbruch nach unten};
+\node[anchor=base west,inner sep=0,text=soft,font=\micro\ls] at (20,-277.359) {PENDING ORDERS};
+\node[anchor=base east,inner sep=0,text=soft,font=\micro\ls] at (190,-277.359) {STANDARD TIER};
 \end{scope}
-\node[inner sep=0,text=buy,font=\hthree] at (42.50,85.88) {BUY STOP};
-\node[inner sep=0,text=muted,font=\small] at (42.50,79.88) {Ausbruch nach oben};
-\begin{scope}[shift={(104.50,95.38)},scale=0.26437]
-\chartslmini
-\end{scope}
-\node[inner sep=0,text=sell,font=\hthree] at (127.50,85.88) {SELL LIMIT};
-\node[inner sep=0,text=muted,font=\small] at (127.50,79.88) {teurer verkaufen};
-\begin{scope}[shift={(19.50,10.00)},scale=0.26437]
-\chartblmini
-\end{scope}
-\node[inner sep=0,text=buy,font=\hthree] at (42.50,50.88) {BUY LIMIT};
-\node[inner sep=0,text=muted,font=\small] at (42.50,44.88) {günstiger kaufen};
-\begin{scope}[shift={(104.50,10.00)},scale=0.26437]
-\chartssmini
-\end{scope}
-\node[inner sep=0,text=sell,font=\hthree] at (127.50,50.88) {SELL STOP};
-\node[inner sep=0,text=muted,font=\small] at (127.50,44.88) {Ausbruch nach unten};
 \end{tikzpicture}
-\par\vspace{0pt plus 1.35fill}
-{\color{rule}\rule{\linewidth}{0.4pt}}\par\vspace{2.5mm}
-{\micro\ls\color{soft}PENDING ORDERS\hfill STANDARD TIER}
 \clearpage
 % =========================================================================
 \kicker{}{Fundament}
