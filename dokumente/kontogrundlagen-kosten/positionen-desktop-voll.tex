@@ -1,0 +1,209 @@
+% Tabelle der offenen Positionen am Desktop (Reiter Active, blaues Design) – Vektor-Nachbau
+% VOLLSTÄNDIGE Fassung ohne Bruchkante, für eine Querformat-Seite (Satzbreite ca. 257 mm).
+% Gegenstück zum Ausschnitt positionen-desktop.tex (gleiche Technik, Farben, Platzhalter).
+% Grundlage: DOM-Messung originals/messungen/positionen-desktop.json (CSS-px, Fenster
+% 2040 x 986; anonymisiert: Ziffern = 0, Instrumente = XXXXXX). Koordinaten unten in
+% CSS-px, y nach unten, Ursprung = linke obere Ecke des Blocks.
+%
+% Gemessen (Original-x):
+%   .maintable   1704 x 271, Fläche rgb(4,39,60), Radius 7 px, Inter 400, 12 px / 14 px
+%   Leiste oben links (Lage im Block, unabhängig von den Spalten):
+%     a.button.bordered  „New order“ x10 y10,2 100 x 29,6, Rand 0,8 px rgb(83,188,81),
+%                        Radius 5 px, Fläche frei, padding 6px 10px, Inter 600 weiß,
+%                        Zeile 16 px, text-align center
+%       i.icon-plus      x22,3 y17,8 12 x 12, icomoon 12 px, U+E91A, weiß
+%     input.form-control x120 y10 145 x 30, Fläche und Rand rgb(0,19,40), Radius 4 px,
+%                        padding 6px 30px 6px 10px, Zeile 16 px; Platzhalter „Search“
+%       i.icon-search    x238 y17,5 15 x 15, icomoon 15 px, U+E915, rgb(168,187,190)
+%     ng-select-container x275 / x430 y10 145 x 30, Fläche und Rand rgb(0,19,40),
+%                        Radius 4 px; ng-value x275,8 / x430,8, padding 6px 10px,
+%                        Zeile 18 px, weiß: „All sides“ (67,4), „All profits“ (73,8)
+%   ul.nav-tabs  x1436,3 y10 257,7 x 30, Fläche rgb(0,19,40), Radius 3 px; endet bündig
+%                mit der Tabelle (x1694 = 1704 - 10)
+%     a.nav-link  flex, padding 0 16px, Text mittig, weiß, capitalize:
+%                „Active (0)“ 87 (aktiv: Fläche rgb(14,80,114), Radius 3 0 0 3),
+%                „Pending (0)“ 98,1, „History“ 72,6 (Radius 0 3 3 0)
+%   th           y47, 28,8 hoch, padding 4px 10px, Text rgb(168,187,190), capitalize;
+%                span (inline-block, 20 px Zeile) mit padding-right 15 px; Text beginnt am
+%                gemessenen span-x: ID 102,5, Instrument 177, Type 298, Amount 383,8,
+%                Trade volume 493,5, Open Rate 640, Open Time 787,5, S/L 941, T/P 1030,9,
+%                Swap 1113,6, Commission 1207,4, Total Profit 1344,2, Margin 1467,9
+%   td           Zeilen y75,8 / y105,4, je 29,6 hoch, border-top 1,6 px rgb(4,39,60),
+%                Fläche rgba(14,80,114,.1), Text mittig (padding 4px 10px); erste Zelle
+%                Radius 3 0 0 3, letzte 0 3 3 0
+%                Spalten: (Bild 10 w70) | ID 80 w71,8 | Instrument 151,8 w126,2 |
+%                Type 278 w83,2 | Amount 361,2 w104,3 | Trade volume 465,5 w149,5 |
+%                Open Rate 615 w124,2 | Open Time 739,2 w173,8 | S/L 912,9 w90 |
+%                T/P 1002,9 w90 | Swap 1093 w87,8 | Commission 1180,8 w138,1 |
+%                Total Profit 1318,9 w127,2 | Margin 1446 w98 | (Zahnrad 1544 w50) |
+%                (Schließen 1594 w100)
+%   Total Profit grün rgb(83,188,81) (color-green-main) bzw. rot rgb(249,64,86)
+%                (color-red-main)
+% Grundlinien (Chrome, Gerätepixel 0,8 px: Ascent 12, Descent 3,2 px; icomoon 12 px:
+% Ascent 11,2, Descent 0,8 px): Zeilenoberkante + (Zeilenhöhe - 15,2) / 2 + 12.
+%   Kopf 65,4; Zeilen 95,0 und 124,6 (belegt durch €-span und Bildmitte, siehe
+%   positionen-desktop.tex); Reiter 29,2 (mittig angenommen, nicht gemessen);
+%   New order 29,0 (belegt: Oberkante icon-plus 17,8 + Ascent 11,2; der halbe Durchschuss
+%   0,4 px fällt weg); Search 10 + 0,8 + 6 + 0,4 + 12 = 29,2; All sides / All profits
+%   16 + 1,4 + 12 = 29,4.
+%   „New order“: Zeile (Plus + Abstand + Text) mittig im Inhalt x20,8..99,2 (Mitte 60);
+%   sie beginnt beim Plus (x22,3), endet also bei 60 + (60 - 22,3) = 97,7 = Textende.
+%
+% Vollständige Fassung (Abweichungen vom Original, nur Weglassen):
+%   Bildspalte (x10..80, 70 px) entfällt: alle Spalten ab ID um -70 px verschoben, die
+%   Zeilen beginnen wieder mit Radius 3 px. Zahnrad- und Schließen-Spalte (x1544..1694,
+%   150 px) entfallen; Zeilenende wieder Radius 3 px. Tabelle x10..1474, Block 1484 px
+%   breit (1704 - 70 - 150). Die Reiter bleiben bündig mit dem rechten Tabellenrand, die
+%   Leiste bleibt an ihrer Stelle oben links (x10..575).
+%   unten  Schnitt 10 px unter der zweiten Zeile (y145; leere Fläche bis y271 entfällt),
+%          Ecken wieder Radius 7 px.
+%   Weggelassen: Griff zum Einklappen (a.hide, Mitte oben, Icon U+E90E fehlt in
+%   icons.tikz), Instrument-Bild in der Bildspalte und Pfeil hinter dem Instrument (PNG,
+%   kein Vektor; die Fläche bleibt leer: Text um 5,5 px nach links wie im Original),
+%   Sortierpfeile (padding-right 15 px der Köpfe; Inhalt nicht gemessen), Pfeil der
+%   Auswahlfelder All sides / All profits (ng-arrow, nicht gemessen).
+%   Plus (U+E91A) und Lupe (U+E915) fehlen in icons.tikz: Fläche leer; sie werden
+%   automatisch gezeichnet, sobald \iconplus bzw. \iconsearch existieren.
+%   NICHT GEMESSEN, vorläufig: Farbe des Platzhalters „Search“ (::placeholder) – hier
+%   rgb(168,187,190) wie Köpfe und Lupe (\definecolor{suchtext} unten).
+%
+% Das Dokument ist zahlenfrei: Werte sind Wörter, ohne „€“ (wie bar.tex). ID „Nummer“,
+% Instrument „Instrument“, Type „Buy“, Amount „Menge“, Trade Volume „Wert“, Open Rate
+% „Kurs“, Open Time „Zeitpunkt“, S/L, T/P und Commission „—“, Swap „Betrag“,
+% Total Profit „Ergebnis“ (grün/rot), Margin „Betrag“. Reiter ohne Zähler; ihre Breite
+% rechnet wie der Browser (16 + Text + 16 px). Probe der Textbreiten mit den gemessenen
+% Werten: siehe \typeout POSITIONEN-VOLL im Log.
+%
+% Bei width=257mm: 1 px = 0,1732 mm, Bild 257 x 25,1 mm, Schrift 12 px = 5,9 pt.
+%
+% Marken (Schalter \ifmarken, Standard: an; ohne Marken bauen mit
+%   xelatex '\def\ohnemarken{}\input{positionen-desktop-voll.tex}'):
+% Stil wie info-desktop.tex (weißer Kreis 17 px, Ziffer Inter 600 in #04273C), mittig auf
+% der Kopfzeile, 3 px vor dem Spaltennamen: 1 Swap, 2 Total Profit, 3 Margin.
+\documentclass[border=0pt]{standalone}
+\usepackage{fontspec}
+\usepackage{tikz}
+\setmainfont{Inter}% Inter 4.0 (Paket fonts-inter), wie bar.tex
+\newfontfamily\halbfett{Inter SemiBold}% New order, Ziffern der Marken (wie panel.pdf)
+
+\newlength\px \setlength\px{0.75bp}% 1 CSS-px
+\newcommand\schrift{\fontsize{9bp}{10.5bp}\selectfont}% 12 px / line-height 14 px
+\definecolor{block}{RGB}{4,39,60}%      .maintable
+\definecolor{reiter}{RGB}{0,19,40}%     ul.nav-tabs, input, ng-select-container
+\definecolor{aktiv}{RGB}{14,80,114}%    a.nav-link.active; Zeilen mit 10 % Deckung
+\definecolor{label}{RGB}{168,187,190}%  th, i.icon-search
+\definecolor{gewinn}{RGB}{83,188,81}%   color-green-main, Rand von New order
+\definecolor{verlust}{RGB}{249,64,86}%  color-red-main
+\definecolor{suchtext}{RGB}{168,187,190}% Platzhalter „Search“ – NICHT GEMESSEN (vorläufig)
+\definecolor{markenziffer}{HTML}{04273C}% Ziffer der Marken (wie panel.pdf)
+
+\input{icons.tikz}
+
+\newif\ifmarken \markentrue
+\ifdefined\ohnemarken \markenfalse\fi
+
+\newcommand\breite{1484}% 1704 - 70 (Bildspalte) - 150 (Zahnrad, Schließen)
+\newcommand\hoehe{145}%   zweite Zeile endet bei 135, + 10 px
+\newcommand\links{-70}%   Verschiebung der Tabellenspalten (ID beginnt bei x10)
+\newcommand\rand{1474}%   rechter Tabellenrand (\breite - 10)
+
+% Textbreiten in px (vor dem Bild messen; in TikZ ist \nullfont aktiv)
+\newlength\tw
+\makeatletter
+\newcommand\breitepx[2]{\settowidth\tw{\schrift #2}%
+  \edef#1{\strip@pt\dimexpr\tw*4/3*7200/7227\relax}}
+\newcommand\probe[2]{\breitepx\probewert{#1}%
+  \typeout{POSITIONEN-VOLL: '#1' \probewert\space px (gemessen #2)}}
+\makeatother
+\probe{Active (0)}{55,0}\probe{Pending (0)}{66,1}\probe{History}{40,6}
+\probe{ID}{11,9}\probe{Instrument}{60,7}\probe{Type}{28,1}\probe{Amount}{44,1}
+\probe{Trade Volume}{78,4}\probe{Open Rate}{59,2}\probe{Open Time}{62,2}
+\probe{S/L}{18,8}\probe{T/P}{19,1}\probe{Swap}{31,6}
+\probe{Commission}{69,8}\probe{Total Profit}{61,5}\probe{Margin}{39,3}
+\probe{All sides}{47,4}\probe{All profits}{53,8}
+\breitepx\probewert{Search}\typeout{POSITIONEN-VOLL: 'Search' \probewert\space px (nicht gemessen)}
+\breitepx\wn{\halbfett New order}\pgfmathsetmacro\probewert{97.7-\wn-22.3-12}
+\typeout{POSITIONEN-VOLL: 'New order' (600) \wn\space px; Abstand Plus-Text \probewert\space px}
+\breitepx\wa{Active}\breitepx\wp{Pending}\breitepx\wh{History}
+\pgfmathsetmacro\xh{\rand-(\wh+32)}% Reiter rechtsbündig am Tabellenrand
+\pgfmathsetmacro\xp{\xh-(\wp+32)}
+\pgfmathsetmacro\xa{\xp-(\wa+32)}
+\typeout{POSITIONEN-VOLL: Reiter ab x \xa, \xp, \xh\space bis \rand\space px}
+
+% \flaeche{<Zeilenoberkante>}: getönte Zeile, Zellen-Fläche unter dem 1,6-px-Rand;
+% außen Radius 3 px (oben innen 3 x 1,4 px)
+\newcommand\flaeche[1]{%
+  \fill[aktiv,fill opacity=0.1] (\breite/2,#1+1.6) -- (13,#1+1.6)
+    arc[start angle=270,end angle=180,x radius=3,y radius=1.4] -- (10,#1+26.6)
+    arc[start angle=180,end angle=90,radius=3] -- (\rand-3,#1+29.6)
+    arc[start angle=90,end angle=0,radius=3] -- (\rand,#1+3)
+    arc[start angle=0,end angle=-90,x radius=3,y radius=1.4] -- cycle;}
+
+% \kopf{<Original-x des span>}{<Text>} / \zelle{<Mitte>}{<y>}{<Farbe>}{<Text>}
+\newcommand\kopf[2]{\node[anchor=base west,text=label] at (#1,65.4) {#2};}
+\newcommand\zelle[4]{\node[anchor=base,text=#3] at (#1,#2) {#4};}
+
+% \icon{<x>}{<y Oberkante>}{<Größe px>}{<Farbe>}{<Icon>}: Box Größe x Größe
+% (icons.tikz: 24 px, Ursprung unten links, y nach oben)
+\newcommand\icon[5]{%
+  \begin{scope}[shift={(#1,#2+#3)},x=#3/32*1bp,y=#3/32*1bp,color=#4]#5\end{scope}}
+
+% \marke{<Original-x des Spaltennamens>}{<Nummer>}: Kreis 17 px, Mitte 3 px + Radius davor
+\newcommand\marke[2]{%
+  \fill[white] (#1-11.5,61) circle[radius=8.5];
+  \node[anchor=base,text=markenziffer,font=\fontsize{6.954bp}{8bp}\halbfett]
+    at (#1-11.5,61+3.091) {#2};}% 12 px * 17/22
+
+\begin{document}%
+\begin{tikzpicture}[x=\px,y={(0,-\px)},font=\schrift,
+    every node/.style={inner sep=0,outer sep=0}]
+  \path[use as bounding box] (0,0) rectangle (\breite,\hoehe);
+  % Block und Zeilen
+  \fill[block,rounded corners=7\px] (0,0) rectangle (\breite,\hoehe);
+  \flaeche{75.8}\flaeche{105.4}
+  % Leiste oben links (Lage wie gemessen)
+  \draw[gewinn,line width=0.8\px,rounded corners=4.6\px]
+    (10.4,10.6) rectangle (109.6,39.4);% Rand 0,8 px innen, Radius 5 px außen
+  \ifdefined\iconplus \icon{22.3}{17.8}{12}{white}{\iconplus}\fi
+  \node[anchor=base east,text=white,font=\schrift\halbfett] at (97.7,29.0) {New order};
+  \fill[reiter,rounded corners=4\px] (120,10) rectangle (265,40);
+  \node[anchor=base west,text=suchtext] at (130.8,29.2) {Search};
+  \ifdefined\iconsearch \icon{238}{17.5}{15}{label}{\iconsearch}\fi
+  \fill[reiter,rounded corners=4\px] (275,10) rectangle (420,40);
+  \node[anchor=base west,text=white] at (285.8,29.4) {All sides};
+  \fill[reiter,rounded corners=4\px] (430,10) rectangle (575,40);
+  \node[anchor=base west,text=white] at (440.8,29.4) {All profits};
+  % Reiter (ohne Zähler), bündig mit dem rechten Tabellenrand
+  \fill[reiter,rounded corners=3\px] (\xa,10) rectangle (\rand,40);
+  \fill[aktiv] (\xp,10) {[rounded corners=3\px] -- (\xa,10) -- (\xa,40)} -- (\xp,40) -- cycle;
+  \node[anchor=base,text=white] at ({\xa+(\wa+32)/2},29.2) {Active};
+  \node[anchor=base,text=white] at ({\xp+(\wp+32)/2},29.2) {Pending};
+  \node[anchor=base,text=white] at ({\xh+(\wh+32)/2},29.2) {History};
+  % Tabelle (Original-x, um die Bildspalte nach links verschoben)
+  \begin{scope}[xshift=\links\px]
+    \kopf{102.5}{ID}\kopf{177}{Instrument}\kopf{298}{Type}\kopf{383.8}{Amount}
+    \kopf{493.5}{Trade Volume}\kopf{640}{Open Rate}\kopf{787.5}{Open Time}
+    \kopf{941}{S/L}\kopf{1030.9}{T/P}\kopf{1113.6}{Swap}\kopf{1207.4}{Commission}
+    \kopf{1344.2}{Total Profit}\kopf{1467.9}{Margin}
+    \foreach \y/\farbe in {95.0/gewinn,124.6/verlust} {
+      \zelle{115.9}{\y}{white}{Nummer}
+      \zelle{209.4}{\y}{white}{Instrument}% Mitte 214,9 - 5,5 (Pfeil-Bild weggelassen)
+      \zelle{319.6}{\y}{white}{Buy}
+      \zelle{413.35}{\y}{white}{Menge}
+      \zelle{540.25}{\y}{white}{Wert}
+      \zelle{677.1}{\y}{white}{Kurs}
+      \zelle{826.1}{\y}{white}{Zeitpunkt}
+      \zelle{957.9}{\y}{white}{—}
+      \zelle{1047.9}{\y}{white}{—}
+      \zelle{1136.9}{\y}{white}{Betrag}
+      \zelle{1249.85}{\y}{white}{—}
+      \zelle{1382.5}{\y}{\farbe}{Ergebnis}
+      \zelle{1495}{\y}{white}{Betrag}}
+    \ifmarken
+      \marke{1113.6}{1}
+      \marke{1344.2}{2}
+      \marke{1467.9}{3}
+    \fi
+  \end{scope}
+\end{tikzpicture}%
+\end{document}

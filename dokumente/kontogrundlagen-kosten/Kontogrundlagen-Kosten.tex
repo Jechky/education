@@ -7,9 +7,9 @@
 \tcbuselibrary{skins}
 \usepackage[ngerman,provide=*]{babel}
 % Trennmuster wie beim Original-Build (dort fehlten die deutschen Muster,
-% babel nahm die englischen). Ohne diese Zeile bricht Seite 5 anders um.
+% babel nahm die englischen). Ohne diese Zeile bricht die Swap-Seite (S. 6) anders um.
 \babelprovide[hyphenrules=english]{ngerman}
-\usepackage{hyperref}\hypersetup{hidelinks,pdftitle={Kontogrundlagen & Kosten – Schulungseinheit},pdfsubject={Balance, Equity, Margin, Free Margin, Leverage, Swap}}
+\usepackage{hyperref}\hypersetup{hidelinks,pdftitle={Kontogrundlagen \& Kosten – Schulungseinheit},pdfsubject={Balance, Equity, Margin, Free, Leverage, Swap}}
 
 \setmainfont{IBMPlexSans-Regular.otf}[Path=../../fonts/,
   BoldFont={IBMPlexSans-SemiBold.otf}, ItalicFont={IBMPlexSans-Italic.otf},
@@ -37,6 +37,7 @@
 \definecolor{pfbg}{HTML}{001328}\definecolor{pfgruen}{HTML}{0E7A4E}
 \definecolor{pfgrau}{HTML}{97A5B4}\definecolor{pfrot}{HTML}{B23A2E}
 \definecolor{pfgrey}{HTML}{6A6A6A}
+\definecolor{pfseite}{HTML}{04273C}% Seitenhintergrund der Plattform (Rand um den Kursliste-Ausschnitt)
 \definecolor{wbg}{HTML}{0E2939} \definecolor{whead}{HTML}{0B2130} \definecolor{wfield}{HTML}{102B3C}
 \definecolor{wborder}{HTML}{1D4256} \definecolor{waccent}{HTML}{1B6CA8} \definecolor{wgreen}{HTML}{3CB44A}
 \definecolor{wtext}{HTML}{E7EEF2} \definecolor{wmuted}{HTML}{8FA6B3} \definecolor{wmark}{HTML}{3F88BD}
@@ -72,6 +73,13 @@
 \newcommand{\lead}[1]{{\leadf\color{body}\raggedright #1\par}}
 \newcommand{\hr}{\par\vspace{7mm}{\color{rule}\rule{\linewidth}{0.4pt}}\par\vspace{6mm}}
 \newcommand{\hd}[1]{{\micro\bfseries\ls\color{soft}\MakeUppercase{#1}}}
+% Verweise ohne Seitenzahl (Nutzerregel "keine Zahlen", HANDOFF 2.3): Ziel ist der Seitentitel
+% (Kicker), als unsichtbarer Link; Labels hinter den \kicker (s:grundbegriffe, s:kontostand, ...).
+%   \titel{label}{Titel}  -> „Titel“ im Fliesstext, z. B. (Abbildung unter~\titel{...}{In der Plattform})
+%   \pfeil{label}{Titel}  -> „→ Titel“ in Tabellen; \verw wie \pfeil, in muted
+\newcommand{\titel}[2]{\hyperref[#1]{\mbox{„#2“}}}% Titel bricht nicht um
+\newcommand{\pfeil}[2]{\hyperref[#1]{→~#2}}
+\newcommand{\verw}[2]{\leavevmode{\color{muted}\pfeil{#1}{#2}}}
 \tikzset{cnum/.style={circle,fill=ink,text=white,inner sep=0,minimum size=3.2mm,
   font=\bfseries\fontsize{5.6}{6}\selectfont}}
 \newcommand{\cn}[1]{\tikz[baseline=-0.65ex]\node[cnum]{#1};}
@@ -98,6 +106,29 @@
   \tikz[baseline=(current bounding box.north)]\node[inner sep=0,softshadow]
     {\includegraphics[width=#1]{#2}};}
 
+% Querformat-Seiten ("Angaben eines Instruments", "Offene Positionen"; Nutzerwunsch 02.10.2026):
+% echte Seitengroesse 297 x 210 mm, Raender und Fusszeile wie im Hochformat (Satz 257 x 173 mm).
+% \querformat und \hochformat beginnen jeweils eine neue Seite.
+% (\newgeometry stellt zuerst das Papier der Praeambel wieder her; daher wird das Querformat
+% unmittelbar danach eingesetzt, Geometrie-intern ueber \Gm@restore@org.)
+\makeatletter
+\newcommand{\querformat}{\clearpage
+  \let\Gm@restore@org@hoch\Gm@restore@org
+  \def\Gm@restore@org{\Gm@restore@org@hoch
+    \setlength{\paperwidth}{297mm}\setlength{\paperheight}{210mm}}%
+  \newgeometry{top=19mm,bottom=18mm,left=20mm,right=20mm,footskip=9mm}%
+  \let\Gm@restore@org\Gm@restore@org@hoch
+  \setlength{\pdfpagewidth}{\paperwidth}\setlength{\pdfpageheight}{\paperheight}%
+  \setlength{\headwidth}{\textwidth}}
+\makeatother
+\newcommand{\hochformat}{\clearpage
+  \setlength{\paperwidth}{210mm}\setlength{\paperheight}{297mm}%
+  \setlength{\pdfpagewidth}{\paperwidth}\setlength{\pdfpageheight}{\paperheight}%
+  \restoregeometry\setlength{\headwidth}{\textwidth}}
+% Nachbau der Positionstabelle am Desktop (1484 x 145 CSS-px; bei 257 mm: 257 x 25,1 mm,
+% Schrift 5,9 pt). Tausch der Fassung nur hier.
+\newcommand{\positionstabelle}{\includegraphics[width=\linewidth]{positionen-desktop-voll.pdf}}
+
 \newtcolorbox{merk}{enhanced,colback=paper,colframe=paper,boxrule=0pt,arc=0pt,
   borderline west={2pt}{0pt}{ink},left=5mm,right=5mm,top=3.5mm,bottom=3.5mm,boxsep=0pt,
   before skip=6mm,after skip=0pt,fontupper=\small\color{body}}
@@ -110,14 +141,16 @@
 
 \pagestyle{fancy}\fancyhf{}\renewcommand{\headrulewidth}{0pt}
 
-\fancyfoot[L]{\micro\color{soft}\ls KONTOGRUNDLAGEN \& KOSTEN · SCHULUNGSEINHEIT}
+\fancyfoot[L]{\micro\color{soft}\ls KONTOGRUNDLAGEN \& KOSTEN · EDUCATION – STANDARD PACKAGE}
+% keine Seitenzahl (Nutzerregel "keine Zahlen"); Deckblatt ohne Fusszeile
 \begin{document}
 \thispagestyle{empty}
 {\htwo\ls\color{muted}SCHULUNGSEINHEIT}\par\vspace{11mm}
 {\display\color{ink}Kontogrundlagen \& Kosten}\par\vspace{7mm}
 {\color{ink}\rule{28mm}{2pt}}\par\vspace{6mm}
 \begin{minipage}{126mm}\lead{Diese Schulungseinheit erläutert die Begriffe Balance, Equity, Margin,
-Free, Level, Leverage und Swap sowie ihren Zusammenhang innerhalb Ihres Kontos.}\end{minipage}
+Free, Level, Leverage (Hebel) und Swap sowie ihren Zusammenhang innerhalb Ihres Kontos. Wo Sie diese Werte
+auf der Plattform finden, zeigt die Abbildung unter~\titel{s:plattform}{In der Plattform}.}\end{minipage}
 \par\vspace{6mm}
 \tikz\node[draw=rule,line width=0.4pt,rounded corners=1.6mm,inner xsep=3mm,inner ysep=1.5mm,
   text=muted,font=\micro\bfseries\ls]{KONTOWERTE UND KOSTEN};
@@ -131,7 +164,7 @@ Free, Level, Leverage und Swap sowie ihren Zusammenhang innerhalb Ihres Kontos.}
 \draw[hilfslinie] (0,49.8) -- (0,75.8) (170,49.8) -- (170,75.8) (128,49.8) -- (128,62.8)
   (0,36.2) -- (0,28.2) (52,36.2) -- (52,28.2) (170,36.2) -- (170,28.2);
 \mass[body]{0}{170}{74.6}{\hthree\color{ink}Equity}
-\node[inner sep=0,text=muted,font=\lbl] at (85,69.4) {aktueller Wert des Kontos};
+\node[inner sep=0,text=muted,font=\lbl] at (85,69.4) {aktueller Kontowert};
 \mass{0}{128}{61.6}{\hthree\color{ink}Balance}
 \node[inner sep=0,text=muted,font=\lbl] at (64,56.4) {Einzahlungen und Ergebnisse geschlossener Positionen};
 \mass{128}{170}{61.6}{\hthree\color{ink}Profit/Losses}
@@ -142,23 +175,75 @@ Free, Level, Leverage und Swap sowie ihren Zusammenhang innerhalb Ihres Kontos.}
 \node[inner sep=0,text=muted,font=\lbl] at (111,24.2) {verfügbar für neue Positionen};
 \draw[greya,line width=0.5pt,dash pattern=on 1.2mm off 0.9mm] (0,14) -- (170,14);
 \node[inner sep=0,fill=white,inner xsep=2mm,text=muted,font=\micro\bfseries\ls] at (85,14) {LEVEL = EQUITY IM VERHÄLTNIS ZUR MARGIN};
-\node[inner sep=0,text=soft,font=\micro] at (85,5) {Je höher das Level, desto größer ist der Abstand zum Stop out, bei dem die Plattform Positionen schließt.};
+\node[inner sep=0,text=soft,font=\micro] at (85,5) {Je höher das Level, desto größer ist der Abstand zum Stop out, bei dem die Plattform Positionen schließt (mehr dazu unter~\titel{s:margin}{Margin}).};
 \end{tikzpicture}
 \par\vspace{0pt plus 1.35fill}
 {\color{rule}\rule{\linewidth}{0.4pt}}\par\vspace{2.5mm}
-{\micro\ls\color{soft}KONTOGRUNDLAGEN \& KOSTEN\hfill SCHULUNGSEINHEIT}
+{\micro\ls\color{soft}KONTOGRUNDLAGEN \& KOSTEN\hfill EDUCATION – STANDARD PACKAGE}
 \clearpage
-\kicker{}{Kontostand}
+\kicker{}{Grundbegriffe}\phantomsection\label{s:grundbegriffe}
+\Hone{Die Begriffe, auf denen diese Einheit aufbaut}
+\begin{minipage}{128mm}\lead{Die folgenden Seiten setzen diese Begriffe des Handels voraus. Der Pfeil verweist
+auf die Seite mit der ausführlichen Erklärung.}\end{minipage}
+\par\vspace{8mm}
+% Reihenfolge: jeder Begriff wird erst erklaert, dann in einer spaeteren Zeile benutzt.
+% Spalten im Flattersatz; 30 + 102 + 29,5 mm plus Spaltenabstaende = 170 mm (wie "Auf einen Blick");
+% "Mehr dazu" so breit, dass "→ In der Plattform" einzeilig bleibt (ca. 28,9 mm).
+% Zwei Gruppen (Handel; Sicherheit und Kosten), getrennt nur durch groesseren Abstand.
+% Swap: in Total Profit der Position enthalten, Balance erst beim Schliessen (Quellen: originals/...Kosten_2.pdf,
+% 7.3/8; docs/plattform/dom-positionsliste.md).
+% Keine Commission auf dieser Plattform (Nutzer 02.10.2026); dafuer Bonus (Feld in der Kontouebersicht, S. 7).
+\newcommand{\gbz}[1]{\newline{\color{muted}\small #1}}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{30mm}%
+  >{\raggedright\arraybackslash}p{102mm}>{\raggedright\arraybackslash}p{29.5mm}@{}}
+\hd{Begriff} & \hd{Erklärung} & \hd{Mehr dazu} \\
+\addlinespace[1.6mm]\midrule\addlinespace[2.4mm]
+\textbf{Instrument} & Das handelbare Produkt, zum Beispiel ein Rohstoff oder eine Währung aus der Kategorie Forex (Devisen). In den
+  Beispielen dieser Einheit steht dafür Instrument~XY. & \\ \addlinespace[2mm]
+\textbf{Kurs} & Der aktuelle Preis eines Instruments. Er ändert sich laufend; diese Änderungen heißen
+  Kursbewegungen. & \\ \addlinespace[2mm]
+\textbf{Position}\gbz{(offen, geschlossen)} & Ein Handel in einem Instrument, den Sie öffnen und später
+  schließen. Solange die Position offen ist, ändert sich ihr Ergebnis, also Gewinn oder Verlust, mit dem Kurs;
+  mit dem Schließen wird es realisiert. & \verw{s:kontostand}{Kontostand} \\ \addlinespace[2mm]
+\textbf{Buy / Sell} & Die Richtung einer Position: Buy (Kauf, auch long) oder Sell (Verkauf, auch short). Bei Buy
+  entsteht mit steigendem Kurs ein Gewinn und mit fallendem ein Verlust, bei Sell umgekehrt. & \\ \addlinespace[2mm]
+\textbf{Spread} & Der Unterschied zwischen dem Kurs für Buy und dem Kurs für Sell; er steht in den Angaben des
+  Instruments. & \verw{s:instrumente}{Angaben eines Instruments} \\ \addlinespace[2mm]
+\textbf{Volumen} & Der Wert einer Position. Gewinne und Verluste werden am gesamten Volumen berechnet.
+  & \verw{s:hebel}{Hebel} \\ \addlinespace[2mm]
+\textbf{Broker} & Das Unternehmen, das Ihr Konto führt und über das Sie Positionen öffnen und schließen. Anders
+  als beim Direktkauf erwerben Sie das Instrument dabei nicht selbst. & \verw{s:hebel}{Hebel} \\ \addlinespace[2mm]
+\textbf{Plattform} & Die Anwendung des Brokers, mobil und am Desktop. Dort öffnen und schließen Sie Positionen
+  und sehen die Werte Ihres Kontos. & \verw{s:plattform}{In der Plattform} \\ \addlinespace[5mm]
+\textbf{Margin} & Der Teil Ihres Kontos, den offene Positionen als Sicherheit binden, solange sie offen sind.
+  & \verw{s:margin}{Margin} \\ \addlinespace[2mm]
+\textbf{Stop out} & Die Schwelle des Levels, bei der die Plattform offene Positionen selbstständig schließt. Das
+  Level gibt die Equity im Verhältnis zur Margin an. & \verw{s:margin}{Margin} \\ \addlinespace[2mm]
+\textbf{Leverage}\gbz{(Hebel)} & Gibt an, welcher Teil des Volumens als Margin gebunden wird. Die Schreibweise
+  1:10 bedeutet: Die Margin beträgt ein Zehntel des Volumens. & \verw{s:hebel}{Hebel}\newline
+  \verw{s:instrumente}{Angaben eines Instruments} \\ \addlinespace[2mm]
+\textbf{Swap} & Ein Betrag für das Halten einer Position über den Tageswechsel, der ihr je nach Satz (Swap long
+  für Buy, Swap short für Sell) belastet oder gutgeschrieben wird. Er ist in ihrem Total Profit enthalten
+  und geht beim Schließen in die Balance ein. & \verw{s:swap}{Swaps}\newline
+  \verw{s:instrumente}{Angaben eines Instruments} \\ \addlinespace[2mm]
+\textbf{Bonus} & Ein Betrag auf Ihrem Konto, mit dem Sie handeln können. Gewinne, die Sie damit erzielen,
+  sind gemäß den AGB des Brokers auszahlbar. & \verw{s:plattform}{In der Plattform} \\
+\end{tabular}
+\par
+\begin{merk}\textbf{Zur Schreibweise.} Begriffe der Plattform stehen in deren Schreibweise, etwa Buy, Margin
+oder Stop out. Wo es das Verständnis erleichtert, folgt die deutsche Entsprechung in Klammern.\end{merk}
+\clearpage
+\kicker{}{Kontostand}\phantomsection\label{s:kontostand}
 \Hone{Der Unterschied zwischen Balance und Equity}
-\begin{minipage}{128mm}\lead{Die Plattform weist für Ihr Konto zwei Werte aus. Die Differenz zwischen
+\begin{minipage}{128mm}\lead{Die Plattform weist für Ihr Konto zwei Werte aus (Abbildung unter~\titel{s:plattform}{In der Plattform}). Die Differenz zwischen
 ihnen entspricht dem aktuellen Ergebnis Ihrer offenen Positionen.}\end{minipage}
 \par\vspace{8mm}
 \noindent\begin{minipage}[t]{82mm}\vspace{0pt}\begin{soft}[equal height group=konto]
 {\htwo\ls\color{muted}BALANCE}\par\vspace{2mm}
 {\hthree\color{ink}Der realisierte Kontostand}\par\vspace{1.5mm}
 {\color{body}Die Balance umfasst Ihre Einzahlungen sowie alle Gewinne und Verluste aus bereits
-geschlossenen Positionen. Sie ändert sich nur, wenn Sie eine Position schließen, eine Ein- oder Auszahlung
-vornehmen oder ein Swap gebucht wird.}\end{soft}\end{minipage}\hfill
+geschlossenen Positionen. Sie ändert sich beim Schließen einer Position sowie bei Ein- und Auszahlungen.
+Der Swap einer Position geht beim Schließen mit ihrem Ergebnis in die Balance ein.}\end{soft}\end{minipage}\hfill
 \begin{minipage}[t]{82mm}\vspace{0pt}\begin{soft}[equal height group=konto]
 {\htwo\ls\color{muted}EQUITY}\par\vspace{2mm}
 {\hthree\color{ink}Der aktuelle Kontowert}\par\vspace{1.5mm}
@@ -193,8 +278,8 @@ Grundlage dieses Werts berechnet.}\end{soft}\end{minipage}
 \hr
 \Htwo{Unrealisierte und realisierte Ergebnisse}
 {\color{body}\raggedright Solange eine Position offen ist, stellt ihr Gewinn oder Verlust lediglich eine Momentaufnahme dar.
-Die Plattform weist ihn unter \textbf{Profit/Losses} aus und berücksichtigt ihn in der Equity, nicht jedoch in der
-Balance. Erst mit dem Schließen der Position wird der Betrag realisiert.\par}
+Die Plattform weist ihn bei der Position unter \textbf{Total Profit} aus, das Ergebnis aller offenen Positionen
+zusammen unter \textbf{Profit/Losses}. Er fließt in die Equity ein, nicht jedoch in die Balance. Erst mit dem Schließen der Position wird der Betrag realisiert.\par}
 \par\vspace{5mm}
 \noindent \begin{tikzpicture}[x=1mm,y=1mm]
 \useasboundingbox (0,0) rectangle (170.0,30);
@@ -215,16 +300,16 @@ Balance. Erst mit dem Schließen der Position wird der Betrag realisiert.\par}
 \end{tikzpicture}
 \par\vspace{4mm}
 \begin{merk}\textbf{Zur Einordnung.} Die Balance enthält keine Angaben zu offenen Positionen. Den aktuellen
-Stand Ihres Kontos geben folglich Equity und Profit/Losses wieder.\end{merk}
+Kontowert gibt folglich die Equity wieder, das Ergebnis der offenen Positionen Profit/Losses.\end{merk}
 \clearpage
-\kicker{}{Margin}
+\kicker{}{Margin}\phantomsection\label{s:margin}
 \Hone{Die Margin als Sicherheitsleistung}
 \begin{minipage}{128mm}\lead{Sobald Sie eine Position öffnen, bindet die Plattform einen Teil Ihrer Equity
-als Sicherheit. Dieser Betrag wird nicht verbraucht, sondern bleibt gebunden, bis die Position geschlossen wird.}\end{minipage}
+als Sicherheit für mögliche Verluste. Dieser Betrag wird nicht verbraucht, sondern bleibt gebunden, bis die Position geschlossen wird.}\end{minipage}
 \par\vspace{8mm}
 \noindent\begin{minipage}[t]{54mm}\vspace{0pt}\raggedright
 {\bfseries Margin}\par\vspace{1mm}
-{\color{muted}\small Der als Sicherheit gebundene Teil der Equity. Er wird in der Kontoübersicht und bei jeder Position einzeln ausgewiesen.}
+{\color{muted}\small Der als Sicherheit gebundene Teil der Equity. Er wird in der Kontoübersicht (Abbildung unter~\titel{s:plattform}{In der Plattform}) und bei jeder Position einzeln ausgewiesen.}
 \end{minipage}\hfill
 \begin{minipage}[t]{54mm}\vspace{0pt}\raggedright
 {\bfseries Free}\par\vspace{1mm}
@@ -260,14 +345,14 @@ als Sicherheit. Dieser Betrag wird nicht verbraucht, sondern bleibt gebunden, bi
 \node[anchor=west,inner sep=0,text=sell,font=\micro] at (56,1.6) {Ein Verlust verringert die Equity und folglich zuerst den Wert unter Free.};
 \end{tikzpicture}
 \par\vspace{5mm}
-{\color{body}\raggedright Größere Positionen und eine höhere Anzahl an Positionen binden mehr Margin. Verluste verringern
+{\color{body}\raggedright Positionen mit höherem Volumen und eine höhere Anzahl an Positionen binden mehr Margin. Verluste verringern
 zudem die Equity. Der Wert unter Free nimmt folglich aus zwei Gründen ab.\par}
 \hr
 \Htwo{Level, Warnbereich und Stop out}
 {\color{body}\raggedright Solange die Equity deutlich über der gebundenen Margin liegt, ist das Level hoch. Sinkt die Equity
 durch Verluste, sinkt folglich auch das Level. Ab einer bestimmten Schwelle gibt die Plattform eine Warnung aus.
 Erreicht das Level den \textbf{Stop out}, schließt die Plattform Positionen selbstständig, beginnend mit der Position
-mit dem größten Verlust. Den Stop-out-Wert Ihres Kontos finden Sie unter \textbf{Information}.\par}
+mit dem größten Verlust. Den Stop-out-Wert Ihres Kontos finden Sie unter \textbf{Information} (siehe~\titel{s:plattform}{In der Plattform}).\par}
 \par\vspace{5mm}
 \noindent \begin{tikzpicture}[x=1mm,y=1mm]
 \useasboundingbox (0,0) rectangle (170.0,30);
@@ -284,130 +369,163 @@ mit dem größten Verlust. Den Stop-out-Wert Ihres Kontos finden Sie unter \text
 \node[anchor=west,inner sep=0,text=soft,font=\micro] at (92,26) {Das Level sinkt bei Verlusten und mit jeder neuen Position.};
 \end{tikzpicture}
 \clearpage
-\kicker{}{Hebel}
+\kicker{}{Hebel}\phantomsection\label{s:hebel}
 \Hone{Die Wirkung des Hebels}
-\begin{minipage}{128mm}\lead{Mit Hebel bewegen Sie am Markt ein deutlich größeres Volumen, als Sie an Margin
-hinterlegen. Gewinne und Verluste werden folglich am gesamten Volumen berechnet, nicht am Einsatz.}\end{minipage}
+\begin{minipage}{128mm}\lead{Mit Hebel bewegen Sie am Markt ein deutlich größeres Volumen, als die Plattform an
+Margin bindet. Gewinne und Verluste werden folglich am gesamten Volumen berechnet, nicht an der Margin.}\end{minipage}
 \par\vspace{8mm}
-\noindent \begin{tikzpicture}[x=1mm,y=1mm]
-\useasboundingbox (0,5) rectangle (170.0,56);
-\node[anchor=west,inner sep=0,text=ink,font=\lbl\bfseries] at (0,53) {Ohne Hebel};
-\fill[pfgrau] (0,43) rectangle (7.5,49);
-\node[anchor=west,inner sep=0,text=muted,font=\micro] at (9.5,46) {Margin: Ihr Einsatz};
-\draw[greya,line width=0.4pt] (0,35) rectangle (7.5,41);
-\node[anchor=west,inner sep=0,text=muted,font=\micro] at (0,31.6) {Trade volume: das am Markt bewegte Volumen};
-\fill[buytint] (0,16) rectangle (7.5,22);\fill[selltint] (0,10) rectangle (7.5,16);
-\draw[greya,line width=0.4pt] (0,16) -- (7.5,16);
-\draw[buy,zone] (0,22) -- (7.5,22);\draw[sell,zone] (0,10) -- (7.5,10);
-\node[anchor=south west,inner sep=0,text=buy,font=\micro] at (0,23) {Gewinn bei gleicher Kursbewegung};
-\node[anchor=north west,inner sep=0,text=sell,font=\micro] at (0,9) {Verlust bei gleicher Kursbewegung};
-\node[anchor=west,inner sep=0,text=ink,font=\lbl\bfseries] at (88,53) {Mit Hebel};
-\fill[pfgrau] (88,43) rectangle (95.5,49);
-\node[anchor=west,inner sep=0,text=muted,font=\micro] at (97.5,46) {Margin: Ihr Einsatz};
-\draw[greya,line width=0.4pt] (88,35) rectangle (163,41);
-\node[anchor=west,inner sep=0,text=muted,font=\micro] at (88,31.6) {Trade volume: das am Markt bewegte Volumen};
-\fill[buytint] (88,16) rectangle (163,22);\fill[selltint] (88,10) rectangle (163,16);
-\draw[greya,line width=0.4pt] (88,16) -- (163,16);
-\draw[buy,zone] (88,22) -- (163,22);\draw[sell,zone] (88,10) -- (163,10);
-\node[anchor=south west,inner sep=0,text=buy,font=\micro] at (88,23) {Gewinn bei gleicher Kursbewegung};
-\node[anchor=north west,inner sep=0,text=sell,font=\micro] at (88,9) {Verlust bei gleicher Kursbewegung};
-\end{tikzpicture}
-\par\vspace{6mm}
 % Einzige bewusste Ausnahme vom Zahlenverbot (Nutzerwunsch, HANDOFF Abschnitt 14):
-% Vergleich mit einfachen Zahlen nach dem Lehrbuchbeispiel "you vs. your friend".
-% Schreibweise: 1.000\,€, 5\,%, echtes Minuszeichen U+2212.
+% Aufbau wie im Lehrbuchbeispiel "you vs. your friend" (Opening / Closing the Positions):
+% Direktkauf ueber die Bank (ohne Hebel, ohne Swap) gegen Broker mit Hebel 1:10.
+% Keine Grafik, keine Gruen-/Rot-Faerbung (Nutzervorgabe 02.10.2026). Zahlen nach Skizze des
+% Nutzers: nur 1.000, 2.000, 10.000, 9.000, 1:10, 100, 105, 95, 50, 500, 7, 493, 5 %, 50 %, 10 %.
+% Je 2.000 EUR verfuegbar: neben der Margin bleiben 1.000 EUR frei (Free > 0, wie im Handbuch).
+% Begriffe: fuer Sie durchgaengig "Margin", fuer den Bekannten "Einsatz"; "vor/nach Swap".
+% Swap nicht mit dem geliehenen Betrag begruenden (Aufbau des Swaps: Swap-Seite).
+% Schreibweise: 1.000\,€, 5\,%, Minuszeichen U+2212. Seite ist voll (Rest ca. 2 pt).
+% Erlaeuternde Klammern in den Zeilenbezeichnungen nicht fett.
 \Htwo{Ein Vergleich mit einfachen Zahlen}
-{\color{body}\raggedright Angenommen, Sie und ein Bekannter verfügen über je 100\,€ und erwarten, dass
-Instrument~XY steigt. Ihr Bekannter kauft ohne Hebel und bewegt folglich genau 100\,€. Sie handeln hingegen mit Hebel~1:10:
-Ihre~100\,€ sind als Margin gebunden, bewegt werden jedoch 1.000\,€. Die fehlenden 900\,€ sind geliehen.\par}
-\par\vspace{4mm}
-% Spalte "Mit Hebel" beginnt bei 88 mm wie "Mit Hebel" in der Grafik darueber.
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{34mm}>{\raggedright\arraybackslash}p{45.53mm}%
-  >{\raggedright\arraybackslash}p{82mm}@{}}
- & \hd{Ohne Hebel} & \hd{Mit Hebel 1:10} \\
+{\color{body}\raggedright Angenommen, Sie und ein Bekannter verfügen über je 2.000\,€ und erwarten, dass der Kurs
+von Instrument~XY steigt. Ihr Bekannter kauft Instrument~XY für 1.000\,€ direkt über das Wertpapierdepot seiner
+Bank, also ohne Hebel. Sie öffnen hingegen beim Broker eine Position mit Hebel~1:10.\par}
+\par\vspace{6mm}
+% Spaltenkoepfe zweizeilig; 71 + 42 + 48,53 mm plus Spaltenabstaende = 170 mm (Bezeichnungen
+% einzeilig ausser der letzten Zeile; Verweis auf die Swap-Seite in der Swap-Zelle)
+% \leavevmode: erste Zeile ist eine Box, Zellen stehen auf gemeinsamer Grundlinie
+\newcommand{\hdd}[2]{\leavevmode\micro\bfseries\ls\color{soft}\MakeUppercase{#1}\newline\MakeUppercase{#2}}
+\newcommand{\ttl}[1]{\leavevmode{\bfseries\color{ink}#1}}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{71mm}>{\raggedright\arraybackslash}p{42mm}%
+  >{\raggedright\arraybackslash}p{48.53mm}@{}}
+\ttl{Öffnen der Positionen} & \hdd{Ihr Bekannter}{Direktkauf über die Bank} & \hdd{Sie}{Broker, Hebel 1:10} \\
 \addlinespace[1.6mm]\midrule\addlinespace[2.4mm]
-\textbf{Einsatz} & 100\,€ & 100\,€ als Margin \\ \addlinespace[1.6mm]
-\textbf{Bewegtes Volumen} & 100\,€ & 1.000\,€ \\ \addlinespace[1.6mm]
-\textbf{Kurs steigt um 5\,\%} & \textcolor{buy}{+5\,€} & \textcolor{buy}{+50\,€} \\ \addlinespace[1.6mm]
-\textbf{Kurs fällt um 5\,\%} & \textcolor{sell}{−5\,€} & \textcolor{sell}{−50\,€} \\ \addlinespace[1.6mm]
-\textbf{Kurs fällt um 10\,\%} & \textcolor{sell}{−10\,€} & \textcolor{sell}{−100\,€, also der gesamte Einsatz}\newline
-  {\color{muted}\small Der Stop out schließt die Position in der Regel vorher.} \\ \addlinespace[1.6mm]
-\textbf{Halten über Nacht} & kein Swap & Swap für die geliehenen 900\,€ \\
+\textbf{Kurs von Instrument~XY} & 100\,€ & 100\,€ \\ \addlinespace[1.6mm]
+\textbf{Volumen} (Wert der Position) & 1.000\,€ & 10.000\,€ \\ \addlinespace[1.6mm]
+\textbf{Einsatz bzw. Margin} & 1.000\,€ & 1.000\,€ \\ \addlinespace[1.6mm]
+\textbf{Geliehener Betrag} (Volumen minus Margin) & – & 9.000\,€ \\ \addlinespace[1.6mm]
+\textbf{Auf dem Konto frei verfügbar (Free)} & – & 1.000\,€ \\
 \end{tabular}
-\par\vspace{4mm}
-{\color{body}\raggedright Gemessen am Einsatz ergibt dieselbe Kursbewegung bei Ihrem Bekannten ±5\,\%, bei Ihnen hingegen
-+50\,\% oder −50\,\%. Der Hebel vergrößert folglich Gewinn und Verlust im gleichen Verhältnis.\par}
+\par\vspace{5mm}
+{\color{body}\raggedright Am nächsten Tag steht Instrument~XY bei 105\,€, und Sie beide schließen Ihre Positionen.\par}
+\par\vspace{6mm}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{71mm}>{\raggedright\arraybackslash}p{42mm}%
+  >{\raggedright\arraybackslash}p{48.53mm}@{}}
+\ttl{Schließen der Positionen} & \hdd{Ihr Bekannter}{Direktkauf über die Bank} & \hdd{Sie}{Broker, Hebel 1:10} \\
+\addlinespace[1.6mm]\midrule\addlinespace[2.4mm]
+\textbf{Kurs von Instrument~XY} & 105\,€ & 105\,€ \\ \addlinespace[1.6mm]
+\textbf{Ergebnis vor Swap} & +50\,€ & +500\,€ \\ \addlinespace[1.6mm]
+\textbf{Kosten über Nacht} & kein Swap & Swap: 7\,€ pro Nacht (\pfeil{s:swap}{Swaps}) \\ \addlinespace[1.6mm]
+\textbf{Ergebnis nach Swap} & +50\,€ & +493\,€ \\ \addlinespace[1.6mm]
+\textbf{Ergebnis vor Swap, gemessen an\newline Einsatz bzw. Margin} & +5\,\% & +50\,\% \\
+\end{tabular}
+\par\vspace{1mm}
+{\micro\color{soft}Alle Beträge sind fiktiv und dienen ausschließlich der Veranschaulichung.\par}
+\par\vspace{3.5mm}
+{\color{body}\raggedright Bei einem Rückgang auf 95\,€ hätte der Hebel den Verlust ebenso
+vergrößert: −50\,€ beim Direktkauf gegenüber −500\,€ beim Broker, jeweils vor Swap. Fiele der Kurs um 10\,\%,
+entspräche Ihr Verlust bereits der Margin von 1.000\,€. Fällt der Kurs weiter, schließt die Plattform
+die Position spätestens am Stop~out.\par}
 \par\vspace{6mm}
 \noindent\begin{minipage}[t]{82mm}\vspace{0pt}\begin{soft}[equal height group=hebel]
-{\htwo\ls\color{muted}AUSWIRKUNG AUF DEN KAPITALEINSATZ}\par\vspace{2mm}
+{\htwo\ls\color{muted}AUSWIRKUNG AUF DIE MARGIN}\par\vspace{2mm}
 {\color{body}Ein großes Volumen erfordert nur eine geringe Margin. Folglich bleibt ein größerer Teil
 der Equity frei.}\end{soft}\end{minipage}\hfill
 \begin{minipage}[t]{82mm}\vspace{0pt}\begin{soft}[equal height group=hebel]
 {\htwo\ls\color{muted}AUSWIRKUNG AUF KURSBEWEGUNGEN}\par\vspace{2mm}
-{\color{body}Jede Kursbewegung wirkt im Verhältnis zum Einsatz stärker, und zwar in beide Richtungen.
+{\color{body}Jede Kursbewegung wirkt im Verhältnis zur Margin stärker, und zwar in beide Richtungen.
 Je höher der Hebel, desto schneller nähert sich das Level bei Verlusten dem Stop out.}\end{soft}\end{minipage}
 \par
 \begin{merk}\textbf{Wo der Hebel steht.} Den Hebel Ihres Kontos finden Sie unter \textbf{Information} als
-\textbf{Leverage}, den eines Instruments in dessen Info-Fenster. Dieser kann niedriger sein als der Kontohebel;
-maßgeblich ist stets der Wert des Instruments.\end{merk}
+\textbf{Leverage}, den eines Instruments in dessen Angaben (Abbildung unter~\titel{s:instrumente}{Angaben eines Instruments}). Der Hebel eines Instruments kann niedriger sein
+als der Hebel Ihres Kontos; maßgeblich ist stets der Wert des Instruments.\end{merk}
 \clearpage
-\kicker{}{Swaps}
+\kicker{}{Swaps}\phantomsection\label{s:swap}
+% Liquiditaetsanbieter statt Bank (Nutzervorgabe 02.10.2026). Seite ist voll (Rest ca. 1 pt): Lead 132 mm,
+% Abstaende 6/3/3 mm, Pfeil "pro Nacht" und Wochen-Grafik oben je knapper; Hinweis "fiktiv" in der
+% Formel-Grafik, vor dem Merk-Kasten nur dessen eigener Abstand.
 \Hone{Warum über Nacht ein Swap anfällt}
-\begin{minipage}{130mm}\lead{Mit Hebel hinterlegen Sie nur einen kleinen Teil Ihrer Position als Margin.
-Der übrige Betrag ist geliehen, und für geliehenes Geld fallen Zinsen an.}\end{minipage}
-\par\vspace{7mm}
-\noindent \begin{tikzpicture}[x=1mm,y=1mm]
-\useasboundingbox (0,2) rectangle (170.0,38);
-\fill[pfgrau] (0,24) rectangle (22.0,30);
-\draw[greya,line width=0.4pt] (0,24) rectangle (170.0,30);
-\draw[hilfslinie] (0,30.8) -- (0,35.4) (170,30.8) -- (170,35.4)
-  (0,23.2) -- (0,18.6) (22,23.2) -- (22,18.6) (170,23.2) -- (170,18.6);
-\mass{0}{170}{34.6}{\micro\bfseries\ls\color{muted}IHRE POSITION AM MARKT}
-\mass{0}{22.0}{19.4}{\micro\bfseries\color{ink}Margin}
-\mass{22.0}{170}{19.4}{\lbl\bfseries\color{ink}Der übrige Betrag ist geliehen}
-\node[inner sep=0,text=muted,font=\micro] at (11.0,15.6) {Ihr Kapital};
-\draw[greya,line width=0.5pt,-{Stealth[length=2mm]}] (96,16.6) -- (96,9);
-\node[inner sep=0,text=body,font=\lbl] at (96,5) {Die Zinsen für den geliehenen Betrag werden als Swap gebucht.};
-\end{tikzpicture}
-\par\vspace{5mm}
+\begin{minipage}{132mm}\lead{Bleibt eine Position über Nacht offen, verlangen der Liquiditätsanbieter – das Finanzinstitut,
+über das der Broker seine Positionen abwickelt – und der Broker dafür je einen Betrag. Zusammen werden sie
+als Swap gebucht.}\end{minipage}
+\par\vspace{6mm}
+% Rechenbeispiel nach der Skizze des Nutzers (originals/skizze-hebel-swap.png). Eigene Position in Crude Oil,
+% nicht Instrument XY der Hebel-Seite (der Bekannte kauft XY ueber sein Wertpapierdepot).
+% Ausnahme vom Zahlenverbot (Nutzerwunsch 02.10.2026): nur 1.000, 1:10, 10.000, 3, 3, 6, 1, 7.
+% Modell des Nutzers: Betrag des Liquiditaetsanbieters = Miete fuer die Aufbewahrung (Rohstoffe) bzw. Zinsen fuer
+% das geliehene Geld (Forex) + Risikoanteil; dazu der Aufschlag des Brokers. Kein Gruen/Rot.
 \Htwo{Zusammensetzung des Swaps}
+{\color{body}\raggedright Angenommen, Sie halten eine Position im Rohstoff Crude Oil (Rohöl) mit einem Volumen
+von 10.000\,€.\par}
+\par\vspace{3mm}
+% Position massstaeblich: Margin 17 mm = ein Zehntel von 170 mm (Hebel 1:10)
+\noindent \begin{tikzpicture}[x=1mm,y=1mm]
+\useasboundingbox (0,6.6) rectangle (170.0,35.2);
+\fill[pfgrau] (0,22) rectangle (17.0,28);
+\draw[greya,line width=0.4pt] (0,22) rectangle (170.0,28);
+\draw[hilfslinie] (0,28.8) -- (0,33.4) (170,28.8) -- (170,33.4)
+  (0,21.2) -- (0,16.6) (17,21.2) -- (17,16.6);
+\mass{0}{170}{32.6}{\lbl\bfseries\color{ink}Ihre Position in Crude Oil: 10.000\,€}
+\masslinie{0}{17.0}{17.4}
+\node[anchor=west,inner sep=0,font=\lbl] at (20.5,17.4)
+  {\textbf{\color{ink}Margin: 1.000\,€}\hspace{2.2mm}{\color{muted}bei Hebel 1:10 ein Zehntel der Position}\strut};
+\draw[greya,line width=0.5pt,-{Stealth[length=2mm]}] (85,13.4) -- (85,7.6);
+\node[anchor=west,inner sep=0,text=muted,font=\micro] at (88,10.5) {pro Nacht};
+\end{tikzpicture}
+\par
 \noindent\makebox[\linewidth][c]{\begin{tikzpicture}[x=1mm,y=1mm,
   term/.style={anchor=base west,inner sep=0,font=\hthree,text=ink},
   op/.style={anchor=base west,inner sep=0,font=\fontsize{12}{15}\selectfont,text=muted},
   klammer/.style={greya,line width=0.5pt,decorate,decoration={brace,mirror,amplitude=1.4mm}},
-  notiz/.style={anchor=base,inner sep=0,font=\micro,text=muted}]
-\path (0,0) (0,30);
-\node[term] (a) at (0,17) {Zins am Geldmarkt};
-\node[op] (p) at ([xshift=5mm]a.base east) {+};
-\node[term] (b) at ([xshift=5mm]p.base east) {Aufschlag des Brokers};
-\node[op] (g) at ([xshift=5mm]b.base east) {=};
-\node[term] (c) at ([xshift=5mm]g.base east) {Ihr Swap};
-\foreach \n in {a,b,c} \draw[klammer] ([yshift=-2.8mm]\n.base west) -- ([yshift=-2.8mm]\n.base east);
-\node[notiz] at ([yshift=-8.6mm]a.base) {Zinssatz für Kredite zwischen Banken};
-\node[notiz] at ([yshift=-8.6mm]b.base) {Marge des Anbieters};
-\node[notiz] at ([yshift=-8.6mm]c.base) {pro Nacht gebuchter Betrag};
+  betrag/.style={anchor=base,inner sep=0,font=\small,text=ink}]
+\path (0,-1.2) (0,25);
+\node[term] (a) at (0,21) {Miete für die Aufbewahrung};
+\node[op] (p1) at ([xshift=4.2mm]a.base east) {+};
+\node[term] (b) at ([xshift=4.2mm]p1.base east) {Risikoanteil};
+\node[op] (p2) at ([xshift=4.2mm]b.base east) {+};
+\node[term] (c) at ([xshift=4.2mm]p2.base east) {Aufschlag des Brokers};
+\node[op] (g) at ([xshift=4.2mm]c.base east) {=};
+\node[term] (d) at ([xshift=4.2mm]g.base east) {Swap};
+\foreach \n in {a,b,c,d} \draw[klammer] ([yshift=-2.8mm]\n.base west) -- ([yshift=-2.8mm]\n.base east);
+\node[betrag] at ([yshift=-8.6mm]a.base) {3\,€};
+\node[betrag] at ([yshift=-8.6mm]b.base) {3\,€};
+\node[betrag] at ([yshift=-8.6mm]c.base) {1\,€};
+\node[betrag,font=\small\bfseries] at ([yshift=-8.6mm]d.base) {7\,€ pro Nacht};
+% zweite Stufe: Miete und Risikoanteil zusammen = Betrag des Liquiditaetsanbieters
+\draw[klammer] ([yshift=-11.4mm]a.base west) -- ([yshift=-11.4mm]b.base east);
+\node[betrag] at ($([yshift=-17.4mm]a.base west)!0.5!([yshift=-17.4mm]b.base east)$) {Betrag des Liquiditätsanbieters: 6\,€};
+% ebenso der Aufschlag = Betrag des Brokers
+\draw[klammer] ([yshift=-11.4mm]c.base west) -- ([yshift=-11.4mm]c.base east);
+\node[betrag] at ($([yshift=-17.4mm]c.base west)!0.5!([yshift=-17.4mm]c.base east)$) {Betrag des Brokers: 1\,€};
+% Hinweis auf Beispielzahlen (Nutzervorgabe 02.10.2026)
+\node[anchor=base,inner sep=0,font=\micro,text=soft] at ($([yshift=-21.4mm]a.base west)!0.5!([yshift=-21.4mm]d.base east)$)
+  {Die Beträge sind fiktiv und dienen ausschließlich der Veranschaulichung.};
 \end{tikzpicture}}
-\par\vspace{5mm}
-{\color{muted}\small\raggedright Für jedes Instrument gelten zwei Sätze: \textbf{Swap long} für Buy und \textbf{Swap short}
-für Sell. In der Regel sind beide negativ; ist ein Satz positiv, wird Ihnen der Betrag gutgeschrieben.
-Beide Werte finden Sie im Info-Fenster des Instruments.\par}
+\par\vspace{3mm}
+{\color{body}\raggedright Die Miete für die Aufbewahrung fällt bei Rohstoffen wie Crude Oil oder Natural Gas (Erdgas) an; bei Forex
+(Währungen, z.\,B. EUR/USD) treten an ihre Stelle die Zinsen für das geliehene Geld. Der Risikoanteil soll den Liquiditätsanbieter vor~Verlusten~schützen.\par}
+\par\vspace{3mm}
+% Einheit der Saetze unbekannt (nicht nennen); Satz zur Gutschrift bleibt (Nutzerentscheidung)
+{\color{muted}\small\raggedright Die tatsächlichen Sätze stehen bei jedem Instrument (\pfeil{s:instrumente}{Angaben eines Instruments}):
+\textbf{Swap long} für Buy, \textbf{Swap short} für Sell. In der Regel sind beide negativ, was eine Belastung bedeutet; ist ein Satz positiv,
+wird Ihnen der Betrag gutgeschrieben.\par}
 \hr
 \Htwo{Zeitpunkt der Buchung}
 \noindent \begin{tikzpicture}[x=1mm,y=1mm]
-\useasboundingbox (0,1) rectangle (170.0,29);
+\useasboundingbox (0,1.6) rectangle (170.0,29);
 \draw[greya,line width=0.5pt,-{Stealth[length=2mm]}] (0,10) -- (170.0,10);
 \draw[pfgrey,line width=1.2pt] (0,10) -- (108.0,10);
 \draw[sell,line width=1.2pt] (108.0,10) -- (108.0,22);
 \draw[pfgrey,line width=1.2pt] (108.0,22) -- (166.0,22);
 \fill[sell] (108.0,10) circle (1.2);
 \node[anchor=east,inner sep=0,text=muted,font=\lbl] at (104.0,14) {im Tagesverlauf keine Buchung};
-\node[anchor=west,inner sep=0,text=sell,font=\lbl\bfseries] at (112.0,26) {Tageswechsel: Swap wird gebucht};
+% Uhrzeit vom Nutzer bestaetigt (02.10.2026): 23:00 Uhr Amsterdamer Zeit; nur hier ausgeschrieben
+\node[anchor=east,inner sep=0,text=sell,font=\lbl\bfseries] at (104.0,26) {Tageswechsel um 23:00 Uhr (Amsterdamer Zeit)};
+\node[anchor=west,inner sep=0,text=sell,font=\lbl\bfseries] at (112.0,26) {Swap wird gebucht};
 \node[anchor=west,inner sep=0,text=muted,font=\micro] at (112.0,19) {einmalig, nicht anteilig nach Stunden};
 \node[anchor=west,inner sep=0,text=soft,font=\micro] at (0,4) {Wird die Position vor dem Tageswechsel geschlossen, fällt kein Swap an; ist sie noch offen, wird der volle Swap gebucht.};
 \end{tikzpicture}
 \par\vspace{3mm}
 \noindent \begin{tikzpicture}[x=1mm,y=1mm]
-\useasboundingbox (0,1) rectangle (170.0,31);
+\useasboundingbox (0,1) rectangle (170.0,28);
 \draw[body,line width=0.7pt,-{Stealth[length=2mm]}] (0,18) -- (170.0,18);
 \node[inner sep=0,text=ink,font=\lbl\bfseries] at (10.0,26) {Montag};
 \fill[ink] (10.0,18) circle (1.1);
@@ -430,18 +548,18 @@ Beide Werte finden Sie im Info-Fenster des Instruments.\par}
 \node[inner sep=0,text=ink,font=\lbl\bfseries] at (160.0,26) {Freitag};
 \fill[ink] (160.0,18) circle (1.1);
 \node[inner sep=0,text=muted,font=\micro] at (160.0,10) {ein Swap};
-\node[inner sep=0,text=soft,font=\micro] at (85.0,3) {Für jede Nacht, in der eine Position offen bleibt, wird ein Swap gebucht; am Mittwoch wird das Wochenende mitberechnet.};
+\node[inner sep=0,text=soft,font=\micro] at (85.0,3) {Für jede Nacht, in der eine Position offen bleibt, wird ein Swap gebucht; am Mittwoch wird der Swap für das Wochenende mitgebucht.};
 \end{tikzpicture}
-\par\vspace{3mm}
+\par
 \begin{merk}\textbf{Zusammenfassung.} Für eine Position, die Sie am selben Tag schließen, fällt kein Swap an.
 Halten Sie eine Position über mehrere Nächte, wird für jede Nacht ein Swap gebucht, am Mittwoch in dreifacher Höhe.
-Der Swap wird bei jeder Position in der Spalte \textbf{Swap} ausgewiesen und ist im angezeigten Profit bereits
-enthalten; er wirkt sich folglich unmittelbar auf das Ergebnis der Position aus.\end{merk}
+Der Swap wird bei der offenen Position verbucht und in der Spalte \textbf{Swap} ausgewiesen; er ist in ihrem
+\textbf{Total Profit} enthalten und geht beim Schließen mit ihrem Ergebnis in die Balance ein.\end{merk}
 \clearpage
-\kicker{}{In der Plattform}
+\kicker{}{In der Plattform}\phantomsection\label{s:plattform}
 \Hone{Wo Sie die Werte finden}
-\begin{minipage}{130mm}\lead{Die mobile Ansicht und der Desktop zeigen dieselben Werte unter denselben
-Begriffen. Oben ist die mobile Kontoübersicht abgebildet, darunter die Leiste am Desktop.}\end{minipage}
+\begin{minipage}{130mm}\lead{Mobile Ansicht und Desktop zeigen dieselben Werte unter denselben Begriffen;
+anstelle der Beträge stehen in den Abbildungen Wörter.}\end{minipage}
 \par\vspace{7mm}
 % Mobile Ansicht (mobil.pdf: Kopfleiste + Reiter + panel.pdf, 440 x 516 CSS-px) im Maßstab
 % des bisherigen Panels (78 mm für 452 px). Koordinaten unten in CSS-px, y nach unten.
@@ -465,7 +583,7 @@ Begriffen. Oben ist die mobile Kontoübersicht abgebildet, darunter die Leiste a
 \end{tikzpicture}\end{minipage}\hfill
 \begin{minipage}[t]{86mm}\vspace{1mm}\raggedright
 \vspace{20mm}
-\begin{enumerate}[label=\protect\pfn{\arabic*},leftmargin=6.6mm,labelsep=2.4mm,itemsep=3mm,topsep=0pt]
+\begin{enumerate}[label=\protect\pfn{\arabic*},leftmargin=6.6mm,labelsep=2.4mm,itemsep=2.5mm,topsep=0pt]
 \item {\bfseries Equity}\newline{\color{muted}\small Der aktuelle Kontowert: Balance zuzüglich Profit/Losses.}
 \item {\bfseries Profit/Losses}\newline{\color{muted}\small Das unrealisierte Ergebnis der offenen Positionen.}
 \item {\bfseries Margin}\newline{\color{muted}\small Der als Sicherheit gebundene Teil der Equity.}
@@ -473,29 +591,109 @@ Begriffen. Oben ist die mobile Kontoübersicht abgebildet, darunter die Leiste a
 \item {\bfseries Level}\newline{\color{muted}\small Das Verhältnis von Equity zu Margin; Maßstab für den Abstand zum Stop out.}
 \end{enumerate}
 \par\vspace{3mm}
-{\color{soft}\small Die \textbf{Balance} steht ganz oben. Die Felder \textbf{Bonus} und \textbf{Credit}
-sind für den regulären Handel ohne Bedeutung.}
+{\color{soft}\small Am Ende folgen \textbf{Bonus} und \textbf{Credit}. Der Reiter \textbf{Information}
+nennt \textbf{Leverage} und \textbf{Stop out} Ihres Kontos.}
 \end{minipage}
-\hr
-\Htwo{Am Desktop: dieselben Werte in einer Zeile}
+\par\vspace{6mm}{\color{rule}\rule{\linewidth}{0.4pt}}\par\vspace{5mm}% wie \hr, je 1 mm knapper
+\Htwo{Am Desktop: dieselben Werte in der untersten Leiste}
+% desktop-schema.pdf (170 x 82,4 mm): Lehrbuch-Schema des Bildschirms mit den Bereichen Kursliste,
+% Chart, Tabelle der Positionen und Unterste Leiste; darunter bar.pdf als Nachbau dieser Leiste.
+\noindent\includegraphics[width=170mm]{desktop-schema.pdf}
+\par\vspace{2.5mm}
 \noindent\includegraphics[width=170mm]{bar.pdf}
-\par\vspace{3mm}
-{\color{soft}\small Die Leiste befindet sich unten rechts und ist dauerhaft sichtbar. Sie enthält dieselben Werte
-wie die mobile Ansicht; die \textbf{Balance} steht hier am Anfang der Reihe.}
+\par\vspace{2.5mm}
+{\color{soft}\small\raggedright Den Weg über die \textbf{Kursliste} zeigt~\titel{s:instrumente}{Angaben eines
+Instruments}, die \textbf{Tabelle der Positionen} erläutert~\titel{s:positionen}{Offene Positionen}.\par}
+\querformat
+\kicker{}{Angaben eines Instruments}\phantomsection\label{s:instrumente}
+\Hone{Wo Sie die Angaben eines Instruments finden}
+\begin{minipage}{130mm}\lead{Jedes Instrument hat eigene Angaben, darunter die Sätze des Swaps und den Hebel.
+Die Abbildungen zeigen den Weg dorthin am Beispiel Gold; anstelle der Werte stehen Wörter.}\end{minipage}
 \par\vspace{7mm}
-\noindent\begin{minipage}[t]{82mm}\vspace{0pt}\begin{soft}[equal height group=plattform]
-{\htwo\ls\color{muted}DESKTOP}\par\vspace{2.5mm}
-{\color{body}Die Kontoübersicht befindet sich in der \textbf{untersten Leiste}. Offene Positionen werden
-direkt unter dem Chart angezeigt, einschließlich der Spalten \textbf{Swap} und \textbf{Commission}. Angaben
-zu einem Instrument erhalten Sie über das \textbf{Info-Zeichen} in der Kursliste.}\end{soft}\end{minipage}\hfill
-\begin{minipage}[t]{82mm}\vspace{0pt}\begin{soft}[equal height group=plattform]
-{\htwo\ls\color{muted}MOBILE}\par\vspace{2.5mm}
-{\color{body}Tippen Sie oben rechts auf das \textbf{Info-Zeichen}. Zunächst öffnet sich
-\textbf{Information}; nach Antippen von \textbf{Balance} erscheint die oben abgebildete Ansicht. Der Reiter
-\textbf{Information} zeigt \textbf{Leverage} und \textbf{Stop out}. Positionen finden Sie unter
-\textbf{Orders} → \textbf{Active}; aufgeklappt zeigen sie Swap und Margin.}\end{soft}\end{minipage}
+% Bildfolge links (Desktop): Ausschnitt der Kursliste (kursliste-desktop-ohne.pdf, Energies bis
+% Commodities), Pfeil vom Info-Zeichen der Zeile Gold zum Info-Fenster (info-desktop.pdf);
+% rechts (mobil) info-mobil.pdf. Alle Nachbauten im selben Massstab: 1 CSS-px = 0,21 mm
+% (Schrift 12 px = 7,1 pt). Koordinaten in px, y nach unten. Markierung des Info-Zeichens
+% und der Kopfzeile wie die Tippmarken unter "In der Plattform" (weisser Ring/Rahmen).
+\newlength\ipx\setlength\ipx{0.21mm}
+\noindent\begin{minipage}[t]{776\ipx}\raggedright
+{\htwo\ls\color{muted}DESKTOP}\par\vspace{1.5mm}
+{\small\color{muted}\textbf{Kursliste}~→ \textbf{Metals}~→ Zeile \textbf{Gold}}\end{minipage}\hfill
+\begin{minipage}[t]{410\ipx}\raggedright
+{\htwo\ls\color{muted}MOBILE}\par\vspace{1.5mm}
+{\small\color{muted}\textbf{Quotes}~→ \textbf{Metals}~→ \textbf{Gold} antippen}\end{minipage}
+\par\vspace{4mm}
+\noindent\begin{minipage}[t]{776\ipx}\vspace{0pt}
+\begin{tikzpicture}[x=\ipx,y={(0,-\ipx)}]
+\useasboundingbox (0,0) rectangle (776,254);
+% Kursliste (Koordinaten kx, ky der Quelle): Ausschnitt kx -10..314, ky 126..380, Rand in der
+% Farbe des Seitenhintergrunds; Bildpunkt = (kx+10, ky-126)
+\fill[pfseite] (0,0) rectangle (324,254);
+\begin{scope}
+\clip (1,1) rectangle (323,253);% innerhalb der Flaeche, sonst Saum beim Kantenglaetten
+\node[anchor=north west,inner sep=0,outer sep=0] at (10,-126)
+  {\includegraphics[width=304\ipx]{kursliste-desktop-ohne.pdf}};
+\end{scope}
+% Info-Zeichen der Zeile Gold: Mitte kx 285,6 / ky 239,5 -> (295.6,113.5)
+\draw[white,line width=1.5\ipx] (295.6,113.5) circle[radius=10.5] (306.1,113.5) -- (324,113.5);
+\draw[ink,line width=1.2pt,-{Stealth[length=3.2mm,width=2.8mm]}] (324,113.5) -- (456,113.5);
+\node[anchor=south,align=center,font=\fine,text=ink,inner sep=0] at (390,107)
+  {Klick auf das\\\textbf{Info-Zeichen (i)}};
+% Info-Fenster: PDF 338 x 242,8 px mit 24 px Schattenrand je Seite; Fenster (462,24)-(752,218.8)
+\node[anchor=north west,inner sep=0,outer sep=0] at (438,0)
+  {\includegraphics[width=338\ipx]{info-desktop.pdf}};
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}[t]{410\ipx}\vspace{0pt}
+\begin{tikzpicture}[x=\ipx,y={(0,-\ipx)}]
+\node[anchor=north west,inner sep=0,outer sep=0] at (0,0) {\includegraphics[width=410\ipx]{info-mobil.pdf}};
+% Kopfzeile des Instruments (410 x 40 px) = Stelle zum Antippen
+\draw[white,line width=1.5\ipx,rounded corners=3\ipx] (0.75,0.75) rectangle (409.25,39.25);
+\end{tikzpicture}
+\end{minipage}
+\par\vspace{8mm}
+% Legende der Nummern 1-3 (Wegweiser), gilt fuer beide Abbildungen
+\noindent{\renewcommand{\arraystretch}{1.2}%
+\begin{tabular}{@{}c@{\hspace{2.4mm}}l@{\hspace{2mm}}l@{\hspace{12mm}}c@{\hspace{2.4mm}}l@{\hspace{2mm}}l%
+  @{\hspace{12mm}}c@{\hspace{2.4mm}}l@{\hspace{2mm}}l@{}}
+\pfn{1} & \textbf{Swap long} & {\color{muted}\small Satz des Swaps für Buy} &
+\pfn{2} & \textbf{Swap short} & {\color{muted}\small Satz des Swaps für Sell} &
+\pfn{3} & \textbf{Leverage} & {\color{muted}\small Hebel des Instruments} \\
+\end{tabular}}
 \clearpage
-\kicker{}{Auf einen Blick}
+\kicker{}{Offene Positionen}\phantomsection\label{s:positionen}
+\Hone{Die Angaben Ihrer offenen Positionen}
+\begin{minipage}{130mm}\lead{Jede offene Position steht mit ihren eigenen Angaben in einer Liste, darunter ihr
+Swap, ihr Total Profit und ihre Margin. Anstelle der Werte stehen in der Abbildung Wörter.}\end{minipage}
+\par\vspace{7mm}
+% Liste der offenen Positionen (docs/plattform/dom-positionsliste.md); kein S/L (HANDOFF 2.2/2.3).
+\noindent\begin{minipage}[t]{150mm}\raggedright
+{\htwo\ls\color{muted}DESKTOP}\par\vspace{1.5mm}
+{\small\color{muted}\textbf{Tabelle der Positionen} unter dem \textbf{Chart} (der grafischen Darstellung des
+Kursverlaufs)~→ Reiter \textbf{Active} (daneben
+\textbf{Pending} und \textbf{History}), je Position eine Zeile}\end{minipage}\hfill
+\begin{minipage}[t]{410\ipx}\raggedright
+{\htwo\ls\color{muted}MOBILE}\par\vspace{1.5mm}
+{\small\color{muted}\textbf{Orders}~→ \textbf{Active}~→ Position antippen; ihre Angaben klappen darunter
+auf}\end{minipage}
+\par\vspace{4mm}
+\noindent\positionstabelle
+\par\vspace{8mm}
+\begin{tabularx}{\linewidth}{@{}c@{\hspace{2.4mm}}>{\raggedright\arraybackslash}p{30mm}%
+  >{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{36mm}@{}}
+ & \hd{Angabe} & \hd{Bedeutung} & \hd{Mehr dazu} \\
+\addlinespace[1.6mm]\midrule\addlinespace[2.4mm]
+ & \textbf{Amount} & Die gehandelte Menge des Instruments. & \\ \addlinespace[2mm]
+ & \textbf{Trade Volume} & Der Wert der Position, in dieser Einheit Volumen genannt. & \verw{s:hebel}{Hebel} \\ \addlinespace[2mm]
+\pfn{1} & \textbf{Swap} & Der bei der Position verbuchte Swap. Er ist in Total Profit enthalten.
+  & \verw{s:swap}{Swaps} \\ \addlinespace[2mm]
+\pfn{2} & \textbf{Total Profit} & Das aktuelle Ergebnis der Position einschließlich ihres Swaps; es ändert sich mit
+  jeder Kursbewegung. Das Ergebnis aller offenen Positionen zusammen steht unter Profit/Losses.
+  & \verw{s:kontostand}{Kontostand} \\ \addlinespace[2mm]
+\pfn{3} & \textbf{Margin} & Der Teil Ihres Kontos, den diese Position als Sicherheit bindet. & \verw{s:margin}{Margin} \\
+\end{tabularx}
+\hochformat
+\kicker{}{Auf einen Blick}\phantomsection\label{s:ueberblick}
 \Hone{Die Begriffe im Überblick}
 \begin{minipage}{130mm}\lead{Die folgende Übersicht nennt für jeden Begriff seine Bedeutung und die Anlässe, zu denen sich sein Wert ändert.}\end{minipage}
 \par\vspace{9mm}
@@ -504,14 +702,21 @@ zu einem Instrument erhalten Sie über das \textbf{Info-Zeichen} in der Kurslist
   >{\raggedright\arraybackslash}p{61.5mm}@{}}
 \hd{Begriff} & \hd{Bedeutung} & \hd{Änderung} \\
 \addlinespace[1.6mm]\midrule\addlinespace[2.4mm]
-\textbf{Balance} & Einzahlungen und Ergebnisse geschlossener Positionen & Bei Schließen, Ein- und Auszahlung sowie Swap \\ \addlinespace[2mm]
+\textbf{Balance} & Einzahlungen und Ergebnisse geschlossener Positionen & Bei Schließen sowie Ein- und Auszahlung \\ \addlinespace[2mm]
 \textbf{Equity} & Balance zuzüglich Profit/Losses & Mit jeder Kursbewegung \\ \addlinespace[2mm]
 \textbf{Profit/Losses} & Unrealisiertes Ergebnis der offenen Positionen & Mit jeder Kursbewegung \\ \addlinespace[2mm]
+\textbf{Total Profit} & Ergebnis einer offenen Position einschließlich ihres Swaps & Mit jeder Kursbewegung
+  und jedem Swap \\ \addlinespace[2mm]
 \textbf{Margin} & Als Sicherheit gebundener Teil der Equity & Beim Öffnen und Schließen von Positionen \\ \addlinespace[2mm]
 \textbf{Free} & Equity abzüglich Margin & Mit jeder Kursbewegung und jeder Position \\ \addlinespace[2mm]
 \textbf{Level} & Equity im Verhältnis zur Margin & Mit jeder Kursbewegung und jeder Position \\ \addlinespace[2mm]
-\textbf{Leverage} & Verhältnis von Volumen zu Margin & Fest je Konto und Instrument \\ \addlinespace[2mm]
-\textbf{Swap} & Zinsen für das Halten über Nacht & Jede Nacht, am Mittwoch dreifach \\
+\textbf{Stop out} & Schwelle des Levels, an der die Plattform Positionen selbstständig schließt & Fest je Konto \\ \addlinespace[2mm]
+\textbf{Leverage} & Verhältnis von Margin zu Volumen; bei 1:10 beträgt die Margin ein Zehntel des Volumens
+  & Fest je Konto und Instrument \\ \addlinespace[2mm]
+\textbf{Swap} & Belastung oder Gutschrift für das Halten über Nacht; bei der Position verbucht, beim Schließen
+  in der Balance & Jede Nacht, am Mittwoch dreifach \\ \addlinespace[2mm]
+\textbf{Bonus} & Betrag, mit dem Sie handeln können; Gewinne daraus sind gemäß den AGB auszahlbar
+  & – \\
 \end{tabular}
 \par\vspace{6mm}
 \begin{merk}\textbf{Kernaussagen.} Die Equity gibt den aktuellen Wert Ihres Kontos wieder, die Balance hingegen nur

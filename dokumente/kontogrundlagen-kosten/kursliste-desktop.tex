@@ -1,0 +1,114 @@
+% Kursliste am Desktop (blaues Design, Kategorie Metals aufgeklappt) – Vektor-Nachbau.
+% Grundlage: DOM-Messung originals/messungen/kursliste-desktop.json (CSS-px, Fenster
+% 2040 x 986 wie bei bar.tex). Bild = der gemessene Block .quote-list, 304 x 410 px.
+% Koordinaten unten in CSS-px, y nach unten, Ursprung = linke obere Ecke des Blocks.
+%
+% Gemessen:
+%   Block              304 x 410, Fläche rgb(4,39,60) (= Seitenhintergrund), Inter
+%   button.quotes-ttl  x0, je 304 x 28, padding 0 20px 0 0, text-align left,
+%                      Inter 500, 12 px / line-height 14 px, weiß, Fläche = Block;
+%                      y Forex 0, Stocks 32, Cryptos 64, Indices 96, Energies 128,
+%                      Metals 160 (aufgeklappt, margin-bottom 4 px), Commodities 350,
+%                      ETFs 382
+%     Pfeil auf/ab     NICHT gemessen (kein Knoten, kein ::after) – WEGGELASSEN
+%   li > a (Zeile)     x0, 304 x 30, y 192 / 224 / 256 (Abstand 32), padding 6px 8px,
+%                      Radius 3 px, Fläche rgba(14,80,114,0.1), Inter 400, 12 px / line-height 18 px
+%     i.icon-star      x8 y+8 14 x 14, icomoon 14 px, U+E916, rgb(91,106,130)
+%                      – nur, wenn icons.tikz \iconstar enthält (derzeit nicht; die Font
+%                      liegt nicht im Repo), sonst leer
+%     img              x33,3 (Palladium x30,8) y+8,5, 22 x 14 (27 x 14)
+%                      – WEGGELASSEN (Rasterbild), die Fläche bleibt leer
+%     span.arrow       NICHT gemessen – WEGGELASSEN
+%     span.symbol      x73,6 y+6, 63,15 x 18: Copper, Gold, Palladium (weiß)
+%     Kurse (2 Spalten) x145,2 und x210,9, Textbox y+6,8, 15,2 hoch; Farbe Copper
+%                      rgb(255,255,255) (color00), Gold und Palladium rgb(83,188,81)
+%                      (color-green-main)
+%     i.icon-information x278,6 y+8,5, 14 x 14, icomoon 14 px, U+E93A, rgb(34,100,134)
+%                      -> \iconinfo aus icons.tikz
+%   Platinum (y 288) und Silver (y 320): NICHT gemessen – der Messbefehl hat je Kategorie
+%   nur die ersten drei li erfasst. Belegt durch das HTML des Nutzers
+%   (docs/plattform/dom-kursliste-instrument-info.md: Copper, Gold, Palladium, Platinum,
+%   Silver) und die 64 px bis Commodities (350) = 2 x 32 px; nach dem gemessenen
+%   Zeilenmuster ergänzt, Kurse weiß (color00, neutraler Zustand; die Farbe wechselt live).
+%
+% Grundlinien (wie bar.tex): Oberkante der Textbox + Ascent 12 px (Chrome rundet Ascent/
+% Descent in Gerätepixeln: 12 + 3,2 = 15,2 px). Zeilen: Textbox y+6,8 gemessen -> y+18,8.
+% Schaltflächen: Zeile (14 px) mittig in 28 px -> Oberkante 7, Textbox 0,8 px darüber
+% (wie bar.tex bei 14 px) -> Grundlinie y+18,2.
+% Icons: Glyphenbox (Ascent 960 + Descent 64 = 1 em) = Box des <i>, 14 x 14 px.
+%
+% Abweichung vom Original (Regeln des Nutzers): keine Zahlen, kein Bid/Ask -> beide Kurse
+% heißen „Kurs“, in den gemessenen Farben. Die Instrumentnamen bleiben.
+%
+% Marken (Schalter \ifmarken, Standard: an; ohne Marken bauen mit
+%   xelatex -jobname=kursliste-desktop-ohne '\def\ohnemarken{}\input{kursliste-desktop}'):
+% Stil der Nummern in panel.pdf (weißer Kreis 22 px, Ziffer Inter 600 12 px in #04273C,
+% Grundlinie 4 px unter der Mitte); 1 links neben dem Info-Zeichen der Zeile Gold (3 px
+% Abstand, mittig zum Zeichen).
+\documentclass[border=0pt]{standalone}
+\usepackage{fontspec}
+\usepackage{tikz}
+\setmainfont{Inter}% Inter 4.0 (Paket fonts-inter), wie bar.tex
+\newfontfamily\mittel{Inter Medium}%     button.quotes-ttl, font-weight 500
+\newfontfamily\halbfett{Inter SemiBold}% Ziffern der Marken (wie panel.pdf)
+
+\newlength\px \setlength\px{0.75bp}% 1 CSS-px
+\newcommand\schrift{\fontsize{9bp}{10.5bp}\selectfont}% 12 px
+\definecolor{seite}{RGB}{4,39,60}%      Block und Schaltflächen
+% Zeile: rgba(14,80,114,0.1) über rgb(4,39,60) = (5,0; 43,1; 65,4) -> rgb(5,43,65)
+\definecolor{zeile}{RGB}{5,43,65}%
+\definecolor{stern}{RGB}{91,106,130}%   i.icon-star
+\definecolor{info}{RGB}{34,100,134}%    i.icon-information
+\definecolor{gruen}{RGB}{83,188,81}%    color-green-main
+\definecolor{markenziffer}{HTML}{04273C}% Ziffer der Marken (wie panel.pdf)
+\input{icons.tikz}
+
+\newif\ifmarken \markentrue
+\ifdefined\ohnemarken \markenfalse\fi
+
+% \kategorie{<y>}{<Name>}
+\newcommand\kategorie[2]{%
+  \node[anchor=base west,inner sep=0,outer sep=0,text=white,font=\schrift\mittel]
+    at (0,#1+18.2) {#2};}
+
+% \icon{<x>}{<y Oberkante>}{<Farbe>}{<Icon>}: Box 14 x 14 px (icons.tikz: 24 px, y nach oben)
+\newcommand\icon[4]{%
+  \begin{scope}[shift={(#1,#2+14)},x=0.4375bp,y=0.4375bp,color=#3]#4\end{scope}}% 14/24 px
+
+% \instrument{<y>}{<Name>}{<Farbe der Kurse>}
+\newcommand\instrument[3]{%
+  \fill[zeile,rounded corners=3\px] (0,#1) rectangle (304,#1+30);
+  \ifdefined\iconstar \icon{8}{#1+8}{stern}{\iconstar}\fi
+  \node[anchor=base west,inner sep=0,outer sep=0,text=white] at (73.6,#1+18.8) {#2};
+  \node[anchor=base west,inner sep=0,outer sep=0,text=#3] at (145.2,#1+18.8) {Kurs};
+  \node[anchor=base west,inner sep=0,outer sep=0,text=#3] at (210.9,#1+18.8) {Kurs};
+  \icon{278.6}{#1+8.5}{info}{\iconinfo}}
+
+% \marke{<y Mitte>}{<Nummer>}: Kreis 22 px, 3 px links vor dem Info-Zeichen (x 278,6)
+\newcommand\marke[2]{%
+  \fill[white] (264.6,#1) circle[radius=11];
+  \node[anchor=base,inner sep=0,outer sep=0,text=markenziffer,
+    font=\schrift\halbfett] at (264.6,#1+4) {#2};}
+
+\begin{document}%
+\begin{tikzpicture}[x=\px,y={(0,-\px)},font=\schrift]
+  \path[use as bounding box] (0,0) rectangle (304,410);
+  \fill[seite] (0,0) rectangle (304,410);
+  \kategorie{0}{Forex}
+  \kategorie{32}{Stocks}
+  \kategorie{64}{Cryptos}
+  \kategorie{96}{Indices}
+  \kategorie{128}{Energies}
+  \kategorie{160}{Metals}
+  \instrument{192}{Copper}{white}
+  \instrument{224}{Gold}{gruen}
+  \instrument{256}{Palladium}{gruen}
+  \instrument{288}{Platinum}{white}% nach Zeilenmuster ergänzt (s. o.)
+  \instrument{320}{Silver}{white}%   nach Zeilenmuster ergänzt (s. o.)
+  \kategorie{350}{Commodities}
+  \kategorie{382}{ETFs}
+  \ifmarken
+    \marke{224+8.5+7}{1}
+  \fi
+\end{tikzpicture}%
+\end{document}
