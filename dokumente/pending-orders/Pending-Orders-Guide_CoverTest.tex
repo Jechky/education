@@ -100,6 +100,9 @@
 % Platzhalter-Koordinaten aus cover.svg (y von oben, hier negativ). Baselines:
 % Versalhoehe (0,698 em) mittig in der Platzhalter-Box; Kicker oben buendig
 % auf 20,5 mm (gleiche Starthoehe wie die Innenseiten).
+% Charts: linke Kante des Chart-Inhalts buendig mit der Textkante (x=20 bzw. 117,5).
+% Abgezogen wird die linke Inhaltskante aus charts.tikz (bs/sl: 11.373, bl/ss: 14 px);
+% bei Aenderungen an charts.tikz diese Werte anpassen.
 \definecolor{cvkicker}{HTML}{9FB3C2}\definecolor{cvsub}{HTML}{D5DEE6}
 \definecolor{cvpill}{HTML}{5E7F95}\definecolor{cvpilltext}{HTML}{C9D6E0}
 \thispagestyle{empty}
@@ -114,16 +117,16 @@
 \node[anchor=base,inner sep=0,text=muted,font=\lbl\bfseries\ls] at (105,-115.932) {AT PRICE ÜBER DEM AKTUELLEN KURS};
 \node[anchor=base,inner sep=0,text=ink,font=\lbl\bfseries\ls] at (105,-188.932) {KURS JETZT};
 \node[anchor=base,inner sep=0,text=muted,font=\lbl\bfseries\ls] at (105,-260.932) {AT PRICE UNTER DEM AKTUELLEN KURS};
-\begin{scope}[shift={(20,-163)},scale=72.5/174] \chartbsmini \end{scope}
+\begin{scope}[shift={(20-11.373*72.5/174,-163)},scale=72.5/174] \chartbsmini \end{scope}
 \node[anchor=base west,inner sep=0,text=buy,font=\hthree] at (20,-171.472) {BUY STOP};
 \node[anchor=base west,inner sep=0,text=muted,font=\small] at (20,-177.305) {Ausbruch nach oben};
-\begin{scope}[shift={(117.5,-163)},scale=72.5/174] \chartslmini \end{scope}
+\begin{scope}[shift={(117.5-11.373*72.5/174,-163)},scale=72.5/174] \chartslmini \end{scope}
 \node[anchor=base west,inner sep=0,text=sell,font=\hthree] at (117.5,-171.472) {SELL LIMIT};
 \node[anchor=base west,inner sep=0,text=muted,font=\small] at (117.5,-177.305) {teurer verkaufen};
-\begin{scope}[shift={(20,-252)},scale=72.5/174] \chartblmini \end{scope}
+\begin{scope}[shift={(20-14*72.5/174,-252)},scale=72.5/174] \chartblmini \end{scope}
 \node[anchor=base west,inner sep=0,text=buy,font=\hthree] at (20,-200.972) {BUY LIMIT};
 \node[anchor=base west,inner sep=0,text=muted,font=\small] at (20,-206.805) {günstiger kaufen};
-\begin{scope}[shift={(117.5,-252)},scale=72.5/174] \chartssmini \end{scope}
+\begin{scope}[shift={(117.5-14*72.5/174,-252)},scale=72.5/174] \chartssmini \end{scope}
 \node[anchor=base west,inner sep=0,text=sell,font=\hthree] at (117.5,-200.972) {SELL STOP};
 \node[anchor=base west,inner sep=0,text=muted,font=\small] at (117.5,-206.805) {Ausbruch nach unten};
 \node[anchor=base west,inner sep=0,text=soft,font=\micro\ls] at (20,-277.359) {PENDING ORDERS};

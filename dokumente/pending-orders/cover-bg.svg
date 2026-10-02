@@ -24,9 +24,8 @@
 
     <!-- GRID CONNECTION -->
     <g id="grid-connection" fill="none" stroke="#E2E5E9" stroke-width="0.25">
-        <!-- KORREKTUR: center-rule-top lief bis y=121 mitten durch ph-axis-top-label (y 113-117);
-             gekuerzt auf y2=111 (2 mm Abstand zum Label). -->
-        <line id="center-rule-top" x1="105" y1="98" x2="105" y2="111"></line>
+        <!-- KORREKTUR: center-rule-top (x=105, y 98-111) entfernt: nach dem Entfernen der
+             uebrigen Mittellinien-Stuecke verwaister Stummel unter dem Navy-Band. -->
         <!-- KORREKTUR: center-rule-middle-top (y 163-165) entfernt: 2-mm-Stummel ohne Funktion. -->
         <!-- KORREKTUR: center-rule-middle-bottom (y 180-194.5) entfernt: lief durch ph-axis-label
              "KURS JETZT" (y 186-190); gekuerzt blieben nur Stummel von 4 bzw. 2,5 mm. -->
@@ -35,9 +34,12 @@
     </g>
 
     <!-- PRICE AXIS -->
+    <!-- KORREKTUR: Luecke um "KURS JETZT" verschmaelert: x2 87 -> 92.6, x1 123 -> 117.4.
+         Schriftbild des Labels reicht von x=96.0 bis 114.1; so bleiben je ca. 3,3 mm Luft,
+         wie im Deckblatt des Haupt-Guides (dort Linie bis 92.58 bzw. ab 117.40). -->
     <g id="current-price-axis" fill="none" stroke="#3C4249" stroke-width="0.25">
-        <line id="axis-left" x1="20" y1="188" x2="87" y2="188"></line>
-        <line id="axis-right" x1="123" y1="188" x2="190" y2="188"></line>
+        <line id="axis-left" x1="20" y1="188" x2="92.6" y2="188"></line>
+        <line id="axis-right" x1="117.4" y1="188" x2="190" y2="188"></line>
     </g>
 
     <!-- AXIS ACCENTS -->
